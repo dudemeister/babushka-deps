@@ -56,7 +56,7 @@ end
 dep 'rubygems installed' do
   requires 'ruby'
   requires_when_unmet 'curl'
-  merge :versions, :rubygems => '1.3.7'
+  merge :versions, :rubygems => '1.3.6'
   met? { provided? %w[gem ruby] }
   meet {
     handle_source "http://production.cf.rubygems.org/rubygems/rubygems-#{var(:versions)[:rubygems]}.tgz" do
