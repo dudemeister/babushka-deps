@@ -1,24 +1,13 @@
 gem 'passenger' do
-  installs 'passenger' => '= 2.2.9'
+  installs 'passenger'
   provides 'passenger-install-apache2-module'
 end
 
-dep 'apache2 passenger module built' do
-  requires 'passenger'
-  requires_when_unmet 'build tools', 'apache2 dev packages'
-  met? {
-    "/usr/lib/ruby/gems/1.8/gems/passenger-2.2.9/ext/apache2/mod_passenger.so".p.exists?
-  }
-  meet {
-    sudo "passenger-install-apache2-module -a"
-  }
-end
-
 dep 'apache2 passenger configured' do
-  requires 'apache2 passenger module built'
-
+  requires 'apache2', 'passenger'
+  requires_when_unmet 'build tools', 'apache2 dev packages'
   setup {
-    set :passenger_root, "/usr/lib/ruby/gems/1.8/gems/passenger-2.2.9"
+    set :passenger_root, Babushka::GemHelper.gem_path_for('passenger')
   }
 
   met? {
@@ -31,6 +20,7 @@ dep 'apache2 passenger configured' do
   }
 
   meet {
+    sudo "passenger-install-apache2-module -a"
     render_erb 'passenger/passenger.load.erb', :to => '/etc/apache2/mods-available/passenger.load', :sudo => true
     render_erb 'passenger/passenger.conf.erb', :to => '/etc/apache2/mods-available/passenger.conf', :sudo => true
   }
