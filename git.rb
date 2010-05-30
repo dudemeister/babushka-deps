@@ -1,3 +1,25 @@
+dep 'git-aliases' do
+  requires 'git'
+  met? { 
+    met_result = false
+    tmp_path = "/tmp/git-aliases-test"
+    shell("mkdir #{tmp_path}; cd #{tmp_path}; git init; touch foo")
+    in_dir(tmp_path) do
+      met_result = ["git st", "git br", "git add .; git ci -am 'foo'", "git co ."].all? do |alias_check|
+        failable_shell(alias_check).stderr.empty?
+      end
+    end
+    system("rm -rf #{tmp_path}")
+    met_result
+  }
+  meet {
+    log_shell "Adding git alias ci for commit",   "git config --global alias.ci commit"
+    log_shell "Adding git alias co for checkout", "git config --global alias.co checkout"
+    log_shell "Adding git alias br for branch",   "git config --global alias.br branch"
+    log_shell "Adding git alias st for status",   "git config --global alias.st status"
+  }
+end
+
 dep 'passenger deploy repo' do
   requires 'passenger deploy repo exists', 'passenger deploy repo hooks', 'passenger deploy repo always receives'
 end
