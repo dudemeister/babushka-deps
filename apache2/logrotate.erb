@@ -1,0 +1,30 @@
+# <%= generated_by_babushka %>
+
+/var/log/apache2/error*.log /srv/www/*/shared/log/error*.log {
+        daily
+        missingok
+        rotate 7
+        notifempty
+        create 640
+        sharedscripts
+        postrotate
+                if [ -f "`. /etc/apache2/envvars ; echo ${APACHE_PID_FILE:-/var/run/apache2.pid}`" ]; then
+                        /etc/init.d/apache2 reload > /dev/null
+                fi
+        endscript
+}
+
+/var/log/apache2/access*.log /srv/www/*/shared/log/access*.log /srv/www/*/shared/log/rewrite.log /srv/www/*/shared/log/production.log {
+        daily
+        missingok
+        rotate 7
+        notifempty
+        create 640
+        sharedscripts
+        postrotate
+                if [ -f "`. /etc/apache2/envvars ; echo ${APACHE_PID_FILE:-/var/run/apache2.pid}`" ]; then
+                        /etc/init.d/apache2 reload > /dev/null
+                fi
+        endscript
+}
+
