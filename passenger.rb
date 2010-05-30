@@ -11,7 +11,12 @@ dep 'apache2 passenger configured' do
   }
 
   met? {
-    "#{var :passenger_root}/ext/apache2/mod_passenger.so".p.exists?
+    "#{var :passenger_root}/ext/apache2/mod_passenger.so".p.exists? && [ 
+      "mods-available/passenger.conf",
+      "mods-available/passenger.load"
+    ].all? { |file|
+      babushka_config?("/etc/apache2/#{file}")
+    }
   }
 
   meet {
