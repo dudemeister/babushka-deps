@@ -1,4 +1,4 @@
-# taken from http://github.com/tricycle/babushka-deps (apache2/* is the same)
+# taken from http://github.com/tricycle/babushka-deps and adapted for my needs (same for apache2/*) 
 meta :apache2 do
   template {
     helper(:apachectl_command) { |command| "/usr/sbin/apache2ctl #{command}" }
