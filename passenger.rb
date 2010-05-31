@@ -25,8 +25,3 @@ dep 'apache2 passenger configured' do
     render_erb 'passenger/passenger.conf.erb', :to => '/etc/apache2/mods-available/passenger.conf', :sudo => true
   }
 end
-
-dep 'apache2 passenger module enabled' do
-  setup { set :module_name, 'passenger' }
-  requires 'apache2 passenger configured', 'apache2 module enabled'
-end
