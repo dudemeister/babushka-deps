@@ -108,7 +108,7 @@ dep 'apache2 runs on boot' do
 end
 
 apache2 'apache2 passenger vhost configured' do
-  requires 'apache2 passenger configured'
+  requires 'apache2 passenger mods configured'
 
   met? {
     site_available?(var(:domain)) && babushka_config?(vhost_config_path(var(:domain)))
