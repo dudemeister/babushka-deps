@@ -1,5 +1,5 @@
 gem 'passenger' do
-  installs 'passenger'
+  installs 'passenger' => '2.2.12'
   provides 'passenger-install-apache2-module'
 end
 
