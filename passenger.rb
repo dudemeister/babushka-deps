@@ -3,7 +3,7 @@ gem 'passenger' do
   provides 'passenger-install-apache2-module'
 end
 
-dep 'apache2 passenger configured' do
+dep 'apache2 passenger mods configured' do
   requires 'apache2', 'passenger'
   requires_when_unmet 'build tools', 'apache2 dev packages'
   setup {
@@ -24,4 +24,10 @@ dep 'apache2 passenger configured' do
     render_erb 'passenger/passenger.load.erb', :to => '/etc/apache2/mods-available/passenger.load', :sudo => true
     render_erb 'passenger/passenger.conf.erb', :to => '/etc/apache2/mods-available/passenger.conf', :sudo => true
   }
+end
+
+dep 'apache2 passenger mods enabled' do
+  requires 'apache2 passenger mods configured'
+  setup { set :module_name, 'passenger' }
+  requires 'apache2 module enabled'
 end

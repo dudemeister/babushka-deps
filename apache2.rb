@@ -1,4 +1,5 @@
 # taken from http://github.com/tricycle/babushka-deps and adapted for my needs (same for apache2/*) 
+# hard works been done by them ;)
 meta :apache2 do
   template {
     helper(:apachectl_command) { |command| "/usr/sbin/apache2ctl #{command}" }
