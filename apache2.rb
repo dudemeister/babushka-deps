@@ -39,7 +39,7 @@ dep 'apache2 dev packages', :template => 'managed' do
   provides %w[apxs2 apr-config]
 end
 
-apache2 'apache2 configured' do
+dep 'configured.apache2' do
   requires 'apache2'
 
   met? {
@@ -67,13 +67,13 @@ apache2 'apache2 configured' do
   after { restart_gracefully }
 end
 
-apache2 'apache2 default site disabled' do
+dep 'default site disabled.apache2' do
   met? { site_disabled? 'default' }
   meet { disable_site 'default' }
   after { restart_gracefully }
 end
 
-apache2 'apache2 running' do
+dep 'running.apache2' do
   requires 'apache2 configured'
   met? { apache2_running? }
   meet {
@@ -81,19 +81,19 @@ apache2 'apache2 running' do
   }
 end
 
-apache2 'apache2 mod_rewrite enabled' do
+dep 'mod_rewrite enabled.apache2' do
   setup { set :module_name, 'rewrite' }
-  requires 'apache2 module enabled'
+  requires 'module enabled.apache2'
 end
 
-apache2 'apache2 vhost enabled' do
+dep 'vhost enabled.apache2' do
   requires 'apache2'
   met? { site_enabled? var(:domain) }
   meet { enable_site var(:domain) }
   after { restart_gracefully }
 end
 
-apache2 'apache2 module enabled' do
+dep 'module enabled.apache2' do
   requires 'apache2'
   met? { mod_enabled? var(:module_name) }
   meet { enable_mod var(:module_name) }
@@ -107,7 +107,7 @@ dep 'apache2 runs on boot' do
   meet { sudo "update-rc.d apache2 defaults" }
 end
 
-apache2 'apache2 passenger vhost configured' do
+dep 'passenger vhost configured.apache2' do
   requires 'apache2 passenger mods configured'
 
   met? {
