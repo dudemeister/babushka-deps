@@ -2,14 +2,14 @@ dep 'imagemagick' do
   requires 'pkg imagemagick'
 end
 
-pkg 'pkg libmagickwand-dev' do
+dep 'libmagickwand-dev', :template => 'managed' do
   installs {
     via :apt, 'libmagickwand-dev'
   }
   provides []
 end
 
-pkg 'pkg imagemagick' do
+dep 'imagemagick', :template => 'managed' do
   requires 'pkg libmagickwand-dev'
   
   installs {
