@@ -1,8 +1,4 @@
-dep 'htop' do
-  requires 'pkg htop'
-end
-
-pkg 'pkg htop' do
+dep 'htop', :template => 'managed' do
   installs {
     via :apt, 'htop'
   }
