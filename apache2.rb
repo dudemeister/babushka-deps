@@ -30,11 +30,11 @@ meta :apache2 do
   }
 end
 
-pkg 'apache2' do
+dep 'apache2', :template => 'managed' do
   installs %w[apache2 apache2-mpm-prefork]
 end
 
-pkg 'apache2 dev packages' do
+dep 'apache2 dev packages', :template => 'managed' do
   installs %w[apache2-prefork-dev libapr1-dev libaprutil1-dev]
   provides %w[apxs2 apr-config]
 end

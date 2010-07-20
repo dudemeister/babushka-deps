@@ -1,4 +1,4 @@
-gem 'passenger' do
+dep 'passenger', :template => 'gem' do
   installs 'passenger' => '2.2.12'
   provides 'passenger-install-apache2-module'
 end
