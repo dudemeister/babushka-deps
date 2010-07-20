@@ -1,10 +1,10 @@
-gem 'bundler' do
+dep 'bundler', :template => 'gem' do
   requires 'rdoc'
   installs 'bundler' => '0.9.25'
   provides 'bundle'
 end
 
-gem 'rdoc' do
+dep 'rdoc', :template => 'gem' do
   installs 'rdoc'
   provides 'rdoc'
 end
