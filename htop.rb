@@ -1,6 +1,1 @@
-dep 'htop', :template => 'managed' do
-  installs {
-    via :apt, 'htop'
-  }
-  provides 'htop'
-end
+dep 'htop', :template => 'managed'
