@@ -29,5 +29,5 @@ end
 dep 'apache2 passenger mods enabled' do
   requires 'apache2 passenger mods configured'
   setup { set :module_name, 'passenger' }
-  requires 'apache2 module enabled'
+  requires 'module enabled.apache2'
 end
