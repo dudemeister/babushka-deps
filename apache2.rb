@@ -74,7 +74,7 @@ dep 'default site disabled.apache2' do
 end
 
 dep 'running.apache2' do
-  requires 'apache2 configured'
+  requires 'configured.apache2'
   met? { apache2_running? }
   meet {
     apachectl "start"
