@@ -1,0 +1,1 @@
+dep 'rabbitmq-server', :template => 'managed'
