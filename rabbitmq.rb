@@ -8,7 +8,7 @@ dep 'rabbitmq-with-pid' do
   }
   meet {
     change_line("echo SUCCESS",
-      "echo SUCCESS\nsed 's/.*,\(.*\)\}.*/\\\1/' /var/lib/rabbitmq/pids > /var/run/rabbitmq.pid",
+      Regexp.escape("echo SUCCESS\nsed 's/.*,\(.*\)\}.*/\1/' /var/lib/rabbitmq/pids > /var/run/rabbitmq.pid"),
       "/etc/init.d/rabbitmq-server")
   }
 end
