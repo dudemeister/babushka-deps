@@ -7,6 +7,6 @@ dep 'rabbitmq-with-pid' do
      grep(/rabbitmq\.pid/, '/etc/init.d/rabbitmq-server')
   }
   meet {
-    change_line("echo SUCCESS", "echo SUCCESS\nsed 's/.*,\(.*\)\}.*/\1/' /var/lib/rabbitmq/pids > /var/run/rabbitmq.pid", "/etc/init.d/rabbitmq-server")
+    change_line("echo SUCCESS", "echo SUCCESS\nsed 's/.*,\\(.*\\)\\}.*/\\1/' /var/lib/rabbitmq/pids > /var/run/rabbitmq.pid", "/etc/init.d/rabbitmq-server")
   }
 end
