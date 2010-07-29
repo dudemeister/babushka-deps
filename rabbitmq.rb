@@ -10,5 +10,8 @@ dep 'rabbitmq-with-pid' do
     change_line("echo SUCCESS",
       "echo SUCCESS\nsed 's/.*,\\(.*\\)\\}.*/\\\\1/' /var/lib/rabbitmq/pids > /var/run/rabbitmq.pid",
       "/etc/init.d/rabbitmq-server")
+    # stop and restart the rabbitmq server to reflect changes
+    sudo("/etc/init.d/rabbitmq-server stop")
+    sudo("/etc/init.d/rabbitmq-server start")
   }
 end
