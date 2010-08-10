@@ -1,0 +1,1 @@
+dep 'subversion', :template => 'managed'
