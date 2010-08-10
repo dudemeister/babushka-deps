@@ -1,1 +1,3 @@
-dep 'subversion', :template => 'managed'
+dep 'subversion', :template => 'managed' do
+  provides 'svn'
+end
