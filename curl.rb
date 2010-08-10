@@ -1,0 +1,1 @@
+dep 'curl', :template => 'managed'
