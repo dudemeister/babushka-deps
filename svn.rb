@@ -1,0 +1,1 @@
+dep 'svn', :template => 'managed'
