@@ -7,6 +7,7 @@ end
 dep 'rdoc', :template => 'gem' do
   installs 'rdoc'
   provides 'rdoc'
+end
 
 dep 'app bundled' do
   requires 'deployed app', 'bundler.gem'
