@@ -1,0 +1,1 @@
+dep "default-jre.managed"
