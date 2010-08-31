@@ -1,10 +1,14 @@
-# Run monit in standard run-levels
-start on stopped rc2
-start on stopped rc3
-start on stopped rc4
-start on stopped rc5
-stop on runlevel 0
-stop on runlevel 1
-stop on runlevel 6
+# monit
+#
+# use monit to monitor services
+# 
+description     "monit"
+
+start on [2345]
+stop  on [!2345]
+
 respawn
-exec /usr/sbin/monit -Ic /etc/monit/monitrc
+
+script
+        exec /usr/sbin/monit -Ic /etc/monit/monitrc
+end script
