@@ -1,11 +1,11 @@
 dep 'monit', :template => 'managed'
 
 dep "autostart monit" do
-  met? { !grep(/^[^#]*startup=0/, "/etc/default/monit") && File.exists?("/etc/event.d/monit") }
+  met? { !grep(/^[^#]*startup=0/, "/etc/default/monit") && File.exists?("/etc/init/monit") }
   meet {
     change_line "startup=0", "startup=1", "/etc/default/monit"
-    unless(File.exists?("/etc/event.d/monit"))
-      render_erb 'monit/monit.erb', :to => '/etc/event.d/monit', :sudo => true
+    unless(File.exists?("/etc/init/monit"))
+      render_erb 'monit/monit.erb', :to => '/etc/init/monit.conf', :sudo => true
     end
   } 
 end
