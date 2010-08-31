@@ -1,1 +1,1 @@
-dep "default-jre.managed"
+dep "openjdk-6-jdk.managed"
