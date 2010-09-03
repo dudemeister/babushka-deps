@@ -1,6 +1,6 @@
 dep 'bundler', :template => 'gem' do
   requires 'rdoc'
-  installs 'bundler' => '0.9.25'
+  installs 'bundler' => '0.9.26'
   provides 'bundle'
 end
 
