@@ -8,4 +8,6 @@
   ErrorLog <%= var(:document_root) / 'shared/log/error.log' %>
   CustomLog <%= var(:document_root) / 'shared/log/access.log' %> common
   
+  PassengerMaxPoolSize 3
+  
 </VirtualHost>
