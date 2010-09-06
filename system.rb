@@ -4,7 +4,7 @@ end
 
 dep 'hostname', :for => :linux do
   met? {
-    stored_hostname = read_file('/etc/hostname')
+    stored_hostname = '/etc/hostname'.p.read
     !stored_hostname.blank? && var(:hostname) == stored_hostname
   }
   meet {
