@@ -19,15 +19,29 @@ end
 
 dep 'mysql configured' do
   requires 'mysql root password'
+  requires 'mysql started'
 end
 
 dep 'mysql root password' do
   requires 'mysql.managed'
   met? { failable_shell("echo '\q' | mysql -u root").stderr["Access denied for user 'root'@'localhost' (using password: NO)"] }
   meet {
-    sudo("mysqld_safe --skip-grant-tables &")
+    sudo("killall mysqld")
+    Thread.new {
+      sudo("mysqld_safe --skip-grant-tables")
+    }
+    sleep 3
     mysql(%Q{GRANT ALL PRIVILEGES ON *.* TO 'root'@'localhost' IDENTIFIED BY ''}, 'root', false)
     sudo("killall mysqld")
+  }
+end
+
+dep 'mysql started' do
+  met? {
+    false
+  }
+  meet? {
+    sudo("service mysql start")
   }
 end
 
