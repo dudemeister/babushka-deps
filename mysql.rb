@@ -27,6 +27,7 @@ dep 'mysql root password' do
   met? { failable_shell("mysql -u root -e \"SHOW TABLES;\"").stderr["Access denied for user 'root'@'localhost' (using password: NO)"] }
   meet {
     failable_shell("killall mysqld", :sudo => true)
+    sleep 3
     Thread.new {
       sudo("mysqld_safe --skip-grant-tables")
     }
@@ -35,6 +36,7 @@ dep 'mysql root password' do
   }
   after { 
     sudo("killall mysqld")
+    sleep 3
     sudo("service mysql start")
   }
 end
