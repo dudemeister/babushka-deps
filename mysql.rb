@@ -33,7 +33,10 @@ dep 'mysql root password' do
     sleep 3
     shell("mysql -e \"UPDATE mysql.user SET Password=PASSWORD('') WHERE User='root';FLUSH PRIVILEGES;\"")
   }
-  after { sudo("killall mysqld") }
+  after { 
+    sudo("killall mysqld")
+    sudo("service mysql start")
+  }
 end
 
 dep 'mysql started' do
