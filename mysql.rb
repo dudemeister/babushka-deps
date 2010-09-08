@@ -31,7 +31,7 @@ dep 'mysql root password' do
       sudo("mysqld_safe --skip-grant-tables")
     }
     sleep 3
-    mysql(%Q{GRANT ALL PRIVILEGES ON *.* TO 'root'@'localhost' IDENTIFIED BY ''}, 'root', false)
+    shell("GRANT ALL PRIVILEGES ON *.* TO 'root'@'localhost' IDENTIFIED BY ''")
     sudo("killall mysqld")
   }
 end
