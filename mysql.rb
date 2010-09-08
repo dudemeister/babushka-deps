@@ -26,8 +26,8 @@ dep 'mysql root password' do
   requires 'mysql.managed'
   met? { failable_shell("mysql -u root -e \"SHOW TABLES;\"").stderr["Access denied for user 'root'@'localhost' (using password: NO)"] }
   meet {
+    sudo("service mysql stop")
     failable_shell("killall mysqld", :sudo => true)
-    sleep 3
     Thread.new {
       sudo("mysqld_safe --skip-grant-tables")
     }
