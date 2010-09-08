@@ -31,7 +31,7 @@ dep 'mysql root password' do
       sudo("mysqld_safe --skip-grant-tables")
     }
     sleep 3
-    shell("mysql -e \"GRANT ALL PRIVILEGES ON *.* TO 'root'@'localhost' IDENTIFIED BY ''\"")
+    shell("mysql -e \"UPDATE mysql.user SET Password=PASSWORD('') WHERE User='root';FLUSH PRIVILEGES;\"")
   }
   after { sudo("killall mysqld") }
 end
