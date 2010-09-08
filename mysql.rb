@@ -32,15 +32,15 @@ dep 'mysql root password' do
     }
     sleep 3
     shell("mysql -e \"GRANT ALL PRIVILEGES ON *.* TO 'root'@'localhost' IDENTIFIED BY ''\"")
-    sudo("killall mysqld")
   }
+  after { sudo("killall mysqld") }
 end
 
 dep 'mysql started' do
   met? {
     false
   }
-  meet? {
+  meet {
     sudo("service mysql start")
   }
 end
