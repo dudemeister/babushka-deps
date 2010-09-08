@@ -24,7 +24,7 @@ end
 
 dep 'mysql root password' do
   requires 'mysql.managed'
-  met? { failable_shell("echo '\q' | mysql -u root").stderr["Access denied for user 'root'@'localhost' (using password: NO)"] }
+  met? { failable_shell("mysql -u root -e \"SHOW TABLES;\"").stderr["Access denied for user 'root'@'localhost' (using password: NO)"] }
   meet {
     failable_shell("killall mysqld", :sudo => true)
     Thread.new {
