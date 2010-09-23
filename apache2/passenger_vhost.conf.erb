@@ -1,5 +1,8 @@
 # <%= generated_by_babushka %>
 
+PassengerMaxPoolSize 3
+PassengerPoolIdleTime 0
+
 <VirtualHost *:80>
 
   ServerName <%= var(:server_name) %>
@@ -7,8 +10,5 @@
 
   ErrorLog <%= var(:document_root) / 'shared/log/error.log' %>
   CustomLog <%= var(:document_root) / 'shared/log/access.log' %> common
-  
-  PassengerMaxPoolSize 3
-  PassengerPoolIdleTime 0
   
 </VirtualHost>
