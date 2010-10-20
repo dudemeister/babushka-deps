@@ -19,7 +19,7 @@ end
 dep "uuid4r" do
   requires 'uuid'
   met? {
-    failable_shell("ruby -e \"require 'uuid4r'\"").stderr.empty?
+    failable_shell("ruby -e \"require 'uuid4r';UUID4R::uuid(1)\"").stderr.empty?
   }
   meet {
     in_dir('/tmp') { |path|
