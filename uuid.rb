@@ -13,6 +13,7 @@ dep "uuid4r" do
   }
   meet {
     in_dir('/tmp') { |path|
+      log_shell "clean up...", "rm -rf uuid4r"
       log_shell "getting uuid4r from github", "git clone http://github.com/dudemeister/uuid4r.git", {:spinner => true}
       in_dir('uuid4r/ext') { |path|
         log_shell "configure ", "ruby extconf.rb"
