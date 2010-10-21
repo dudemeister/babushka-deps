@@ -1,13 +1,13 @@
-dep "uuid-dev.managed" do
-  provides []
+dep "libossp-uuid-dev.managed" do
+  provides ['uuid-config']
 end
 
 dep "uuid.managed" do
-  provides ['uuid', 'uuid-config']
+  provides ['uuid']
 end
 
 dep "uuid4r" do
-  requires "uuid.managed", "uuid-dev.managed"
+  requires "uuid.managed", "libossp-uuid-dev.managed"
   met? {
     failable_shell("ruby -e \"require 'uuid4r';UUID4R::uuid(1)\"").stderr.empty?
   }
