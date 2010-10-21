@@ -1,4 +1,6 @@
-dep "uuid-dev.managed"
+dep "uuid-dev.managed" do
+  provides ['uuid', 'uuid-config']
+end
 
 dep "uuid4r" do
   requires "uuid-dev.managed"
