@@ -7,7 +7,7 @@ dep "uuid.managed" do
 end
 
 dep "uuid4r" do
-  requires "uuid", "uuid-dev.managed"
+  requires "uuid.managed", "uuid-dev.managed"
   met? {
     failable_shell("ruby -e \"require 'uuid4r';UUID4R::uuid(1)\"").stderr.empty?
   }
