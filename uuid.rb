@@ -1,9 +1,13 @@
 dep "uuid-dev.managed" do
+  provides []
+end
+
+dep "uuid.managed" do
   provides ['uuid', 'uuid-config']
 end
 
 dep "uuid4r" do
-  requires "uuid-dev.managed"
+  requires "uuid", "uuid-dev.managed"
   met? {
     failable_shell("ruby -e \"require 'uuid4r';UUID4R::uuid(1)\"").stderr.empty?
   }
