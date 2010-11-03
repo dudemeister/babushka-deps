@@ -6,7 +6,7 @@ dep 'protonet babushka' do
   meet {
     log_shell "adding babushka source", "mkdir -p /home/protonet/.babushka/sources/protonet"
     in_dir "/tmp" do
-      log_shell "downloading", "wget http://releases.protonet.info/release/babushka/get/#{var :deploy_key}"
+      log_shell "downloading", "wget -O babushka.tar.gz http://releases.protonet.info/release/babushka/get/#{var :deploy_key}"
       if File.exists?("babushka.tar.gz")
         log_shell "unpacking  ", "tar xzf babushka.tar.gz"
         log_shell "moving     ", "mkdir -p ~/.babushka/protonet;mv babushka ~/.babushka/protonet"
