@@ -16,7 +16,7 @@ dep "uuid4r" do
     failable_shell("ruby -e \"require 'uuid4r';UUID4R::uuid(1)\"").stderr.empty?
   }
   meet {
-    log_shell "installing gem", "gem install fishman-uuid4r", {:spinner => true, :sudo => true}
+    log_shell "installing gem", "gem install fishman-uuid4r --no-rdoc --no-ri", {:spinner => true, :sudo => true}
     # in_dir('/tmp') { |path|
     #   log_shell "clean up...", "rm -rf uuid4r"
     #   log_shell "getting uuid4r from github", "git clone http://github.com/dudemeister/uuid4r.git", {:spinner => true}
