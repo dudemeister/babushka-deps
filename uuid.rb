@@ -17,6 +17,6 @@ dep "uuid4r" do
     failable_shell("ruby -r rubygems -e \"require 'uuid4r';UUID4R::uuid(1)\"").stderr.empty?
   }
   meet { 
-    log_shell "installing gem", "gem install dudemeister-uuid4r -v 0.1.1 --no-rdoc --no-ri", {:spinner => true, :sudo => true}
+    log_shell "installing gem", "gem install dudemeister-uuid4r -v 0.1.2 --no-rdoc --no-ri", {:spinner => true, :sudo => true}
   }
 end
