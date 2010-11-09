@@ -12,7 +12,6 @@ end
 
 dep "uuid4r" do
   requires "libossp-uuid16.managed", "libossp-uuid-dev.managed", "uuid.managed"
-  # requires "libossp-uuid-dev.managed"
   met? {
     failable_shell("ruby -r rubygems -e \"require 'uuid4r';UUID4R::uuid(1)\"").stderr.empty?
   }
