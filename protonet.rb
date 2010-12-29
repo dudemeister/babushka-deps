@@ -16,3 +16,16 @@ dep 'protonet babushka' do
     end
   }
 end
+
+dep 'protonet babushka remove' do
+  met? {
+    !File.exists?('/home/protonet/.babushka/sources/protonet/base.rb')
+  }
+  meet {
+    shell "rm -rf '/home/protonet/.babushka/sources/protonet'"
+  }
+end
+
+dep 'protonet babushka update' do
+  requires 'protonet babushka remove', 'protonet babushka'
+end
