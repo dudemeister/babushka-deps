@@ -1,25 +1,32 @@
 meta :nginx do
   accepts_list_for :source
   accepts_list_for :extra_source
-  template {
-    helper(:nginx_bin) { var(:nginx_prefix) / 'sbin/nginx' }
-    helper(:nginx_conf) { var(:nginx_prefix) / 'conf/nginx.conf' }
-    helper(:nginx_cert_path) { var(:nginx_prefix) / 'conf/certs' }
-    helper(:nginx_conf_for) {|domain,ext| var(:nginx_prefix) / "conf/vhosts/#{domain}.#{ext}" }
-    helper(:nginx_conf_link_for) {|domain| var(:nginx_prefix) / "conf/vhosts/on/#{domain}.conf" }
-
-    helper(:passenger_root) { Babushka::GemHelper.gem_path_for('passenger') }
-
-    helper :nginx_running? do
-      shell "netstat -an | grep -E '^tcp.*[.:]80 +.*LISTEN'"
+  def nginx_bin
+    var(:nginx_prefix) / 'sbin/nginx'
+  end
+  def nginx_conf
+    var(:nginx_prefix) / 'conf/nginx.conf'
+  end
+  def nginx_cert_path
+    var(:nginx_prefix) / 'conf/certs'
+  end
+  def nginx_conf_for domain, ext
+    var(:nginx_prefix) / "conf/vhosts/#{domain}.#{ext}"
+  end
+  def nginx_conf_link_for domain
+    var(:nginx_prefix) / "conf/vhosts/on/#{domain}.conf"
+  end
+  def passenger_root
+    Babushka::GemHelper.gem_path_for('passenger')
+  end
+  def nginx_running?
+    shell "netstat -an | grep -E '^tcp.*[.:]80 +.*LISTEN'"
+  end
+  def restart_nginx
+    if nginx_running?
+      log_shell "Restarting nginx", "#{nginx_bin} -s reload", :sudo => true
     end
-
-    helper :restart_nginx do
-      if nginx_running?
-        log_shell "Restarting nginx", "#{nginx_bin} -s reload", :sudo => true
-      end
-    end
-  }
+  end
 end
 
 dep 'vhost enabled.nginx' do
@@ -78,9 +85,9 @@ end
 dep 'webserver running.nginx' do
   requires 'webserver configured.nginx', 'webserver startup script.nginx'
   met? {
-    returning nginx_running? do |result|
+    nginx_running?.tap {|result|
       log "There is #{result ? 'something' : 'nothing'} listening on #{result ? result.scan(/[0-9.*]+[.:]80/).first : 'port 80'}"
-    end
+    }
   }
   meet :on => :linux do
     sudo '/etc/init.d/nginx start'
@@ -115,9 +122,9 @@ dep 'webserver configured.nginx' do
   met? {
     if babushka_config? nginx_conf
       configured_root = nginx_conf.read.val_for('passenger_root')
-      returning configured_root == passenger_root do |result|
+      (configured_root == passenger_root).tap {|result|
         log_result "nginx is configured to use #{File.basename configured_root}", :result => result
-      end
+      }
     end
   }
   meet {
@@ -165,7 +172,7 @@ dep 'webserver installed.src' do
   # The build process needs to write to passenger_root/ext/nginx.
   configure { log_shell "configure", default_configure_command, :sudo => Babushka::GemHelper.should_sudo? }
   build { log_shell "build", "make", :sudo => Babushka::GemHelper.should_sudo? }
-  install { log_shell "install", "make install", :sudo => Babushka::GemHelper.should_sudo? }
+  install { log_shell "install", "make install", :sudo => true }
 
   met? {
     if !File.executable?(var(:nginx_prefix) / 'sbin/nginx')
@@ -174,7 +181,7 @@ dep 'webserver installed.src' do
       installed_version = shell(var(:nginx_prefix) / 'sbin/nginx -V') {|shell| shell.stderr }.val_for('nginx version').sub('nginx/', '')
       if installed_version != var(:versions)[:nginx]
         unmet "an outdated version of nginx is installed (#{installed_version})"
-      elsif !shell(var(:nginx_prefix) / 'sbin/nginx -V') {|shell| shell.stderr }[Babushka::GemHelper.gem_path_for('passenger').to_s]
+      elsif !shell(var(:nginx_prefix) / 'sbin/nginx -V') {|shell| shell.stderr }[Babushka::GemHelper.gem_path_for('passenger').to_s + '/']
         unmet "nginx is installed, but built against the wrong passenger version"
       else
         met "nginx-#{installed_version} is installed"

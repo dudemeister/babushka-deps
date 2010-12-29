@@ -1,7 +1,9 @@
 #!/usr/bin/env ruby
 
+STDOUT.sync = true # fuck yeah @sj26
+
 def shell cmd
-  output = `#{cmd}`
+  output = `#{cmd} 2>&1`
   output.chomp if $? == 0
 end
 def say message = nil, &block
@@ -31,18 +33,19 @@ else
       say "I have local changes, not updating."
     else
       say {
-        if shell("#{env_git} branch").grep(/\b#{branch_name}\b/).empty?
+        if shell("#{env_git} branch").split("\n").grep(/\b#{branch_name}\b/).empty?
           log_shell "Creating the '#{branch_name}' branch", "#{env_git} checkout -b '#{branch_name}'"
         else
           puts "  Branch '#{branch_name}' already exists."
         end
-        if shell("#{env_git} branch").grep(/\* \b#{branch_name}\b/).empty?
+        if shell("#{env_git} branch").split("\n").grep(/\* \b#{branch_name}\b/).empty?
           log_shell "Switching to the '#{branch_name}' branch", "#{env_git} checkout '#{branch_name}'"
         else
           puts "  Already on the '#{branch_name}' branch."
         end
         log_shell "Updating to #{new_id[0...7]}", "#{env_git} reset --hard '#{new_id}'"
         log_shell "Updating submodules", "#{env_git} submodule update --init"
+        log_shell "Bundling", "bundle install --deployment --without 'development test'"
         log_shell "Removing cached JS and CSS", 'rm -f public/javascripts/all.js; rm -f public/stylesheets/all.css'
         shell 'mkdir -p tmp'
         log_shell "Flagging app for restart", 'touch tmp/restart.txt'

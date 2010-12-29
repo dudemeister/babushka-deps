@@ -25,18 +25,25 @@ dep 'postgres backups' do
   requires 'postgres.managed'
   met? { shell "test -x /etc/cron.hourly/postgres_offsite_backup" }
   before {
-    returning sudo("ssh #{var :offsite_host} 'true'") do |result|
+    sudo("ssh #{var :offsite_host} 'true'").tap {|result|
       if result
         log_ok "publickey login to #{var :offsite_host}"
       else
         log_error "You need to add root's public key to #{var :offsite_host}:~/.ssh/authorized_keys."
       end
-    end
+    }
   }
   meet {
     render_erb 'postgres/offsite_backup.rb.erb', :to => '/usr/local/bin/postgres_offsite_backup', :perms => '755', :sudo => true
     sudo "ln -sf /usr/local/bin/postgres_offsite_backup /etc/cron.hourly/"
   }
+end
+
+dep 'postgres 9' do
+  requires {
+    on :apt, 'set.locale', 'ppa postgres.apt_repo', 'postgres.managed'
+  }
+  met? { provided? 'psql ~> 9.0.0' }
 end
 
 dep 'postgres.managed' do

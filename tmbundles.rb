@@ -15,7 +15,14 @@ dep "Gists.tmbundle" do
   source "git://github.com/ivanvc/gists-tmbundle.git"
 end
 
-dep 'github token set' do
-  met? { !shell('git config --global github.token').blank? }
-  meet { shell("git config --global github.token '#{var(:github_token)}'")}
+dep 'RubyAMP.tmbundle' do
+  source 'git://github.com/timcharper/rubyamp.git'
+end
+
+dep 'SCSS.tmbundle' do
+  source 'git://github.com/kuroir/SCSS.tmbundle.git'
+end
+
+dep 'nginx.tmbundle' do
+  source 'git://github.com/johnmuhl/nginx-tmbundle.git'
 end
