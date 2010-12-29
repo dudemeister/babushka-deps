@@ -20,8 +20,6 @@
 #
 # (from http://www.opensource.org/licenses/mit-license.php)
 
-# <%= generated_by_babushka %>
-
 <VirtualHost *:<%= var(:port, :default => (var(:certificate, :default => '').blank? ? 80 : 443)) %>>
   <% unless var(:certificate).blank? %>
     SSLEngine On
