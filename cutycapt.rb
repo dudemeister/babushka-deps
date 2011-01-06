@@ -19,5 +19,7 @@ end
 dep "libqt4-webkit.managed" do
   provides []
 end
-dep "libqt4-dev.managed"
+dep "libqt4-dev.managed" do
+  provides []
+end
 dep "g++.managed"
