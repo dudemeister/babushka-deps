@@ -16,6 +16,8 @@ dep 'cutycapt' do
   }
 end
 
-dep "libqt4-webkit.managed"
+dep "libqt4-webkit.managed" do
+  provides []
+end
 dep "libqt4-dev.managed"
 dep "g++.managed"
