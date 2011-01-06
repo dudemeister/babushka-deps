@@ -4,9 +4,9 @@ dep 'cutycapt' do
   meet {
     in_dir "/tmp" do
       log_shell "cleaning   ", "rm -rf cutycapt"
-      log_shell "downloading", "git clone https://github.com/jdecuyper/cutycapt.git"
+      log_shell "downloading", "git clone git@github.com:dudemeister/cutycapt.git"
       if File.exists?("cutycapt")
-        in_dir "cutycapt/CutyCapt" do
+        in_dir "cutycapt" do
           log_shell "qmake      ", "qmake"
           log_shell "make       ", "make"
           log_shell "copy       ", "cp CutyCapt /usr/local/bin"
