@@ -1,5 +1,5 @@
 dep 'cutycapt' do
-  requires "git", "libqt4-webkit.managed", "libqt4-dev.managed", "g++.managed", "xvfb"
+  requires "git", "libqt4-webkit.managed", "libqt4-dev.managed", "g++.managed", "xvfb.managed"
   met? { which("CutyCapt") }
   meet {
     in_dir "/tmp" do
