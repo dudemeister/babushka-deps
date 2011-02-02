@@ -16,7 +16,9 @@ dep 'ruby19.src' do
   }
 end
 
-dep 'ruby1.8-dev.managed'
+dep 'ruby1.8-dev.managed' do
+  provides []
+end
 
 dep 'ruby18.src' do
   source 'ftp://ftp.ruby-lang.org/pub/ruby/1.8/ruby-1.8.7-p302.tar.gz'
