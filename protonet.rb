@@ -32,10 +32,15 @@ dep 'protonet babushka update' do
 end
 
 dep 'fix babushka version' do
+  
+  def fixed_version
+    "2d1a54b2eda98d30e7d17b55e99c3ce8970d374a"
+  end
+  
   met? {
-    shell("cd #{Babushka::Path.path}; git show").split("\n").first.match(" (.*)$")[1] == "2d1a54b2eda98d30e7d17b55e99c3ce8970d374a"
+    shell("cd #{Babushka::Path.path}; git show").split("\n").first.match(" (.*)$")[1] == fixed_version
   }
   meet {
-    shell("cd #{Babushka::Path.path}; git co 2d1a54b2eda98d30e7d17b55e99c3ce8970d374a")
+    shell("cd #{Babushka::Path.path}; git checkout master; git reset --hard; git pull origin master; git checkout #{fixed_version}")
   }
 end
