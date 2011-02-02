@@ -1,4 +1,5 @@
 dep 'protonet babushka' do
+  requires "sbin in path" # needed so the next script starts off with the right paths
   setup {
     define_var :deploy_key, :message => "Please enter your protonet license key"
   }
