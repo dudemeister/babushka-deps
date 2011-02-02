@@ -2,31 +2,53 @@
 # hard works been done by them ;)
 meta :apache2 do
   template {
-    helper(:apachectl_command) { |command| "/usr/sbin/apache2ctl #{command}" }
-    helper(:apachectl) { |command| sudo apachectl_command(command) }
-    helper(:config_path) { '/etc/apache2' }
-
-    helper :apache2_running? do
+    def apachectl_command(command)
+      "/usr/sbin/apache2ctl #{command}"
+    end
+    def apachectl(command)
+      sudo apachectl_command(command)
+    end
+    def config_path
+      '/etc/apache2'
+    end
+    def apache2_running?
       shell "netstat -an | grep -E '^tcp.*[.:]80 +.*LISTEN'"
     end
-
-    helper :restart_gracefully do
+    def restart_gracefully
       if apache2_running?
         log_shell "Restarting apache2", apachectl_command("graceful"), :sudo => true
       end
     end
-
-    helper(:vhost_config_path) { |domain| config_path / "sites-available/#{domain}" }
-    helper(:site_available?) { |domain| shell "[ -e #{vhost_config_path(domain)} ]" }
-    helper(:site_enabled?) { |domain| shell "[ -e #{config_path}/sites-enabled/*#{domain} ]" }
-    helper(:site_disabled?) { |domain| not site_enabled?(domain) }
-    helper(:enable_site) { |domain| sudo "a2ensite #{domain}" }
-    helper(:disable_site) { |domain| sudo "a2dissite #{domain}" }
-
-    helper(:mod_enabled?) { |mod| shell "[ -e #{config_path}/mods-enabled/#{mod}.load ]" }
-    helper(:mod_disabled?) { |mod| not mod_enabled?(mod) }
-    helper(:enable_mod) { |mod| sudo "a2enmod #{mod}" }
-    helper(:disable_mod) { |mod| sudo "a2dismod #{mod}" }
+    def vhost_config_path(domain)
+      config_path / "sites-available/#{domain}"
+    end
+    def site_available?(domain)
+      shell "[ -e #{vhost_config_path(domain)} ]"
+    end
+    def site_enabled?(domain)
+      shell "[ -e #{config_path}/sites-enabled/*#{domain} ]"
+    end
+    def site_disabled?(domain)
+      not site_enabled?(domain)
+    end
+    def enable_site(domain)
+      sudo "a2ensite #{domain}"
+    end
+    def disable_site(domain)
+      sudo "a2dissite #{domain}"
+    end
+    def mod_enabled?(mod)
+      shell "[ -e #{config_path}/mods-enabled/#{mod}.load ]"
+    end
+    def mod_disabled?(mod)
+      not mod_enabled?(mod)
+    end
+    def enable_mod(mod)
+      sudo "a2enmod #{mod}"
+    end
+    def disable_mod(mod)
+      sudo "a2dismod #{mod}"
+    end
   }
 end
 
