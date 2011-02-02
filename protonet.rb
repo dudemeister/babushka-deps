@@ -41,6 +41,6 @@ dep 'fix babushka version' do
     shell("cd #{Babushka::Path.path}; git show").split("\n").first.match(" (.*)$")[1] == fixed_version
   }
   meet {
-    shell("cd #{Babushka::Path.path}; git checkout master; git reset --hard; git pull origin master; git checkout #{fixed_version}")
+    shell("cd #{Babushka::Path.path}; git checkout master; git reset --hard; git pull origin master; git reset --hard #{fixed_version}")
   }
 end
