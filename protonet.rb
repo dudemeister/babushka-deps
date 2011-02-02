@@ -1,5 +1,5 @@
 dep 'protonet babushka' do
-  requires "sbin in path" # needed so the next script starts off with the right paths
+  requires "fix babushka version", "sbin in path" # needed so the next script starts off with the right paths
   setup {
     define_var :deploy_key, :message => "Please enter your protonet license key"
   }
@@ -29,4 +29,13 @@ end
 
 dep 'protonet babushka update' do
   requires 'protonet babushka remove', 'protonet babushka'
+end
+
+dep 'fix babushka version' do
+  met? {
+    shell("cd #{Babushka::Path.path}; git show").split("\n").first.match(" (.*)$")[1] == "2d1a54b2eda98d30e7d17b55e99c3ce8970d374a"
+  }
+  meet {
+    shell("cd #{Babushka::Path.path}; git co 2d1a54b2eda98d30e7d17b55e99c3ce8970d374a")
+  }
 end
