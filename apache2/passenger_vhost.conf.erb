@@ -25,10 +25,18 @@ PassengerUseGlobalQueue on
   SSLProtocol all -SSLv2
   SSLCipherSuite ALL:!ADH:!EXPORT:!SSLv2:RC4+RSA:+HIGH:+MEDIUM
 
-  SSLCertificateChainFile <%= var(:document_root) / 'shared/config/protonet.d/sub.class1.server.ca.pem.cer' %>
-  SSLCACertificateFile <%= var(:document_root) / 'shared/config/protonet.d/ca.pem.cer' %>
-  SSLCertificateFile <%= var(:document_root) / 'shared/config/protonet.d/team.protonet.info.crt' %>
-  SSLCertificateKeyFile <%= var(:document_root) / 'shared/config/protonet.d/id_rsa' %>
-  # SetEnvIf User-Agent ".*MSIE.*" nokeepalive ssl-unclean-shutdown
-   
+  SSLCACertificateFile <%= var(:document_root) / 'shared/config/protonet.d/ca.crt' %>
+  SSLCertificateFile <%= var(:document_root) / 'shared/config/protonet.d/local.protonet.info.crt' %>
+  SSLCertificateKeyFile <%= var(:document_root) / 'shared/config/protonet.d/local.protonet.info.key' %>
+  SetEnvIf User-Agent ".*MSIE.*" nokeepalive ssl-unclean-shutdown
+  
+  <Location /system/files>
+    Order deny,allow
+    Allow from all
+    Satisfy any
+  </Location>
+
+  ProxyPass /node http://127.0.0.1:8124
+  ProxyPassReverse /node http://127.0.0.1:8124
+
 </VirtualHost>

@@ -118,6 +118,11 @@ dep 'proxy_http enabled.apache2' do
   requires 'module enabled.apache2'
 end
 
+dep 'ssl enabled.apache2' do
+  setup { set :module_name, 'ssl' }
+  requires 'module enabled.apache2'
+end
+
 dep 'vhost enabled.apache2' do
   requires 'apache2'
   met? { site_enabled? var(:domain) }
@@ -144,7 +149,7 @@ dep 'self signed cert.apache2' do
   # requires 'webserver installed.src'
   # met? { %w[key csr crt].all? {|ext| (nginx_cert_path / "#{var :domain}.#{ext}").exists? } }
   # meet {
-  #   in_dir nginx_cert_path, :create => "700", :sudo => true do
+  #   in_dir protonet_config_shared_path, :create => "700", :sudo => true do
   #     log_shell("generating private key", "openssl genrsa -out #{var :domain}.key 2048", :sudo => true) and
   #     log_shell("generating certificate", "openssl req -new -key #{var :domain}.key -out #{var :domain}.csr",
   #       :sudo => true, :input => [
