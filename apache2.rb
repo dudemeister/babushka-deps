@@ -113,8 +113,8 @@ dep 'proxy enabled.apache2' do
   requires 'module enabled.apache2'
 end
 
-dep 'http_proxy enabled.apache2' do
-  setup { set :module_name, 'http_proxy' }
+dep 'proxy_http enabled.apache2' do
+  setup { set :module_name, 'proxy_http' }
   requires 'module enabled.apache2'
 end
 
