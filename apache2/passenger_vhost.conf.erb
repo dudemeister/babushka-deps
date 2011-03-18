@@ -11,3 +11,24 @@ PassengerUseGlobalQueue on
   CustomLog <%= var(:document_root) / 'shared/log/access.log' %> common
   
 </VirtualHost>
+
+<VirtualHost *:443>
+
+  ServerName <%= var(:server_name) %>
+  DocumentRoot <%= var(:document_root) / 'current/public' %>
+
+  ErrorLog <%= var(:document_root) / 'shared/log/error.log' %>
+  CustomLog <%= var(:document_root) / 'shared/log/access.log' %> common
+  
+  SSLEngine on
+  SSLOptions +StrictRequire
+  SSLProtocol all -SSLv2
+  SSLCipherSuite ALL:!ADH:!EXPORT:!SSLv2:RC4+RSA:+HIGH:+MEDIUM
+
+  SSLCertificateChainFile <%= var(:document_root) / 'shared/config/protonet.d/sub.class1.server.ca.pem.cer' %>
+  SSLCACertificateFile <%= var(:document_root) / 'shared/config/protonet.d/ca.pem.cer' %>
+  SSLCertificateFile <%= var(:document_root) / 'shared/config/protonet.d/team.protonet.info.crt' %>
+  SSLCertificateKeyFile <%= var(:document_root) / 'shared/config/protonet.d/id_rsa' %>
+  # SetEnvIf User-Agent ".*MSIE.*" nokeepalive ssl-unclean-shutdown
+   
+</VirtualHost>
