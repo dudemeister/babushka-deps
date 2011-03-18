@@ -13,7 +13,7 @@ end
 
 dep 'tiff.src' do
   source 'http://download.osgeo.org/libtiff/tiff-3.9.4.tar.gz'
-  provides 'tiff'
+  provides 'libtiff4'
 end
 
 dep 'freetype.src' do
