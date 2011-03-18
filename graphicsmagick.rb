@@ -8,7 +8,7 @@ dep 'graphicsmagick.src' do
 end
 
 dep 'graphicsmagick complete' do
-  requires 'tiff.src', 'freetype.src', 'libtiff.src', 'libpng.src', 'graphicsmagick.src'
+  requires 'tiff.src', 'freetype.src', 'libjpeg.src', 'libpng.src', 'graphicsmagick.src'
 end
 
 dep 'tiff.src' do
