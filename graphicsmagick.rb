@@ -8,18 +8,18 @@ dep 'graphicsmagick.src' do
 end
 
 dep 'graphicsmagick complete' do
-  requires 'tiff.managed', 'libjpeg6b.managed', 'libpng.managed', 'graphicsmagick.src'
+  requires 'libtiff4-dev.managed', 'libjpeg62-dev.managed', 'libpng12-dev.managed', 'graphicsmagick.src'
 end
 
-dep 'tiff.managed' do
+dep 'libtiff4-dev.managed' do
   provides []
 end
 
-dep 'libjpeg6b.managed' do
+dep 'libjpeg62-dev.managed' do
   provides []
 end
 
-dep 'libpng.managed' do
+dep 'libpng12-dev.managed' do
   provides []
 end
 
