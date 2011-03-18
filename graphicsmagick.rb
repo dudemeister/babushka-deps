@@ -8,27 +8,18 @@ dep 'graphicsmagick.src' do
 end
 
 dep 'graphicsmagick complete' do
-  requires 'tiff.src', 'freetype.src', 'libjpeg.src', 'libpng.src', 'graphicsmagick.src'
+  requires 'tiff.managed', 'libjpeg6b.managed', 'libpng.managed', 'graphicsmagick.src'
 end
 
-dep 'tiff.src' do
-  source 'http://download.osgeo.org/libtiff/tiff-3.9.4.tar.gz'
-  provides 'libtiff4'
-end
-
-dep 'freetype.src' do
-  source 'http://download.savannah.gnu.org/releases/freetype/freetype-2.4.4.tar.gz'
+dep 'tiff.managed' do
   provides []
 end
 
-dep 'libjpeg.src' do
-  source 'http://www.ijg.org/files/jpegsrc.v8c.tar.gz'
+dep 'libjpeg6b.managed' do
   provides []
 end
 
-# http://www.libpng.org/pub/png/libpng.html
-dep 'libpng.src' do
-  source 'http://prdownloads.sourceforge.net/libpng/libpng-1.5.1.tar.gz?download'
+dep 'libpng.managed' do
   provides []
 end
 
