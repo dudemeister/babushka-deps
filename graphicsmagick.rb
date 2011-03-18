@@ -1,4 +1,4 @@
-dep 'graphicsmagick.managed' do
+dep 'graphicsmagick-libmagick-dev-compat.managed' do
   provides 'gm'
 end
 
@@ -8,7 +8,7 @@ dep 'graphicsmagick.src' do
 end
 
 dep 'graphicsmagick complete' do
-  requires 'libtiff4-dev.managed', 'libjpeg62-dev.managed', 'libpng12-dev.managed', 'graphicsmagick.src'
+  requires 'libtiff4-dev.managed', 'libjpeg62-dev.managed', 'libpng12-dev.managed', 'graphicsmagick-libmagick-dev-compat.managed'
 end
 
 dep 'libtiff4-dev.managed' do
