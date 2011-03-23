@@ -10,6 +10,13 @@ PassengerUseGlobalQueue on
   ErrorLog <%= var(:document_root) / 'shared/log/error.log' %>
   CustomLog <%= var(:document_root) / 'shared/log/access.log' %> common
   
+  ProxyRequests Off
+  <Proxy *>
+    AddDefaultCharset off
+    Order deny,allow
+    Allow from all
+  </Proxy>
+
   ProxyPass /node http://127.0.0.1:8124
   ProxyPassReverse /node http://127.0.0.1:8124
   
@@ -38,6 +45,13 @@ PassengerUseGlobalQueue on
     Allow from all
     Satisfy any
   </Location>
+
+  ProxyRequests Off
+  <Proxy *>
+    AddDefaultCharset off
+    Order deny,allow
+    Allow from all
+  </Proxy>
 
   ProxyPass /node http://127.0.0.1:8124
   ProxyPassReverse /node http://127.0.0.1:8124
