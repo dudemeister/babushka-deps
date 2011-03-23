@@ -144,32 +144,6 @@ dep 'apache2 runs on boot' do
   meet { sudo "update-rc.d apache2 defaults" }
 end
 
-dep 'self signed cert.apache2' do
-  # not ready yet
-  # requires 'webserver installed.src'
-  # met? { %w[key csr crt].all? {|ext| (nginx_cert_path / "#{var :domain}.#{ext}").exists? } }
-  # meet {
-  #   in_dir protonet_config_shared_path, :create => "700", :sudo => true do
-  #     log_shell("generating private key", "openssl genrsa -out #{var :domain}.key 2048", :sudo => true) and
-  #     log_shell("generating certificate", "openssl req -new -key #{var :domain}.key -out #{var :domain}.csr",
-  #       :sudo => true, :input => [
-  #         var(:country, :default => 'AU'),
-  #         var(:state),
-  #         var(:city, :default => ''),
-  #         var(:organisation),
-  #         var(:organisational_unit, :default => ''),
-  #         var(:domain),
-  #         var(:email),
-  #         '', # password
-  #         '', # optional company name
-  #         '' # done
-  #       ].join("\n")
-  #     ) and
-  #     log_shell("signing certificate with key", "openssl x509 -req -days 365 -in #{var :domain}.csr -signkey #{var :domain}.key -out #{var :domain}.crt", :sudo => true)
-  #   end
-  # }
-end
-
 dep 'passenger vhost configured.apache2' do
   requires 'apache2 passenger mods configured'
 

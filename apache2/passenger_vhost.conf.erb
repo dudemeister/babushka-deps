@@ -10,6 +10,9 @@ PassengerUseGlobalQueue on
   ErrorLog <%= var(:document_root) / 'shared/log/error.log' %>
   CustomLog <%= var(:document_root) / 'shared/log/access.log' %> common
   
+  ProxyPass /node http://127.0.0.1:8124
+  ProxyPassReverse /node http://127.0.0.1:8124
+  
 </VirtualHost>
 
 <VirtualHost *:443>
