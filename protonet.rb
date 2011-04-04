@@ -1,5 +1,8 @@
 dep 'protonet babushka' do
   requires "fix babushka version", "sbin in path" # needed so the next script starts off with the right paths
+  def version_string
+    "/#{ENV["RELEASE_VERSION"]}" if ENV["RELEASE_VERSION"]
+  end
   setup {
     define_var :deploy_key, :message => "Please enter your protonet license key"
   }
@@ -9,7 +12,7 @@ dep 'protonet babushka' do
   meet {
     in_dir "/tmp" do
       log_shell "cleaning   ", "rm -f babushka.tar.gz; rm -rf babushka"
-      log_shell "downloading", "wget -O babushka.tar.gz http://releases.protonet.info/release/babushka/get/#{var :deploy_key}"
+      log_shell "downloading", "wget -O babushka.tar.gz http://releases.protonet.info/release/babushka/get/#{var :deploy_key}#{version_string}"
       if File.exists?("babushka.tar.gz")
         log_shell "unpacking  ", "tar xzf babushka.tar.gz"
         log_shell "moving     ", "mv babushka ~/.babushka/sources; mv ~/.babushka/sources/babushka ~/.babushka/sources/protonet"
