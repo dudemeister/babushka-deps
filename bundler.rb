@@ -4,6 +4,12 @@ dep 'bundler', :template => 'gem' do
   provides 'bundle'
 end
 
+dep 'bundler_1_0_11', :template => 'gem' do
+  requires 'rdoc'
+  installs 'bundler = 1.0.11'
+  provides 'bundle'
+end
+
 dep 'rdoc', :template => 'gem' do
   installs 'rdoc'
   provides 'rdoc'
