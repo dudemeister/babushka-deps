@@ -4,7 +4,7 @@ dep 'passenger', :template => 'gem' do
 end
 
 dep 'apache2 passenger mods configured' do
-  requires 'apache2', 'passenger'
+  requires 'apache2'
   requires_when_unmet 'build tools', 'apache2 dev packages'
   setup {
     set :passenger_root, Babushka::GemHelper.gem_path_for('passenger')
