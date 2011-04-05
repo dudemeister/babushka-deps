@@ -31,3 +31,9 @@ dep 'apache2 passenger mods enabled' do
   setup { set :module_name, 'passenger' }
   requires 'module enabled.apache2'
 end
+
+dep 'passenger3', :template => 'gem' do
+  requires "apache2 dev packages"
+  installs 'passenger = 3.0.5'
+  provides 'passenger-install-apache2-module'
+end
