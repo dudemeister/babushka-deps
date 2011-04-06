@@ -1,3 +1,4 @@
+#  this is duplicated in protonet-babushka
 def section_exists?(file, section, opts={})
   failable_shell("grep '# #{section}:' '#{file}'", opts).result
 end
