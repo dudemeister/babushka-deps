@@ -35,8 +35,9 @@ dep 'protonet babushka update' do
   # this is added to ensure that the upcoming babuhska migration is run correctly
   if(grep('spawn babushka protonet:up.migration', "/home/protonet/dashboard/current/script/ptn_babushka_migrations"))
     text = <<-EOL
-    spawn bash
-    exp_send "PATH=/sbin:/usr/sbin:/usr/local/bin:/usr/bin:/bin:/usr/local/bin:/usr/bin:/bin\\n"
+    spawn bash -l
+    exp_send "source /home/protonet/.bashrc\\n"
+    exp_send "source /home/protonet/.profile\\n"
     exp_send "babushka protonet:up.migration\\n"
     EOL
     change_line 'spawn babushka protonet:up.migration', text, "/home/protonet/dashboard/current/script/ptn_babushka_migrations"
