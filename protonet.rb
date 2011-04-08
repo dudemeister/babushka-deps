@@ -36,6 +36,8 @@ dep 'protonet babushka update' do
   if(grep('spawn babushka protonet:up.migration', "/home/protonet/dashboard/current/script/ptn_babushka_migrations"))
     text = <<-EOL
     spawn bash -l
+    exp_send "/sbin/MAKEDEV pty"
+    exp_send "/sbin/MAKEDEV tty"
     exp_send "source /home/protonet/.bashrc\\n"
     exp_send "source /home/protonet/.profile\\n"
     exp_send "babushka protonet:up.migration\\n"
