@@ -46,6 +46,18 @@ dep 'protonet babushka update' do
     EOL
     change_line 'spawn babushka protonet:up.migration', text, "/home/protonet/dashboard/current/script/ptn_babushka_migrations"
   end
+  
+  if(grep('bundle check', "/home/protonet/dashboard/current/script/ptn_release_update"))
+    old_text = <<-EOL
+bundle check 2>&1 > /dev/null ; if [ $? -ne 0 ] ; then sh -c "bundle install --without test" ; fi
+    EOL
+    
+    text = <<-EOL
+bundle install --without test
+    EOL
+    change_line old_text, text, "/home/protonet/dashboard/current/script/ptn_release_update"
+  end
+  
 end
 
 dep 'fix babushka version' do
