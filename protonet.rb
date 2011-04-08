@@ -36,8 +36,7 @@ dep 'protonet babushka update' do
   if(grep('spawn babushka protonet:up.migration', "/home/protonet/dashboard/current/script/ptn_babushka_migrations"))
     text = <<-EOL
     spawn bash
-    exp_send "source /home/protonet/.bashrc\\n"
-    exp_send "source /home/protonet/.profile\\n"
+    exp_send "PATH=/sbin:/usr/sbin:/usr/local/bin:/usr/bin:/bin:/usr/local/bin:/usr/bin:/bin\\n"
     exp_send "babushka protonet:up.migration\\n"
     EOL
     change_line 'spawn babushka protonet:up.migration', text, "/home/protonet/dashboard/current/script/ptn_babushka_migrations"
