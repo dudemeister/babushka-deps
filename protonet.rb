@@ -45,6 +45,14 @@ dep 'protonet babushka update' do
     exp_send "exit\\n"
     EOL
     change_line 'spawn babushka protonet:up.migration', text, "/home/protonet/dashboard/current/script/ptn_babushka_migrations"
+    expext_change = <<-EOL
+    expect {
+    -re "password for.*:" {
+      send "$password\r"
+      exp_continue
+    }
+    EOL
+    change_line 'expect {', expext_change, "/home/protonet/dashboard/current/script/ptn_babushka_migrations"
   end
   
   if(grep('bundle check', "/home/protonet/dashboard/current/script/ptn_release_update"))
