@@ -31,6 +31,14 @@ dep 'protonet babushka remove' do
 end
 
 dep 'protonet babushka update' do
+  def change_line line, replacement, filename
+    path = filename.p
+
+    log "Patching #{path}"
+    shell("cat > #{path}", :input => path.readlines.map {|l|
+      l.gsub(/^(\s*)(#{Regexp.escape(line)})/, "\\1# #{edited_by_babushka}\n\\1# was: \\2\n\\1#{replacement}")
+    }.join(""))
+  end
   requires 'protonet babushka remove', 'protonet babushka'
   # this is added to ensure that the upcoming babuhska migration is run correctly
   if((version = shell('cat /home/protonet/dashboard/current/RELEASE')[/[0-9]*/]) && version.to_i >= 94)
