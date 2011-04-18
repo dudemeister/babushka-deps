@@ -66,11 +66,11 @@ dep 'protonet babushka update' do
   
     if(grep('bundle check', "/home/protonet/dashboard/current/script/ptn_release_update"))
       old_text = <<-EOL
-  bundle check 2>&1 > /dev/null ; if [ $? -ne 0 ] ; then sh -c "bundle install --without test" ; fi
-      EOL
+bundle check 2>&1 > /dev/null ; if [ $? -ne 0 ] ; then sh -c "bundle install --without test" ; fi
+EOL
     
       text = <<-EOL
-  export BUNDLE_GEMFILE=''; bundle install --without=test --gemfile=Gemfile;
+export BUNDLE_GEMFILE=''; bundle install --without=test --gemfile=Gemfile;
       EOL
       change_line old_text, text, "/home/protonet/dashboard/current/script/ptn_release_update"
     end
