@@ -41,7 +41,7 @@ dep 'protonet babushka update' do
   end
   requires 'protonet babushka remove', 'protonet babushka'
   # this is added to ensure that the upcoming babuhska migration is run correctly
-  if((version = shell('cat /home/protonet/dashboard/current/RELEASE')[/[0-9]*/]) && version.to_i >= 94)
+  if((version = shell('cat /home/protonet/dashboard/current/RELEASE').match(/[0-9]*/)[0]) && version.to_i >= 94)
     if(grep('spawn babushka protonet:up.migration', "/home/protonet/dashboard/current/script/ptn_babushka_migrations"))
       text = <<-EOL
       spawn bash -l
