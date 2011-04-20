@@ -57,11 +57,11 @@ dep 'protonet babushka update' do
       expext_change = <<-EOL
       expect {
       -re "password for.*:" {
-        send "$password\r"
+        send "$password\\r"
         exp_continue
       }
-      -re "protonet@.*\$ $" {
-        send "exit\r"
+      -re "protonet@.*\\$ $" {
+        send "exit\\r"
         exp_continue
       }
       EOL
