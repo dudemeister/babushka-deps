@@ -51,13 +51,17 @@ dep 'protonet babushka update' do
       exp_send "export GEM_PATH=/usr/lib/ruby/gems/1.8\\n"
       exp_send "export GEM_HOME=/usr/lib/ruby/gems/1.8\\n"
       exp_send "babushka protonet:up.migration\\n"
-      exp_send "exit\\r"
+      exp_send "exit\\n"
       EOL
       change_line 'spawn babushka protonet:up.migration', text, "/home/protonet/dashboard/current/script/ptn_babushka_migrations"
       expext_change = <<-EOL
       expect {
       -re "password for.*:" {
         send "$password\r"
+        exp_continue
+      }
+      -re "protonet@.*\$ $" {
+        send "exit\r"
         exp_continue
       }
       EOL
