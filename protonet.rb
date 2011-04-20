@@ -60,7 +60,7 @@ dep 'protonet babushka update' do
         send "$password\\r"
         exp_continue
       }
-      -re "protonet@.*\\$ $" {
+      -re "protonet@.*\\$" {
         send "exit\\r"
         exp_continue
       }
