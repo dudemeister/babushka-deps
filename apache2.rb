@@ -128,6 +128,11 @@ dep 'headers enabled.apache2' do
   requires 'module enabled.apache2'
 end
 
+dep 'include enabled.apache2' do
+  setup { set :module_name, 'include' }
+  requires 'module enabled.apache2'
+end
+
 dep 'vhost enabled.apache2' do
   requires 'apache2'
   met? { site_enabled? var(:domain) }
