@@ -5,7 +5,7 @@ end
 
 dep 'apache2 passenger mods configured' do
   requires 'apache2'
-  requires_when_unmet 'build tools', 'apache2 dev packages'
+  requires_when_unmet 'build tools', 'apache2 dev packages', 'libcurl4-openssl-dev.managed'
   setup {
     set :passenger_root, Babushka::GemHelper.gem_path_for('passenger')
   }
@@ -36,4 +36,8 @@ dep 'passenger3', :template => 'gem' do
   requires "apache2 dev packages"
   installs 'passenger = 3.0.5'
   provides 'passenger-install-apache2-module'
+end
+
+dep 'libcurl4-openssl-dev.managed' do
+  provides []
 end
