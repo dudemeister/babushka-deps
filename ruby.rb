@@ -52,7 +52,7 @@ dep 'ruby symlinked' do
     }
   }
   meet {
-    in_dir prefix do |path|
+    cd prefix do |path|
       ruby_binaries.each {|rb| sudo "ln -sf '#{rb}#{var(:ruby_version)}' '#{rb}'" }
     end
   }

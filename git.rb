@@ -4,9 +4,9 @@ dep 'git-aliases' do
     met_result = false
     tmp_path = "/tmp/git-aliases-test"
     shell("mkdir #{tmp_path}; cd #{tmp_path}; git init; touch foo")
-    in_dir(tmp_path) do
+    cd(tmp_path) do
       met_result = ["git st", "git br", "git add .; git ci -am 'foo'", "git co ."].all? do |alias_check|
-        failable_shell(alias_check).stderr.empty?
+        raw_shell(alias_check).stderr.empty?
       end
     end
     system("rm -rf #{tmp_path}")
@@ -26,8 +26,8 @@ end
 
 dep 'passenger deploy repo always receives' do
   requires 'passenger deploy repo exists'
-  met? { in_dir(var(:passenger_repo_root)) { shell("git config receive.denyCurrentBranch") == 'ignore' } }
-  meet { in_dir(var(:passenger_repo_root)) { shell("git config receive.denyCurrentBranch ignore") } }
+  met? { cd(var(:passenger_repo_root)) { shell("git config receive.denyCurrentBranch") == 'ignore' } }
+  meet { cd(var(:passenger_repo_root)) { shell("git config receive.denyCurrentBranch ignore") } }
 end
 
 dep 'passenger deploy repo hooks' do
@@ -38,7 +38,7 @@ dep 'passenger deploy repo hooks' do
     }
   }
   meet {
-    in_dir var(:passenger_repo_root), :create => true do
+    cd var(:passenger_repo_root), :create => true do
       %w[pre-receive post-receive].each {|hook_name|
         render_erb "git/deploy-repo-#{hook_name}", :to => ".git/hooks/#{hook_name}"
         shell "chmod +x .git/hooks/#{hook_name}"
@@ -52,7 +52,7 @@ dep 'passenger deploy repo exists' do
   define_var :passenger_repo_root, :default => :rails_root
   met? { (var(:passenger_repo_root) / '.git').dir? }
   meet {
-    in_dir var(:passenger_repo_root), :create => true do
+    cd var(:passenger_repo_root), :create => true do
       shell "git init"
     end
   }

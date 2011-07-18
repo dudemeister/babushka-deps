@@ -1,6 +1,6 @@
 #  this is duplicated in protonet-babushka
 def section_exists?(file, section, opts={})
-  failable_shell("grep '# #{section}:' '#{file}'", opts).result
+  raw_shell("grep '# #{section}:' '#{file}'", opts).result
 end
 
 def append_to_file_with_section(text, file, section, opts={})
@@ -10,7 +10,7 @@ def append_to_file_with_section(text, file, section, opts={})
 end
 
 def remove_babushka_section(file, section, opts={})
-  delimiter = failable_shell("grep '# #{section}:' '#{file}'", opts).stdout
+  delimiter = raw_shell("grep '# #{section}:' '#{file}'", opts).stdout
   unless delimiter.empty?
     text = shell("cat #{file}", opts)
     shell("cat > #{file}", opts.merge(:input => text.gsub(/# #{section}:.*# #{section}:end/im, '')))

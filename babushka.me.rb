@@ -40,7 +40,7 @@ dep 'linked.bab_tarball' do
     (var(:tarball_path) / 'babushka.tgz').readlink == tarball_for(current_head)
   }
   meet {
-    in_dir var(:tarball_path), :create => true do
+    cd var(:tarball_path), :create => true do
       shell "ln -sf #{tarball_for(current_head)} babushka.tgz"
     end
   }

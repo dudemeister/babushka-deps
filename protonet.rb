@@ -10,7 +10,7 @@ dep 'protonet babushka' do
     File.exists?('/home/protonet/.babushka/sources/protonet/base.rb')
   }
   meet {
-    in_dir "/tmp" do
+    cd "/tmp" do
       log_shell "cleaning   ", "rm -f babushka.tar.gz; rm -rf babushka"
       log_shell "downloading", "wget -O babushka.tar.gz http://releases.protonet.info/release/babushka/get/#{var :deploy_key}#{version_string}"
       if File.exists?("babushka.tar.gz")
@@ -31,61 +31,13 @@ dep 'protonet babushka remove' do
 end
 
 dep 'protonet babushka update' do
-  def change_line line, replacement, filename
-    path = filename.p
-
-    log "Patching #{path}"
-    shell("cat > #{path}", :input => path.readlines.map {|l|
-      l.gsub(/^(\s*)(#{Regexp.escape(line)})/, "\\1# #{edited_by_babushka}\n\\1# was: \\2\n\\1#{replacement}")
-    }.join(""))
-  end
   requires 'protonet babushka remove', 'protonet babushka'
-  # this is added to ensure that the upcoming babuhska migration is run correctly
-  if((version = shell('cat /home/protonet/dashboard/current/RELEASE').match(/[0-9]*/)[0]) && version.to_i >= 94)
-    if(grep('spawn babushka protonet:up.migration', "/home/protonet/dashboard/current/script/ptn_babushka_migrations"))
-      text = <<-EOL
-      spawn bash -l
-      exp_send "source /home/protonet/.bashrc\\n"
-      exp_send "source /home/protonet/.profile\\n"
-      exp_send "unset RUBYOPT;unset GEM_HOME; unset GEM_PATH; unset BUNDLE_GEMFILE\\n"
-      exp_send "export GEM_PATH=/usr/lib/ruby/gems/1.8\\n"
-      exp_send "export GEM_HOME=/usr/lib/ruby/gems/1.8\\n"
-      exp_send "babushka protonet:up.migration\\n"
-      exp_send "exit\\n"
-      EOL
-      change_line 'spawn babushka protonet:up.migration', text, "/home/protonet/dashboard/current/script/ptn_babushka_migrations"
-      expext_change = <<-EOL
-      expect {
-      -re "password for.*:" {
-        send "$password\\r"
-        exp_continue
-      }
-      -re "protonet@.*\\$" {
-        send "exit\\r"
-        exp_continue
-      }
-      EOL
-      change_line 'expect {', expext_change, "/home/protonet/dashboard/current/script/ptn_babushka_migrations"
-    end
-  
-    if(grep('bundle check', "/home/protonet/dashboard/current/script/ptn_release_update"))
-      old_text = <<-EOL
-bundle check 2>&1 > /dev/null ; if [ $? -ne 0 ] ; then sh -c "bundle install --without test" ; fi
-EOL
-    
-      text = <<-EOL
-export BUNDLE_GEMFILE=''; bundle install --without=test --gemfile=Gemfile;
-      EOL
-      change_line old_text, text, "/home/protonet/dashboard/current/script/ptn_release_update"
-    end
-    
-  end
 end
 
 dep 'fix babushka version' do
   
   def fixed_version
-    "2d1a54b2eda98d30e7d17b55e99c3ce8970d374a"
+    "aae7afd67b397089b3ab"
   end
   
   met? {

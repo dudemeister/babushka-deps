@@ -24,10 +24,10 @@ end
 
 dep 'mysql root password' do
   requires 'mysql.managed'
-  met? { failable_shell("mysql -u root -e \"SHOW DATABASES;\"").stderr.empty? }
+  met? { raw_shell("mysql -u root -e \"SHOW DATABASES;\"").stderr.empty? }
   meet {
     sudo("service mysql stop")
-    failable_shell("killall mysqld", :sudo => true)
+    raw_shell("killall mysqld", :sudo => true)
     Thread.new {
       sudo("mysqld_safe --skip-grant-tables")
     }
