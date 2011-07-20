@@ -1,0 +1,1 @@
+dep 'sendmail.managed'
