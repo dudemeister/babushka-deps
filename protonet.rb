@@ -47,3 +47,7 @@ dep 'fix babushka version' do
     shell("cd #{Babushka::Path.path}; git checkout master; git reset --hard; git pull origin master; git reset --hard #{fixed_version}")
   }
 end
+
+# https://bugs.launchpad.net/ubuntu/+source/ifupdown/+bug/512253
+# wget http://gb.archive.ubuntu.com/ubuntu/pool/main/i/ifupdown/ifupdown_0.6.10ubuntu3.1_amd64.deb
+# sudo dpkg --install ifupdown_0.6.10ubuntu3.1_amd64.deb
