@@ -1,6 +1,6 @@
 #  this is duplicated in protonet-babushka
 def section_exists?(file, section, opts={})
-  raw_shell("grep '# #{section}:' '#{file}'", opts).result
+  raw_shell("grep '# #{section}:' '#{file}'", opts).result == 0
 end
 
 def append_to_file_with_section(text, file, section, opts={})
