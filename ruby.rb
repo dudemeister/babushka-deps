@@ -60,7 +60,6 @@ end
 
 dep 'rubygems_1_6_2' do
   def version; '1.6.2' end
-  requires 'ruby'
   requires_when_unmet 'curl.managed'
   met? {
     # We check for ruby here too to make sure `ruby` and `gem` run from the same place.
