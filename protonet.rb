@@ -37,7 +37,7 @@ end
 dep 'fix babushka version' do
   
   def fixed_version
-    "188fc73005f92d3c585527215d30e6e90ffa7c41"
+    "8cf34b8651df18ac759c54958f1f0f17e4c07e1e"
   end
   
   met? {
