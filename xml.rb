@@ -1,3 +1,7 @@
-dep 'libxml2-dev.managed'
+dep 'libxml2-dev.managed' do
+  provides []
+end
 
-dep 'libxslt-dev.managed'
+dep 'libxslt-dev.managed' do
+  provides []
+end
