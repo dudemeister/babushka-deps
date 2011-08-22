@@ -33,7 +33,7 @@ end
 
 dep 'rabbitmq remove' do
   met? {
-    ["rabbitmq-activate-plugins", "rabbitmq-multi", "rabbitmqctl", "rabbitmq-deactivate-plugins", "rabbitmq-server"].all? do |cmd|
+    ["rabbitmq-activate-plugins", "rabbitmq-multi", "rabbitmqctl", "rabbitmq-deactivate-plugins", "rabbitmq-server", "/etc/init.d/rabbitmq-server"].all? do |cmd|
       !which(cmd)
     end
   }
