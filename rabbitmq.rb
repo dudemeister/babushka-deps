@@ -8,7 +8,7 @@ dep 'rabbitmq-with-pid' do
   }
   meet {
     change_line("echo SUCCESS",
-      "echo SUCCESS\nsed 's/.*,\\(.*\\)\\}.*/\\\\1/' /var/lib/rabbitmq/pids > /var/run/rabbitmq.pid",
+      "echo SUCCESS\n$CONTROL status | grep \"pid,[0-9]*\" | grep -o \"[0-9]*\" > /var/run/rabbitmq.pid",
       "/etc/init.d/rabbitmq-server")
     # stop and restart the rabbitmq server to reflect changes
     sudo("/etc/init.d/rabbitmq-server stop")
