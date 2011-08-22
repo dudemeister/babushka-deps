@@ -12,6 +12,7 @@ dep 'rabbitmq-with-pid' do
       "/etc/init.d/rabbitmq-server")
     # stop and restart the rabbitmq server to reflect changes
     sudo("/etc/init.d/rabbitmq-server restart")
+  puts "foo"
   }
 end
 
