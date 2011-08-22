@@ -25,7 +25,7 @@ end
 dep 'rabbitmq remove' do
   met? {
     ["rabbitmq-activate-plugins", "rabbitmq-multi", "rabbitmqctl", "rabbitmq-deactivate-plugins", "rabbitmq-server"].all? do |cmd|
-      which(cmd)
+      !which(cmd)
     end
   }
   meet {
