@@ -32,13 +32,16 @@ dep 'rabbitmq.src' do
 end
 
 dep 'rabbitmq remove' do
+  def binaries
+    ["rabbitmq-activate-plugins", "rabbitmq-multi", "rabbitmqctl", "rabbitmq-deactivate-plugins", "rabbitmq-server", "/etc/init.d/rabbitmq-server"]
+  end
   met? {
-    ["rabbitmq-activate-plugins", "rabbitmq-multi", "rabbitmqctl", "rabbitmq-deactivate-plugins", "rabbitmq-server", "/etc/init.d/rabbitmq-server"].all? do |cmd|
+    binaries.all? do |cmd|
       !which(cmd)
     end
   }
   meet {
-    ["rabbitmq-activate-plugins", "rabbitmq-multi", "rabbitmqctl", "rabbitmq-deactivate-plugins", "rabbitmq-server"].each do |cmd|
+    binaries.each do |cmd|
       sudo("rm -rf `which #{cmd}`")
     end
   }
