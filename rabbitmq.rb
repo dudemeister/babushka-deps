@@ -17,7 +17,12 @@ dep 'rabbitmq-with-pid' do
 end
 
 
+dep 'erlang-nox.managed' do
+  provides []
+end
+
 dep 'rabbitmq.src' do
+  requires "erlang-nox.managed"
   source "http://www.rabbitmq.com/releases/rabbitmq-server/v2.5.1/rabbitmq-server_2.5.1-1_all.deb"
   process_source {
     sudo("dpkg -i rabbitmq-server_2.5.1-1_all.deb")
