@@ -15,3 +15,9 @@ dep 'rabbitmq-with-pid' do
     sudo("/etc/init.d/rabbitmq-server start")
   }
 end
+
+
+dep 'rabbitmq.src' do
+  source "http://www.rabbitmq.com/releases/rabbitmq-server/v2.5.1/rabbitmq-server-2.5.1.tar.gz"
+  provides ["rabbitmq-server"]
+end
