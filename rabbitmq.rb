@@ -18,7 +18,11 @@ end
 
 
 dep 'rabbitmq.src' do
-  source "http://www.rabbitmq.com/releases/rabbitmq-server/v2.5.1/rabbitmq-server-2.5.1.tar.gz"
+  source "http://www.rabbitmq.com/releases/rabbitmq-server/v2.5.1/rabbitmq-server_2.5.1-1_all.deb"
+  process_source {
+    sudo("dpkg -i rabbitmq-server_2.5.1-1_all.deb")
+  }
+  # met? { shell("ruby --version") =~ /#{Regexp.escape("ruby 1.8.7 (2010-04-19 patchlevel 253) [x86_64-linux], MBARI 0x6770, Ruby Enterprise Edition 2010.02")}/ }
   provides ["rabbitmq-server"]
 end
 
