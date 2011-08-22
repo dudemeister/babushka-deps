@@ -11,8 +11,7 @@ dep 'rabbitmq-with-pid' do
       "$CONTROL status | grep \"pid,[0-9]*\" | grep -o \"[0-9]*\" > /var/run/rabbitmq.pid\necho SUCCESS",
       "/etc/init.d/rabbitmq-server")
     # stop and restart the rabbitmq server to reflect changes
-    sudo("/etc/init.d/rabbitmq-server restart")
-  puts "foo"
+    sudo("/etc/init.d/rabbitmq-server restart >/dev/null 2>&1")
   }
 end
 
