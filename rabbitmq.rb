@@ -48,5 +48,5 @@ dep 'rabbitmq remove' do
 end
 
 dep 'rabbitmq update' do
-  requires 'rabbitmq remove', 'rabbitmq.src'
+  requires 'rabbitmq remove', 'rabbitmq.src', 'rabbitmq-with-pid'
 end
