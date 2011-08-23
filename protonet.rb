@@ -29,7 +29,7 @@ dep 'dudemeister deps' do
     define_var :deploy_key, :message => "Please enter your protonet license key"
   }
   met? { 
-    File.exists?('/home/protonet/.babushka/sources/dudemeister/base.rb')
+    File.exists?('/home/protonet/.babushka/sources/dudemeister/protonet.rb')
   }
   meet {
     cd "/tmp" do
