@@ -21,6 +21,37 @@ dep 'protonet babushka' do
   }
 end
 
+dep 'dudemeister deps' do
+  def version_string
+    "/#{ENV["RELEASE_VERSION"]}" if ENV["RELEASE_VERSION"]
+  end
+  setup {
+    define_var :deploy_key, :message => "Please enter your protonet license key"
+  }
+  met? { 
+    File.exists?('/home/protonet/.babushka/sources/dudemeister/base.rb')
+  }
+  meet {
+    cd "/tmp" do
+      log_shell "cleaning   ", "rm -f babushka_deps.tar.gz; rm -rf babushka-deps"
+      log_shell "downloading", "wget -O babushka_deps.tar.gz http://releases.protonet.info/release/babushka-deps/get/#{var :deploy_key}#{version_string}"
+      if File.exists?("babushka_deps.tar.gz")
+        log_shell "unpacking  ", "tar xzf babushka_deps.tar.gz"
+        log_shell "moving     ", "mv babushka-deps ~/.babushka/sources; mv ~/.babushka/sources/babushka-deps ~/.babushka/sources/dudemeister"
+      end
+    end
+  }
+end
+
+dep 'dudemeister deps remove' do
+  met? {
+    !File.exists?('/home/protonet/.babushka/sources/dudemeister/protonet.rb')
+  }
+  meet {
+    shell "rm -rf '/home/protonet/.babushka/sources/dudemeister'"
+  }
+end
+
 dep 'protonet babushka remove' do
   met? {
     !File.exists?('/home/protonet/.babushka/sources/protonet/base.rb')
@@ -31,7 +62,7 @@ dep 'protonet babushka remove' do
 end
 
 dep 'protonet babushka update' do
-  requires 'protonet babushka remove', 'protonet babushka'
+  requires 'protonet babushka remove', 'protonet babushka', 'dudemeister deps remove', 'dudemeister deps'
 end
 
 dep 'fix babushka version' do
