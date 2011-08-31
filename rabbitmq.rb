@@ -41,6 +41,7 @@ dep 'rabbitmq remove' do
     end
   }
   meet {
+    sudo("/etc/init.d/rabbitmq-server stop")
     binaries.each do |cmd|
       sudo("rm -rf `which #{cmd}`")
     end
