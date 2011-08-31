@@ -179,7 +179,6 @@ dep 'xsendfile.apache2' do
       log_shell "cleaning   ", "rm -rf mod_xsendfile.c"
       log_shell "downloading", "wget -O mod_xsendfile.c https://tn123.org/mod_xsendfile/mod_xsendfile.c"
       log_shell "installing",  "sudo apxs2 -cia mod_xsendfile.c"
-      end
     end
   }
   after { restart_gracefully }
