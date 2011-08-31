@@ -25,6 +25,8 @@ dep 'rabbitmq.src' do
   source "http://www.rabbitmq.com/releases/rabbitmq-server/v2.5.1/rabbitmq-server_2.5.1-1_all.deb"
   process_source {
     sudo("dpkg -i --force-confnew rabbitmq-server_2.5.1-1_all.deb")
+    sudo("mv -f /etc/init.d/rabbitmq-server.dpkg-dist /etc/init.d/rabbitmq-server")
+    sudo("chmod +x /etc/init.d/rabbitmq-server")
   }
   provides ["rabbitmq-server"]
 end

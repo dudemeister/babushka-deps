@@ -164,3 +164,23 @@ dep 'passenger vhost configured.apache2' do
     render_erb 'apache2/passenger_vhost.conf.erb', :to => vhost_config_path(var(:domain)), :sudo => true
   }
 end
+
+dep 'apache2-prefork-dev.managed' do
+  provides ["apxs2"]
+end
+
+dep 'xsendfile.apache2' do
+  requires 'apache2-prefork-dev.managed'
+  met? {
+    !!sudo("a2enmod xsendfile")
+  }
+  meet {
+    cd "/tmp" do
+      log_shell "cleaning   ", "rm -rf mod_xsendfile.c"
+      log_shell "downloading", "wget -O mod_xsendfile.c https://tn123.org/mod_xsendfile/mod_xsendfile.c"
+      log_shell "installing",  "sudo apxs2 -cia mod_xsendfile.c"
+      end
+    end
+  }
+  after { restart_gracefully }
+end

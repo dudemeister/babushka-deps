@@ -23,6 +23,9 @@ PassengerUseGlobalQueue on
   ProxyPass /xhr http://127.0.0.1:8000
   ProxyPassReverse /xhr http://127.0.0.1:8000
 
+  XSendFile on
+  XSendFilePath /home/protonet/dashboard/shared/user-files
+
 </VirtualHost>
 
 <VirtualHost *:443>
@@ -61,5 +64,8 @@ PassengerUseGlobalQueue on
 
   ProxyPass /xhr http://127.0.0.1:8000
   ProxyPassReverse /xhr http://127.0.0.1:8000
+
+  XSendFile on
+  XSendFilePath /home/protonet/dashboard/shared/user-files
 
 </VirtualHost>
