@@ -41,6 +41,7 @@ dep 'rabbitmq remove' do
     end
   }
   meet {
+    shell("/home/protonet/dashboard/current/script/init/app_monit stop")
     sudo("/etc/init.d/rabbitmq-server stop")
     binaries.each do |cmd|
       sudo("rm -rf `which #{cmd}`")
