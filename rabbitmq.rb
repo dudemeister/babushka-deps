@@ -22,10 +22,12 @@ end
 
 dep 'rabbitmq.src' do
   requires "erlang-nox.managed"
-  source "http://www.rabbitmq.com/releases/rabbitmq-server/v2.6.0/rabbitmq-server_2.6.0-1_all.deb"
+  source "https://github.com/downloads/protonet/custom_debs/rabbitmq-server_2.6.0-1_all.custom.deb"
   process_source {
-    sudo("dpkg -i --force-confnew --force-confmiss rabbitmq-server_2.6.0-1_all.deb")
-    sudo("mv -f /etc/init.d/rabbitmq-server.dpkg-dist /etc/init.d/rabbitmq-server")
+    sudo("dpkg -i --force-confnew --force-confmiss rabbitmq-server_2.6.0-1_all.custom.deb")
+    if File.exists?("/etc/init.d/rabbitmq-server.dpkg-dist")
+      sudo("mv -f /etc/init.d/rabbitmq-server.dpkg-dist /etc/init.d/rabbitmq-server")
+    end
     sudo("chmod +x /etc/init.d/rabbitmq-server")
   }
   provides ["rabbitmq-server"]
