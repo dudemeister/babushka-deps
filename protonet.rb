@@ -4,7 +4,7 @@ dep 'protonet babushka' do
     "/#{ENV["RELEASE_VERSION"]}" if ENV["RELEASE_VERSION"]
   end
   setup {
-    define_var :deploy_key, :message => "Please enter your protonet license key"
+    define_var :license_key, :message => "Please enter your protonet license key"
   }
   met? { 
     File.exists?('/home/protonet/.babushka/sources/protonet/base.rb')
@@ -12,7 +12,7 @@ dep 'protonet babushka' do
   meet {
     cd "/tmp" do
       log_shell "cleaning   ", "rm -f babushka.tar.gz; rm -rf babushka"
-      log_shell "downloading", "wget -O babushka.tar.gz http://releases.protonet.info/release/babushka/get/#{var :deploy_key}#{version_string}"
+      log_shell "downloading", "wget -O babushka.tar.gz http://releases.protonet.info/release/babushka/get/#{var :license_key}#{version_string}"
       if File.exists?("babushka.tar.gz")
         log_shell "unpacking  ", "tar xzf babushka.tar.gz"
         log_shell "moving     ", "mv babushka ~/.babushka/sources; mv ~/.babushka/sources/babushka ~/.babushka/sources/protonet"
@@ -26,7 +26,7 @@ dep 'dudemeister deps' do
     "/#{ENV["RELEASE_VERSION"]}" if ENV["RELEASE_VERSION"]
   end
   setup {
-    define_var :deploy_key, :message => "Please enter your protonet license key"
+    define_var :license_key, :message => "Please enter your protonet license key"
   }
   met? { 
     File.exists?('/home/protonet/.babushka/sources/dudemeister/protonet.rb')
@@ -34,7 +34,7 @@ dep 'dudemeister deps' do
   meet {
     cd "/tmp" do
       log_shell "cleaning   ", "rm -f babushka_deps.tar.gz; rm -rf babushka-deps"
-      log_shell "downloading", "wget -O babushka_deps.tar.gz http://releases.protonet.info/release/babushka-deps/get/#{var :deploy_key}#{version_string}"
+      log_shell "downloading", "wget -O babushka_deps.tar.gz http://releases.protonet.info/release/babushka-deps/get/#{var :license_key}#{version_string}"
       if File.exists?("babushka_deps.tar.gz")
         log_shell "unpacking  ", "tar xzf babushka_deps.tar.gz"
         log_shell "moving     ", "mv babushka-deps ~/.babushka/sources; mv ~/.babushka/sources/babushka-deps ~/.babushka/sources/dudemeister"
