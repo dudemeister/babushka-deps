@@ -1,7 +1,7 @@
 dep 'protonet babushka' do
   requires "fix babushka version", "sbin in path" # needed so the next script starts off with the right paths
   def version_string
-    "/#{ENV["RELEASE_VERSION"]}".gsub("//", "/") if ENV["RELEASE_VERSION"]
+    "/#{ENV["RELEASE_VERSION"]}" if ENV["RELEASE_VERSION"]
   end
   setup {
     define_var :license_key, :message => "Please enter your protonet license key"
@@ -23,7 +23,7 @@ end
 
 dep 'dudemeister deps' do
   def version_string
-    "/#{ENV["RELEASE_VERSION"]}".gsub("//", "/") if ENV["RELEASE_VERSION"]
+    "/#{ENV["RELEASE_VERSION"]}" if ENV["RELEASE_VERSION"]
   end
   setup {
     define_var :license_key, :message => "Please enter your protonet license key"
