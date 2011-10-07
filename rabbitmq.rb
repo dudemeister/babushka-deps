@@ -4,11 +4,11 @@ dep 'rabbitmq-server', :template => 'managed'
 # based on http://blog.joeygeiger.com/2009/02/25/rabbitmq-and-monit/
 dep 'rabbitmq-with-pid' do
   met? {
-     grep(/rabbitmq\.pid/, '/etc/init.d/rabbitmq-server')
+     grep("mkdir -p -m 0777 /var/run/rabbitmq", '/etc/init.d/rabbitmq-server')
   }
   meet {
-    change_line("echo SUCCESS",
-      "$CONTROL status | grep \"pid,[0-9]*\" | grep -o \"[0-9]*\" > /var/run/rabbitmq.pid\necho SUCCESS",
+    change_line("PID_FILE=/var/run/rabbitmq/pid",
+      "PID_FILE=/var/run/rabbitmq/pid\nchown root:admin /var/run\nchmod g+rwx /var/run\nmkdir -p -m 0777 /var/run/rabbitmq",
       "/etc/init.d/rabbitmq-server")
     # stop and restart the rabbitmq server to reflect changes
     sudo("/etc/init.d/rabbitmq-server restart >/dev/null 2>&1")
