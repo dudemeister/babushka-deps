@@ -15,7 +15,7 @@ dep 'protonet babushka' do
       log_shell "downloading", "wget -O babushka.tar.gz http://releases.protonet.info/release/babushka/get/#{var :license_key}#{version_string}"
       if File.exists?("babushka.tar.gz")
         log_shell "unpacking  ", "tar xzf babushka.tar.gz"
-        log_shell "moving     ", "mv babushka ~/.babushka/sources; mv ~/.babushka/sources/babushka ~/.babushka/sources/protonet"
+        log_shell "moving     ", "mv -f babushka ~/.babushka/sources; mv -f ~/.babushka/sources/babushka ~/.babushka/sources/protonet"
       end
     end
   }
@@ -37,7 +37,7 @@ dep 'dudemeister deps' do
       log_shell "downloading", "wget -O babushka_deps.tar.gz http://releases.protonet.info/release/babushka-deps/get/#{var :license_key}#{version_string}"
       if File.exists?("babushka_deps.tar.gz")
         log_shell "unpacking  ", "tar xzf babushka_deps.tar.gz"
-        log_shell "moving     ", "mv babushka-deps ~/.babushka/sources; mv ~/.babushka/sources/babushka-deps ~/.babushka/sources/dudemeister"
+        log_shell "moving     ", "mv -f babushka-deps ~/.babushka/sources; mv -f ~/.babushka/sources/babushka-deps ~/.babushka/sources/dudemeister"
       end
     end
   }
