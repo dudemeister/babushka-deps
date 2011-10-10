@@ -8,7 +8,7 @@ dep 'rabbitmq-with-pid' do
   }
   meet {
     change_line("PID_FILE=/var/run/rabbitmq/pid",
-      "PID_FILE=/var/run/rabbitmq/pid\nchown root:admin /var/run\nchmod g+rwx /var/run\nmkdir -p -m 0777 /var/run/rabbitmq",
+      "PID_FILE=/var/run/rabbitmq/pid\nchown root:admin /var/run\nchmod g+rwx /var/run\nmkdir -p -m /var/run/rabbitmq\nchmod 777 /var/run/rabbitmq",
       "/etc/init.d/rabbitmq-server")
     # stop and restart the rabbitmq server to reflect changes
     sudo("/etc/init.d/rabbitmq-server restart >/dev/null 2>&1")
