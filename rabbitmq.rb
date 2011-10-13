@@ -37,6 +37,21 @@ dep 'rabbitmq remove' do
   }
 end
 
+dep 'rabbitmq remove autostart' do
+  def paths
+    ["/etc/rc0.d/K20rabbitmq-server", "/etc/rc1.d/K20rabbitmq-server", "/etc/rc2.d/S20rabbitmq-server",
+     "/etc/rc3.d/S20rabbitmq-server", "/etc/rc4.d/S20rabbitmq-server", "/etc/rc5.d/S20rabbitmq-server"]
+  end
+  met? {
+    paths.all? do |path|
+      !File.exists?("/etc/rc0.d/K20rabbitmq-server")
+    end
+  }
+  meet {
+    sudo("rm -rf #{paths.join(" ")}")
+  }
+end
+
 dep 'rabbitmq update' do
-  requires 'rabbitmq remove', 'rabbitmq.src'
+  requires 'rabbitmq remove', 'rabbitmq.src', 'rabbitmq remove autostart'
 end
