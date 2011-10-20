@@ -13,7 +13,7 @@ dep 'rabbitmq.src' do
       sudo("mv -f /etc/init.d/rabbitmq-server.dpkg-dist /etc/init.d/rabbitmq-server")
     end
     sudo("chmod +x /etc/init.d/rabbitmq-server")
-    sudo("/etc/init.d/rabbitmq-server start")
+    sudo("/etc/init.d/rabbitmq-server start > /dev/null 2>&1")
   }
   provides ["rabbitmq-server"]
 end
