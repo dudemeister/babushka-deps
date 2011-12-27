@@ -56,12 +56,6 @@ dep 'libxslt.managed' do
   installs { via :apt, 'libxslt1-dev' }
   provides []
 end
-dep 'mdns.managed' do
-  installs {
-    via :apt, 'avahi-daemon'
-  }
-  provides []
-end
 dep 'memcached.managed'
 dep 'ncurses.managed' do
   installs {
