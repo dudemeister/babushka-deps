@@ -62,7 +62,7 @@ dep 'protonet babushka remove' do
 end
 
 dep 'protonet babushka update' do
-  requires 'protonet babushka remove', 'protonet babushka', 'dudemeister deps remove', 'dudemeister deps'
+  requires 'protonet babushka remove', 'protonet babushka', 'dudemeister deps remove', 'dudemeister deps', 'hotpatch babushka migration script'
 end
 
 dep 'fix babushka version' do
@@ -77,6 +77,15 @@ dep 'fix babushka version' do
   meet {
     shell("cd #{Babushka::Path.path}; git checkout master; git reset --hard; git pull origin master; git reset --hard #{fixed_version}")
   }
+end
+
+dep 'hotpatch babushka migration script' do
+  met? { grep("sed", "/home/protonet/dashboard/current/script/ptn_babushka_migrations") }
+  meet {
+    render_erb("tmp/ptn_babushka_migrations.erb", :to => "/home/protonet/dashboard/current/script/ptn_babushka_migrations")
+    shell("chmod +x /home/protonet/dashboard/current/script/ptn_babushka_migrations")
+  }
+  
 end
 
 # https://bugs.launchpad.net/ubuntu/+source/ifupdown/+bug/512253
