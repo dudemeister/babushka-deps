@@ -5,7 +5,7 @@ dep 'monit.src' do
   process_source {
     sudo("dpkg -i --force-confnew --force-confmiss monit_5.3.2-custom_amd64.deb")
   }
-  postinstall {
+  after {
     sudo("ln -s /etc/monit/monitrc /etc/monitrc")
   }
   provides ['monit']
