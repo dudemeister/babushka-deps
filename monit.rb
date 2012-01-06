@@ -3,7 +3,7 @@ dep 'monit', :template => 'managed'
 dep 'monit.src' do
   source 'https://github.com/downloads/protonet/custom_debs/monit_5.3.2-custom_amd64.deb'
   process_source {
-    sudo("dpkg -i monit_5.3.2-custom_amd64.deb")
+    sudo("dpkg -i --force-confnew --force-confmiss monit_5.3.2-custom_amd64.deb")
   }
   postinstall {
     sudo("ln -s /etc/monit/monitrc /etc/monitrc")
