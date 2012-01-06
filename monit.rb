@@ -1,8 +1,13 @@
 dep 'monit', :template => 'managed'
 
 dep 'monit.src' do
-  source 'http://mmonit.com/monit/dist/monit-5.3.2.tar.gz'
-  configure_args "--enable-optimized"
+  source 'https://github.com/downloads/protonet/custom_debs/monit_5.3.2-custom_amd64.deb'
+  process_source {
+    sudo("dpkg -i monit_5.3.2-custom_amd64.deb")
+  }
+  postinstall {
+    sudo("ln -s /etc/monit/monitrc /etc/monitrc")
+  }
   provides ['monit']
 end
 
