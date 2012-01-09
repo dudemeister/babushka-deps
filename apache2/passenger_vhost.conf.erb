@@ -25,6 +25,11 @@ PassengerUseGlobalQueue on
     Allow from all
   </ProxyMatch>
 
+  <ProxyMatch http://127.0.0.1:2812>
+    Order deny,allow
+    Allow from all
+  </ProxyMatch>
+
   <ProxyMatch localhost:22>
     Order deny,allow
     Allow from all
@@ -35,6 +40,9 @@ PassengerUseGlobalQueue on
 
   ProxyPass /xhr http://127.0.0.1:8000
   ProxyPassReverse /xhr http://127.0.0.1:8000
+
+  ProxyPass /monit http://127.0.0.1:2812
+  ProxyPassReverse /monit http://127.0.0.1:2812
 
   XSendFile on
   XSendFilePath /home/protonet/dashboard/shared/user-files
@@ -80,6 +88,11 @@ PassengerUseGlobalQueue on
     Allow from all
   </ProxyMatch>
 
+  <ProxyMatch http://127.0.0.1:2812>
+    Order deny,allow
+    Allow from all
+  </ProxyMatch>
+
   <ProxyMatch localhost:22>
     Order deny,allow
     Allow from all
@@ -90,6 +103,9 @@ PassengerUseGlobalQueue on
 
   ProxyPass /xhr http://127.0.0.1:8000
   ProxyPassReverse /xhr http://127.0.0.1:8000
+
+  ProxyPass /monit http://127.0.0.1:2812
+  ProxyPassReverse /monit http://127.0.0.1:2812
 
   XSendFile on
   XSendFilePath /home/protonet/dashboard/shared/user-files
