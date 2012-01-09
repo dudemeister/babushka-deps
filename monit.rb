@@ -5,7 +5,7 @@ dep 'monit.src' do
   process_source {
     sudo("rm -f /etc/monit/monitrc")
     sudo("ln -s /etc/monit/monitrc /etc/monitrc")
-    sudo("dpkg -i --force-confnew --force-confmiss monit_5.3.2-custom_amd64.deb")
+    sudo("dpkg -i --force-confnew --force-confmiss monit_5.3.2-custom_v2_amd64.deb")
   }
   provides ['monit']
 end
