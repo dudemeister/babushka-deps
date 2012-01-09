@@ -1,7 +1,7 @@
 dep 'monit', :template => 'managed'
 
 dep 'monit.src' do
-  source 'https://github.com/downloads/protonet/custom_debs/monit_5.3.2-custom_amd64.deb'
+  source 'https://github.com/downloads/protonet/custom_debs/monit_5.3.2-custom_v2_amd64.deb'
   process_source {
     sudo("rm -f /etc/monit/monitrc")
     sudo("ln -s /etc/monit/monitrc /etc/monitrc")
