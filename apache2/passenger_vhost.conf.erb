@@ -41,8 +41,8 @@ PassengerUseGlobalQueue on
   ProxyPass /xhr http://127.0.0.1:8000
   ProxyPassReverse /xhr http://127.0.0.1:8000
 
-  ProxyPass /monit http://127.0.0.1:2812
-  ProxyPassReverse /monit http://127.0.0.1:2812
+  ProxyPass /monit/ http://127.0.0.1:2812/
+  ProxyPassReverse /monit/ http://127.0.0.1:2812/
 
   XSendFile on
   XSendFilePath /home/protonet/dashboard/shared/user-files
@@ -104,8 +104,8 @@ PassengerUseGlobalQueue on
   ProxyPass /xhr http://127.0.0.1:8000
   ProxyPassReverse /xhr http://127.0.0.1:8000
 
-  ProxyPass /monit http://127.0.0.1:2812
-  ProxyPassReverse /monit http://127.0.0.1:2812
+  ProxyPass /monit/ http://127.0.0.1:2812/
+  ProxyPassReverse /monit/ http://127.0.0.1:2812/
 
   XSendFile on
   XSendFilePath /home/protonet/dashboard/shared/user-files
