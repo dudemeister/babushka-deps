@@ -25,7 +25,7 @@ dep 'hosts', :for => :linux do
     grep 'protonet', '/etc/hosts' 
   }
   meet {
-    sudo "sed -ri 's/^127.0.0.1.*$/127.0.0.1 #{var(:hostname)} #{var(:hostname).sub(/\..*$/, '')} protonet localhost.localdomain localhost/' /etc/hosts"
+    sudo "sed -ri 's/^127.0.0.1.*$/127.0.0.1 #{hostname} #{hostname).sub(/\..*$/, '')} protonet localhost.localdomain localhost/' /etc/hosts"
   }
 end
 
