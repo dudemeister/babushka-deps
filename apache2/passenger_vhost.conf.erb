@@ -1,5 +1,5 @@
-PassengerMaxPoolSize 2
-PassengerPoolIdleTime 0
+PassengerMinInstances 2
+PassengerMaxPoolSize 10
 PassengerUseGlobalQueue on
 
 <VirtualHost *:80>
@@ -13,7 +13,7 @@ PassengerUseGlobalQueue on
   ProxyRequests On
   AllowCONNECT  22
   
-  <Proxy http://127.0.0.1:8124 >
+  <Proxy http://127.0.0.1:8124>
     AddDefaultCharset off
     Order deny,allow
     Allow from all
