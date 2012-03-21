@@ -47,6 +47,16 @@ PassengerUseGlobalQueue on
   XSendFile on
   XSendFilePath /home/protonet/dashboard/shared/user-files
 
+  <IfModule mod_websocket_tcp_proxy.c>
+    <Location /websocket>
+      SetHandler websocket-handler
+      WebSocketHandler  /usr/lib/apache2/modules/mod_websocket_tcp_proxy.so tcp_proxy_init
+      WebSocketTcpProxyHost localhost
+      WebSocketTcpProxyPort 5000
+      SupportDraft75 On
+    </Location>
+  </IfModule>
+
 </VirtualHost>
 
 <VirtualHost *:443>
@@ -109,5 +119,15 @@ PassengerUseGlobalQueue on
 
   XSendFile on
   XSendFilePath /home/protonet/dashboard/shared/user-files
+
+  <IfModule mod_websocket_tcp_proxy.c>
+    <Location /websocket>
+      SetHandler websocket-handler
+      WebSocketHandler  /usr/lib/apache2/modules/mod_websocket_tcp_proxy.so tcp_proxy_init
+      WebSocketTcpProxyHost localhost
+      WebSocketTcpProxyPort 5000
+      SupportDraft75 On
+    </Location>
+  </IfModule>
 
 </VirtualHost>

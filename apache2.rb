@@ -188,3 +188,36 @@ dep 'xsendfile.apache2' do
   }
   after { restart_gracefully }
 end
+
+dep 'websocket_proxy.apache2' do
+  requires 'apache2-prefork-dev.managed'
+  met? {
+    ["websocket_tcp_proxy", "websocket", "websocket_draft76"].all? {|name| sudo("a2enmod #{name}") }
+  }
+  meet {
+    cd "/tmp" do
+      log_shell "cleaning   ", "sudo rm -rf apache-websocket"
+      log_shell "cloning    ", "git clone git://github.com/protonet/apache-websocket.git"
+      cd "apache-websocket" do
+        ["mod_websocket_draft76.c", "mod_websocket.c"].each do |c_file|
+          log_shell "installing ",  "sudo apxs2 -cia #{c_file}"
+        end
+        cd "examples" do
+          log_shell "installing ", "sudo apxs2 -cia -I.. mod_websocket_tcp_proxy.c"
+        end
+      end
+    end
+  }
+  after { restart_gracefully }  
+end
+
+dep 'websocket_read_timeouts.apache2' do
+  requires 'apache2-prefork-dev.managed'
+  met? {
+     grep "RequestReadTimeout body=30,MinRate=1", '/etc/apache2/mods-available/reqtimeout.conf'
+  }
+  meet {
+    change_line "RequestReadTimeout body=10,minrate=500", "RequestReadTimeout body=30,MinRate=1", "/etc/apache2/mods-available/reqtimeout.conf"
+  }
+  after { restart_gracefully }
+end
