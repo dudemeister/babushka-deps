@@ -1,3 +1,9 @@
+dep 'clamav' do
+  requires 'clamav.managed'
+  after { sudo 'freshclam' }
+end
+
 dep 'clamav.managed' do
-  after { sudo('freshclam') }
+  installs { via :apt, 'clamav' }
+  provides []
 end
