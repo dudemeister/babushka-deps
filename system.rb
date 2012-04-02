@@ -4,7 +4,7 @@ end
 
 dep 'hostname', :for => :linux do
   def hostname
-    shell 'hostname -f'
+    shell 'hostname'
   end
   met? {
     stored_hostname = '/etc/hostname'.p.read
