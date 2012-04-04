@@ -166,7 +166,11 @@ dep 'passenger vhost configured.apache2' do
     site_available?(var(:domain)) && babushka_config?(vhost_config_path(var(:domain)))
   }
   meet {
-    render_erb 'apache2/passenger_vhost.conf.erb', :to => vhost_config_path(var(:domain)), :sudo => true
+    if(var(:domain) == "admin")
+      render_erb 'apache2/passenger_vhost_admin.conf.erb', :to => vhost_config_path(var(:domain)), :sudo => true
+    else
+      render_erb 'apache2/passenger_vhost.conf.erb', :to => vhost_config_path(var(:domain)), :sudo => true
+    end
   }
 end
 

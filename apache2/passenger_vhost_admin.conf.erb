@@ -1,0 +1,118 @@
+<VirtualHost *:81>
+  ServerName releases.protonet.info
+  ServerAlias releases.protonet.info
+  DocumentRoot /home/protonet/code-dispatcher/public
+  RewriteEngine On
+  RewriteCond %{REQUEST_URI} !^/code_dispatcher
+  RewriteCond %{REQUEST_URI} !^/images
+  RewriteCond %{REQUEST_URI} !^/server-status
+  RewriteRule ^(.*)$  code_dispatcher$1  [P,L]
+
+  ProxyRequests Off 
+  <Proxy *>
+    Order deny,allow
+    Deny from all
+  </Proxy>
+
+  <Proxy http://releases.protonet.info/code_dispatcher/>
+    Order deny,allow
+    Allow from all   
+  </Proxy>
+
+  <Location /server-status>
+    SetHandler server-status
+    Order deny,allow
+    Deny from all
+    Allow from all
+  </Location>
+
+</VirtualHost>
+
+<VirtualHost *:81>
+  ServerName admin.protonet.info
+  ServerAlias admin.protonet.info
+  DocumentRoot /home/protonet/code-dispatcher/public
+  RewriteEngine On
+  RewriteCond %{REQUEST_URI} !^/admin
+  RewriteCond %{REQUEST_URI} !^/images
+  RewriteRule ^(.*)$  admin$1  [P,L]
+
+  ProxyRequests Off
+  <Proxy *>
+    Order deny,allow
+    Deny from all
+  </Proxy>
+
+  <Proxy http://admin.protonet.info/admin/>
+    Order deny,allow
+    Allow from all   
+  </Proxy>
+
+</VirtualHost>
+
+<VirtualHost *:81>
+  ServerName oauth.protonet.info
+  ServerAlias oauth.protonet.info
+  DocumentRoot /home/protonet/code-dispatcher/public
+  RewriteEngine On
+  RewriteCond %{REQUEST_URI} !^/oauth
+  RewriteCond %{REQUEST_URI} !^/images
+  RewriteRule ^(.*)$  oauth$1  [P,L]
+  ProxyRequests Off
+  <Proxy *>
+    Order deny,allow
+    Deny from all
+  </Proxy>
+
+  <Proxy http://oauth.protonet.info/oauth/>
+    Order deny,allow
+    Allow from all   
+  </Proxy>
+
+</VirtualHost>
+
+<VirtualHost *:81>
+  ServerName email.protonet.info
+  ServerAlias email.protonet.info
+  DocumentRoot /home/protonet/code-dispatcher/public
+  RewriteEngine On
+  RewriteCond %{REQUEST_URI} !^/email
+  RewriteCond %{REQUEST_URI} !^/images
+  RewriteRule ^(.*)$  email$1  [P,L]
+
+  ProxyRequests Off
+  <Proxy *>
+    Order deny,allow
+    Deny from all
+  </Proxy>
+
+  <Proxy http://email.protonet.info/email/>
+    Order deny,allow
+    Allow from all   
+  </Proxy>
+
+</VirtualHost>
+
+PassengerUserSwitching On
+<VirtualHost *:81>
+  PassengerUser localtunnel
+  ServerName directory.protonet.info
+  ServerAlias directory.protonet.info
+  DocumentRoot /home/protonet/directory/public
+  RewriteEngine On
+  RewriteCond %{REQUEST_URI} !^/directory
+  RewriteCond %{REQUEST_URI} !^/images
+  RewriteRule ^(.*)$  directory$1  [P,L]
+
+  ProxyRequests Off
+  <Proxy *>
+    Order deny,allow
+    Deny from all
+  </Proxy>
+
+  <Proxy http://directory.protonet.info/directory/>
+    Order deny,allow
+    Allow from all   
+  </Proxy>
+
+</VirtualHost>
