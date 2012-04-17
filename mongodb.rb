@@ -7,7 +7,7 @@ dep "mongodb only local connections" do
     grep(/bind_ip = 127.0.0.1/, "/etc/mongodb.conf")
   }
   meet {
-    sudo("bind_ip = 127.0.0.1' > /etc/mongodb.conf")
+    sudo("bind_ip = 127.0.0.1' >> /etc/mongodb.conf")
     sudo("/etc/init.d/mongodb restart")
   }
 end
