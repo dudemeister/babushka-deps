@@ -35,6 +35,7 @@
   RewriteEngine On
   RewriteCond %{REQUEST_URI} !^/admin
   RewriteCond %{REQUEST_URI} !^/images
+  RewriteCond %{REQUEST_URI} !^/monit
   RewriteRule ^(.*)$  admin$1  [P,L]
 
   ProxyRequests Off
@@ -47,6 +48,14 @@
     Order deny,allow
     Allow from all   
   </Proxy>
+
+  <ProxyMatch http://127.0.0.1:2812>
+    Order deny,allow
+    Allow from all
+  </ProxyMatch>
+
+  ProxyPass /monit/ http://127.0.0.1:2812/
+  ProxyPassReverse /monit/ http://127.0.0.1:2812/
 
 </VirtualHost>
 
