@@ -225,3 +225,12 @@ dep 'websocket_read_timeouts.apache2' do
   }
   after { restart_gracefully }
 end
+
+dep 'up_maxclient.apache2' do
+  met? {
+    !!grep(/MaxClients 256/, "/etc/apache2/apache2.conf")
+  }
+  meet {
+    sudo("ruby -pi -e \"gsub(/MaxClients\s.*[0-9]*/, 'MaxClients 256')\" /etc/apache2/apache2.conf")
+  }
+end
