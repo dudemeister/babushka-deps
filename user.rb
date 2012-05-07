@@ -49,7 +49,7 @@ dep 'user exists' do
     }
   }
   on :osx do
-    met? { !shell("dscl . -list /Users").split("\n").grep(var(:username)).empty? }
+    met? { !shell("dscl . -list /Users").split("\n").scan(var(:username)).empty? }
     meet {
       homedir = var(:home_dir_base) / var(:username)
       {

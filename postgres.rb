@@ -2,7 +2,7 @@ dep 'existing postgres db' do
   requires 'postgres access'
   met? {
     !shell("psql -l") {|shell|
-      shell.stdout.split("\n").grep(/^\s*#{var :db_name}\s+\|/)
+      shell.stdout.split("\n").scan(/^\s*#{var :db_name}\s+\|/)
     }.empty?
   }
   meet {
@@ -17,7 +17,7 @@ end
 
 dep 'postgres access' do
   requires 'postgres.managed', 'user exists'
-  met? { !sudo("echo '\\du' | #{which 'psql'}", :as => 'postgres').split("\n").grep(/^\W*\b#{var :username}\b/).empty? }
+  met? { !sudo("echo '\\du' | #{which 'psql'}", :as => 'postgres').split("\n").scan(/^\W*\b#{var :username}\b/).empty? }
   meet { sudo "createuser -SdR #{var :username}", :as => 'postgres' }
 end
 

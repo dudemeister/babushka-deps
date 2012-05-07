@@ -43,7 +43,7 @@ end
 
 dep 'mysql started' do
   met? {
-    !sudo("service mysql status").grep(/start\/running/).empty?
+    !sudo("service mysql status").scan(/start\/running/).empty?
   }
   meet {
     sudo("service mysql start")

@@ -1,3 +1,12 @@
+dep 'bundler_1_1_3' do
+  met? { 
+    which("bundle")
+  }
+  meet {
+    shell("gem install bundler -v 1.1.3")
+  }
+end
+
 dep 'bundler', :template => 'gem' do
   requires 'rdoc'
   installs 'bundler = 1.0.11'
@@ -25,7 +34,7 @@ dep 'app bundled' do
         shell 'bundle update', :log => true
       }
     end
-  } }
+  }
 end
 
 dep 'deployed app' do

@@ -1,6 +1,11 @@
-dep 'passenger', :template => 'gem' do
-  installs 'passenger = 2.2.15'
-  provides 'passenger-install-apache2-module'
+dep 'passenger' do
+  requires 'zlib headers.managed'
+  met? { 
+    which("passenger-install-apache2-module")
+  }
+  meet {
+    shell("gem install passenger")
+  }
 end
 
 dep 'apache2 passenger mods configured' do
@@ -20,7 +25,7 @@ dep 'apache2 passenger mods configured' do
   }
 
   meet {
-    sudo "passenger-install-apache2-module -a"
+    shell "rvmsudo passenger-install-apache2-module -a"
     render_erb 'passenger/passenger.load.erb', :to => '/etc/apache2/mods-available/passenger.load', :sudo => true
     render_erb 'passenger/passenger.conf.erb', :to => '/etc/apache2/mods-available/passenger.conf', :sudo => true
   }

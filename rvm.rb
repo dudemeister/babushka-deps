@@ -1,7 +1,61 @@
 meta :rvm do
   def rvm args
-    shell "~/.rvm/bin/rvm #{args}", :log => args['install']
+    login_shell "rvm #{args}", :log => args['install']
   end
+end
+
+dep '1.9.3-p125.rvm' do
+  requires '1.9.3 installed.rvm'
+  met? { 
+    login_shell('ruby --version') && login_shell('ruby --version')['ruby 1.9.3p125']
+  }
+  meet { sudo("/bin/bash", :input => 'rvm alias create default 1.9.3-p125', :su => true) }
+end
+
+dep 'zlib.rvm' do
+  requires 'rvm'
+  met? {
+    File.exists?("/usr/local/rvm/usr/lib/pkgconfig/zlib.pc")
+  }
+  meet {
+    sudo("/bin/bash", :input => 'rvm pkg install zlib', :su => true)
+  }
+end
+
+dep 'openssl.rvm' do
+  requires 'rvm'
+  met? {
+    File.exists?("/usr/local/rvm/usr/lib/pkgconfig/openssl.pc")
+  }
+  meet {
+    sudo("/bin/bash", :input => 'rvm pkg install openssl', :su => true)
+  }
+end
+
+dep '1.9.3 installed.rvm' do
+  requires 'rvm' , 'zlib.rvm', 'openssl.rvm' 
+  met? { 
+    rvm('list')['ruby-1.9.3-p125']
+  }
+  meet {
+    log('rvm install 1.9.3-p125'){
+      sudo("/bin/bash", :input => 'rvm install 1.9.3-p125', :su => true)
+    }
+  }
+  after{
+    sudo("apt-get -y purge ruby-enterprise* ruby1.8* ruby1.8-dev*") &&
+      sudo("rm -rf /usr/local/lib/ruby")
+  }
+end
+
+dep 'rvm' do
+  requires 'curl'
+  met? { login_shell('which rvm') }
+  meet {
+    sudo("/bin/bash", :input => `curl -L get.rvm.io`)
+    sudo 'usermod -a -G rvm protonet'
+    sudo 'usermod -a -G rvm root'
+  }
 end
 
 dep '1.9.2.rvm' do
@@ -16,16 +70,7 @@ dep '1.9.2 installed.rvm' do
   meet { log("rvm install 1.9.2") { rvm 'install 1.9.2'} }
 end
 
-dep 'rvm' do
-  met? { raw_which 'rvm', login_shell('which rvm') }
-  meet {
-    if confirm(:install_rvm_system_wide, :default => 'n')
-      log_shell "Installing rvm using rvm-install-system-wide", 'bash < <( curl -L http://bit.ly/rvm-install-system-wide )'
-    else
-      log_shell "Installing rvm using rvm-install-head", 'bash -c "`curl http://rvm.beginrescueend.com/releases/rvm-install-head`"'
-    end
-  }
-end
+
 
 meta :rvm_mirror do
   def urls
