@@ -33,7 +33,7 @@ dep 'openssl.rvm' do
 end
 
 dep '1.9.3 installed.rvm' do
-  requires 'rvm' , 'zlib.rvm', 'openssl.rvm' 
+  requires 'rvm'
   met? { 
     rvm('list')['ruby-1.9.3-p125']
   }
@@ -55,6 +55,10 @@ dep 'rvm' do
     sudo("/bin/bash", :input => `curl -L get.rvm.io`)
     sudo 'usermod -a -G rvm protonet'
     sudo 'usermod -a -G rvm root'
+  }
+  after {
+    # additional dependencies for Ruby (rvm requirements)
+    sudo "/usr/bin/apt-get -y install build-essential openssl libreadline6 libreadline6-dev curl git-core zlib1g zlib1g-dev libssl-dev libyaml-dev libsqlite3-dev sqlite3 libxml2-dev libxslt-dev autoconf libc6-dev ncurses-dev automake libtool bison subversion"
   }
 end
 
