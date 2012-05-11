@@ -13,7 +13,7 @@ dep 'apache2 passenger mods configured' do
   requires_when_unmet 'build tools', 'apache2 dev packages', 'libcurl4-openssl-dev.managed'
   setup {
     set :passenger_root, Babushka::GemHelper.gem_path_for('passenger')
-    set :ruby, login_shell('which ruby')
+    set :ruby, "/usr/local/rvm/wrappers/ruby-1.9.3-p125/ruby"
   }
 
   met? {
