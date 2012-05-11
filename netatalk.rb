@@ -58,7 +58,8 @@ dep "enable timemachine volumes" do
     grep(/^~ options:tm$/, "#{config_path}")
   }
   meet {
-    shell("sudo su -l root -c \"ruby -pi -e \"gsub(/^~$/, '~ options:tm')\" #{config_path}")
+    ruby = which("ruby")
+    sudo("#{ruby} -pi -e \"gsub(/^~$/, '~ options:tm')\" #{config_path}")
     sudo("/etc/init.d/netatalk restart")
   }
 end
