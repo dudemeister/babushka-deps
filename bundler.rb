@@ -1,9 +1,9 @@
-dep 'bundler_1_1_3' do
+dep 'bundler_pre' do
   met? { 
-    which("bundle")
+    shell('bundle -v')['Bundler version 1.2.0.pre']
   }
   meet {
-    shell("gem install bundler -v 1.1.3")
+    shell("gem install bundler --pre")
   }
 end
 
