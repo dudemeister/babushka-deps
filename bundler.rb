@@ -1,9 +1,9 @@
 dep 'bundler_pre' do
   met? { 
-    shell('bundle -v')['Bundler version 1.2.0.pre']
+    login_shell('bundle -v')['Bundler version 1.2.0.pre']
   }
   meet {
-    shell("gem install bundler --pre")
+    login_shell("gem install bundler --pre")
   }
 end
 
