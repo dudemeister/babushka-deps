@@ -1,6 +1,6 @@
 dep 'bundler_pre' do
   met? { 
-    login_shell('bundle') && 
+    login_shell('which bundle') && 
       login_shell('bundle -v')['Bundler version 1.2.0.pre']
   }
   meet {
