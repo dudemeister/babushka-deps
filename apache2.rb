@@ -138,6 +138,16 @@ dep 'include enabled.apache2' do
   requires 'module enabled.apache2'
 end
 
+dep 'dav enabled.apache2' do
+  setup { set :module_name, 'dav' }
+  requires 'module enabled.apache2'
+end
+
+dep 'dav_fs enabled.apache2' do
+  setup { set :module_name, 'dav_fs' }
+  requires 'module enabled.apache2'
+end
+
 dep 'vhost enabled.apache2' do
   requires 'apache2'
   met? { site_enabled? var(:domain) }
@@ -150,6 +160,28 @@ dep 'module enabled.apache2' do
   met? { mod_enabled? var(:module_name) }
   meet { enable_mod var(:module_name) }
   after { restart_gracefully }
+end
+
+dep 'libapache2-mod-authz-unixgroup.managed'
+
+dep "pwauth.managed"
+
+dep "pwauth unixgroup" do
+  met? { which("unixgroup") }
+  meet {
+    cd("/tmp") do
+      log_shell "cleaning   ", "rm -f pwauth-2.3.10.tar.gz; rm -rf pwauth-2.3.10"
+      log_shell "downloading", "wget -O pwauth-2.3.10.tar.gz 'http://pwauth.googlecode.com/files/pwauth-2.3.10.tar.gz'"
+      if File.exists?("pwauth-2.3.10.tar.gz")
+        log_shell "unpacking  ", "tar xzf pwauth-2.3.10.tar.gz"
+        log_shell "moving     ", "sudo mv pwauth-2.3.10/unixgroup /usr/local/bin/"
+      end
+    end
+  }
+end
+
+dep 'webdav authorization tools' do
+  requires "libapache2-mod-authz-unixgroup.managed", "pwauth.managed", "pwauth unixgroup"
 end
 
 dep 'apache2 runs on boot' do

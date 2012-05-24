@@ -1,4 +1,4 @@
-PassengerMinInstances 2
+PassengerMinInstances 4
 PassengerMaxPoolSize 10
 PassengerUseGlobalQueue on
 
@@ -45,7 +45,7 @@ PassengerUseGlobalQueue on
   ProxyPassReverse /monit/ http://127.0.0.1:2812/
 
   XSendFile on
-  XSendFilePath /home/protonet/dashboard/shared/user-files
+  XSendFilePath <%= var(:document_root) / 'shared/user-files' %>
 
   <IfModule mod_websocket_tcp_proxy.c>
     <Location /websocket>
@@ -56,6 +56,41 @@ PassengerUseGlobalQueue on
       SupportDraft75 On
     </Location>
   </IfModule>
+
+  AddExternalAuth pwauth /usr/sbin/pwauth
+  SetExternalAuthMethod pwauth pipe
+  AddExternalGroup unixgroup /usr/local/bin/unixgroup
+  SetExternalGroupMethod unixgroup environment
+
+  RewriteEngine On
+  RewriteCond %{LA-U:REMOTE_USER} ^[a-z].*
+  RewriteRule ^\/dav\/(.*)$ /home/%{LA-U:REMOTE_USER}/$1
+
+  <Directory /home>
+      PassengerEnabled off
+      Options Indexes MultiViews +FollowSymLinks
+      AllowOverride All
+      Order allow,deny
+      allow from all
+  </Directory>
+
+  <Directory "/home/protonet">
+    Options -Indexes +FollowSymLinks +MultiViews
+    AllowOverride all
+    Allow from all
+    PassengerEnabled on
+  </Directory>
+
+  <Location /dav/>
+      Dav on
+      Options +Indexes +FollowSymLinks
+      AuthType Basic
+      AuthBasicProvider external
+      AuthExternal pwauth
+      GroupExternal unixgroup
+      AuthName "protonet webDAV"
+      Require group protonet
+  </Location>
 
 </VirtualHost>
 
@@ -118,7 +153,7 @@ PassengerUseGlobalQueue on
   ProxyPassReverse /monit/ http://127.0.0.1:2812/
 
   XSendFile on
-  XSendFilePath /home/protonet/dashboard/shared/user-files
+  XSendFilePath <%= var(:document_root) / 'shared/user-files' %>
 
   <IfModule mod_websocket_tcp_proxy.c>
     <Location /websocket>
@@ -130,4 +165,38 @@ PassengerUseGlobalQueue on
     </Location>
   </IfModule>
 
+  AddExternalAuth pwauth /usr/sbin/pwauth
+  SetExternalAuthMethod pwauth pipe
+  AddExternalGroup unixgroup /usr/local/bin/unixgroup
+  SetExternalGroupMethod unixgroup environment
+
+  RewriteEngine On
+  RewriteCond %{LA-U:REMOTE_USER} ^[a-z].*
+  RewriteRule ^\/dav\/(.*)$ /home/%{LA-U:REMOTE_USER}/$1
+  
+  <Directory /home>
+      PassengerEnabled off
+      Options Indexes MultiViews +FollowSymLinks
+      AllowOverride All
+      Order allow,deny
+      allow from all
+  </Directory>
+
+  <Directory "/home/protonet">
+    Options -Indexes +FollowSymLinks +MultiViews
+    AllowOverride all
+    Allow from all
+    PassengerEnabled on
+  </Directory>
+
+  <Location /dav/>
+      Dav on
+      Options +Indexes +FollowSymLinks
+      AuthType Basic
+      AuthBasicProvider external
+      AuthExternal pwauth
+      GroupExternal unixgroup
+      AuthName "protonet webDAV"
+      Require group protonet
+  </Location>
 </VirtualHost>
