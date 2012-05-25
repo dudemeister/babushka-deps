@@ -162,7 +162,9 @@ dep 'module enabled.apache2' do
   after { restart_gracefully }
 end
 
-dep 'libapache2-mod-authz-unixgroup.managed'
+dep 'libapache2-mod-authz-unixgroup.managed' do
+  provides []
+end
 
 dep "pwauth.managed"
 
