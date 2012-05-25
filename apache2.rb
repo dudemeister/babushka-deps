@@ -148,6 +148,11 @@ dep 'dav_fs enabled.apache2' do
   requires 'module enabled.apache2'
 end
 
+dep 'authnz_external enabled.apache2' do
+  setup { set :module_name, 'authnz_external' }
+  requires 'module enabled.apache2'
+end
+
 dep 'vhost enabled.apache2' do
   requires 'apache2'
   met? { site_enabled? var(:domain) }
@@ -183,7 +188,7 @@ dep "pwauth unixgroup" do
 end
 
 dep 'webdav authorization tools' do
-  requires "libapache2-mod-authz-unixgroup.managed", "pwauth.managed", "pwauth unixgroup"
+  requires "libapache2-mod-authz-unixgroup.managed", "pwauth.managed", "pwauth unixgroup", "authnz_external enabled.apache2"
 end
 
 dep 'apache2 runs on boot' do
