@@ -1,4 +1,12 @@
-dep 'monit', :template => 'managed'
+dep 'monit' do
+  if Babushka::SystemProfile.for_host.name == :precise
+    requires 'monit.managed'
+  else
+    requires 'monit.src'
+  end
+end
+
+dep 'monit.managed'
 
 dep 'monit.src' do
   source 'https://github.com/downloads/protonet/custom_debs/monit_5.3.2-custom_v2_amd64.deb'
