@@ -4,7 +4,7 @@ dep 'passenger' do
     which("passenger-install-apache2-module")
   }
   meet {
-    shell("gem install passenger")
+    shell("gem install passenger -v 3.0.12")
   }
 end
 
@@ -12,7 +12,12 @@ dep 'apache2 passenger mods configured' do
   requires 'apache2'
   requires_when_unmet 'build tools', 'apache2 dev packages', 'libcurl4-openssl-dev.managed'
   setup {
-    set :passenger_root, Babushka::GemHelper.gem_path_for('passenger')
+    passenger_path = begin
+      Babushka::GemHelper.gem_path_for('passenger')
+    rescue 
+      login_shell("source /usr/local/rvm/scripts/rvm; echo $GEM_PATH").split(":").first + "/gems/passenger-3.0.12"
+    end
+    set :passenger_root, passenger_path
     set :ruby, "/usr/local/rvm/wrappers/ruby-1.9.3-p125/ruby"
   }
 
@@ -40,7 +45,7 @@ end
 
 dep 'passenger3', :template => 'gem' do
   requires "apache2 dev packages"
-  installs 'passenger = 3.0.5'
+  installs 'passenger = 3.0.12'
   provides 'passenger-install-apache2-module'
 end
 
