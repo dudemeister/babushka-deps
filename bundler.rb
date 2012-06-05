@@ -1,10 +1,10 @@
 dep 'bundler_pre' do
   met? { 
     login_shell('which bundle') && 
-      login_shell('bundle -v')['Bundler version 1.2.0.pre'] rescue false
+      login_shell('bundle -v')['Bundler version 1.2.0.pre.1'] rescue false
   }
   meet {
-    login_shell("gem install bundler --pre")
+    login_shell("gem install bundler -v 1.2.0.pre.1 --no-ri --no-rdoc")
   }
 end
 
