@@ -68,14 +68,14 @@ end
 dep 'fix babushka version' do
   
   def fixed_version
-    "8cf34b8651df18ac759c54958f1f0f17e4c07e1e"
+    "6273012f40a880fec223921a1ea0285bf9950335"
   end
   
   met? {
-    shell("cd #{Babushka::Path.path}; git show").split("\n").first.match(" (.*)$")[1] == fixed_version
+    sudo("cd #{Babushka::Path.path}; git show").split("\n").first.match(" (.*)$")[1] == fixed_version
   }
   meet {
-    shell("cd #{Babushka::Path.path}; git checkout master; git reset --hard; git pull origin master; git reset --hard #{fixed_version}")
+    sudo("cd #{Babushka::Path.path}; git checkout master; git reset --hard; git pull origin master; git reset --hard #{fixed_version}")
   }
 end
 
