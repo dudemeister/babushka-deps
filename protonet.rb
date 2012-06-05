@@ -72,10 +72,11 @@ dep 'fix babushka version' do
   end
   
   met? {
-    sudo("cd #{Babushka::Path.path}; git show").split("\n").first.match(" (.*)$")[1] == fixed_version
+    login_shell("export GIT_DIR=#{Babushka::Path.path}/.git; git show", :sudo => true).split("\n").first.match(" (.*)$")[1] == fixed_version
   }
   meet {
-    sudo("cd #{Babushka::Path.path}; git checkout master; git reset --hard; git pull origin master; git reset --hard #{fixed_version}")
+    login_shell("cd #{Babushka::Path.path}; git checkout master; git reset --hard; git pull origin master; git reset --hard #{fixed_version}", 
+      :sudo => true)
   }
 end
 
