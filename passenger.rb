@@ -14,7 +14,7 @@ dep 'apache2 passenger mods configured' do
   setup {
     passenger_path = begin
       Babushka::GemHelper.gem_path_for('passenger')
-    rescue 
+    rescue Errno::ENOENT
       login_shell("source /usr/local/rvm/scripts/rvm; echo $GEM_PATH").split(":").first + "/gems/passenger-3.0.12"
     end
     set :passenger_root, passenger_path
