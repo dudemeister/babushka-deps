@@ -10,7 +10,7 @@ dep 'enable xattr' do
   meet {
     needle = Regexp.escape("errors=remount-ro")
     replacement = "errors=remount-ro,user_xattr"
-    sudo("sed -i '' -e 's/#{needle}/#{replacement}/' '/etc/fstab'")
+    sudo("sed -i -e 's/#{needle}/#{replacement}/' '/etc/fstab'")
     sudo("mount -o remount,user_xattr /")
   }
 end
