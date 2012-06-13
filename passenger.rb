@@ -15,7 +15,7 @@ dep 'apache2 passenger mods configured' do
     passenger_path = begin
       Babushka::GemHelper.gem_path_for('passenger')
     rescue Errno::ENOENT
-      login_shell("source /usr/local/rvm/scripts/rvm; echo $GEM_PATH").split(":").first + "/gems/passenger-3.0.12"
+      "/usr/local/rvm/gems/ruby-1.9.3-p125/gems/passenger-3.0.12"
     end
     set :passenger_root, passenger_path
     set :ruby, "/usr/local/rvm/wrappers/ruby-1.9.3-p125/ruby"
