@@ -64,7 +64,7 @@ PassengerUseGlobalQueue on
 
   RewriteEngine On
   RewriteCond %{LA-U:REMOTE_USER} ^[a-z].*
-  RewriteRule ^\/dav\/(.*)$ /home/%{LA-U:REMOTE_USER}/$1
+  RewriteRule ^\/dav\/(.*)$ /home/protonet/dashboard/shared/files/system_users/%{LA-U:REMOTE_USER}/$1
 
   <Directory /home>
       PassengerEnabled off
@@ -172,7 +172,7 @@ PassengerUseGlobalQueue on
 
   RewriteEngine On
   RewriteCond %{LA-U:REMOTE_USER} ^[a-z].*
-  RewriteRule ^\/dav\/(.*)$ /home/%{LA-U:REMOTE_USER}/$1
+  RewriteRule ^\/dav\/(.*)$ /home/protonet/dashboard/shared/files/system_users/%{LA-U:REMOTE_USER}/$1
   
   <Directory /home>
       PassengerEnabled off
