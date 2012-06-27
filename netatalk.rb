@@ -59,7 +59,7 @@ dep "netatalk permissions" do
   end
   
   met? {
-    grep(/":DEFAULT: options:upriv,usedots dperm:0770 fperm:0660 umask:0007"/, "#{config_path}")
+    grep(/:DEFAULT: options:upriv,usedots dperm:0770 fperm:0660 umask:0007/, "#{config_path}")
   }
   meet{
     old_defaults = ":DEFAULT: options:upriv,usedots"
