@@ -189,6 +189,14 @@ end
 
 dep 'webdav authorization tools' do
   requires "libapache2-mod-authz-unixgroup.managed", "pwauth.managed", "pwauth unixgroup", "authnz_external enabled.apache2"
+
+  met? {
+    !sudo('cat /etc/apache2/envvars').split("\n").grep(/protonet-webdav-umask/).empty?
+  }
+  meet {
+    umask = "umask u=rwx,g=rwx,o="
+    append_to_file_with_section umask, "/etc/apache2/envvars", 'protonet-webdav-umask', {:sudo => true}
+  }
 end
 
 dep 'apache2 runs on boot' do
