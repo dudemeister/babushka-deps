@@ -194,7 +194,7 @@ dep 'webdav authorization tools' do
     !sudo('cat /etc/apache2/envvars').split("\n").grep(/protonet-webdav-umask/).empty?
   }
   meet {
-    umask = "umask u=rwx,g=rwx,o="
+    umask = "umask u=rwx,g=rwx,o=r"
     append_to_file_with_section umask, "/etc/apache2/envvars", 'protonet-webdav-umask', {:sudo => true}
   }
 end
