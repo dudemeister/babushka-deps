@@ -199,6 +199,33 @@ dep 'webdav authorization tools' do
   }
 end
 
+dep 'fix apache2 permissions with udev' do
+  met? {
+    grep "protonet-umask-fix", '/usr/sbin/apache2ctl'
+  }
+  meet {
+    config = <<-EOS
+# START protonet-umask-fix
+if [ "$ARGV" = "start" ] || [ "$ARGV" = "restart" ]; then
+  CHECK_COUNTER=0
+  echo "waiting for pid"
+  until [ -e "$APACHE_PID_FILE" ] || [ $CHECK_COUNTER -gt 3 ]; do
+    echo "."
+    sleep 1
+  done
+  if [ -e "$APACHE_PID_FILE" ]; then
+    echo "fixing pid file"
+    chmod 664 $APACHE_PID_FILE
+  fi
+fi
+# END protonet-umask-fix
+
+exit $ERROR
+EOS
+    change_line("exit $ERROR", config, "/usr/sbin/apache2ctl")
+  }
+end
+
 dep 'apache2 runs on boot' do
   requires 'apache2'
   requires 'rcconf'
