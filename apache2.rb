@@ -188,7 +188,7 @@ dep "pwauth unixgroup" do
 end
 
 dep 'webdav authorization tools' do
-  requires "libapache2-mod-authz-unixgroup.managed", "pwauth.managed", "pwauth unixgroup", "authnz_external enabled.apache2"
+  requires "libapache2-mod-authz-unixgroup.managed", "pwauth.managed", "pwauth unixgroup", "authnz_external enabled.apache2", "fix apache2 permissions with udev"
 
   met? {
     !sudo('cat /etc/apache2/envvars').split("\n").grep(/protonet-webdav-umask/).empty?
