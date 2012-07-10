@@ -63,7 +63,7 @@ dep "netatalk config" do
     section_exists?(config_path, 'protonet-pam')
   }
   meet {
-    append_to_file_with_section(config_path, "- -tcp -noddp -uamlist uams_dhx_pam.so,uams_dhx2_pam.so", 'protonet-pam', :sudo => true)
+    append_to_file_with_section("- -tcp -noddp -uamlist uams_dhx_pam.so,uams_dhx2_pam.so", config_path, 'protonet-pam', :sudo => true)
   }
   
 end
