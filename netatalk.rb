@@ -1,5 +1,5 @@
 dep "netatalk.complete" do
-  requires "mdns.complete", "libssl-dev.managed", "libacl1-dev.managed", "libwrap0-dev.managed", "libgcrypt11-dev.managed", "libdb4.8.managed", "libdb4.8-dev.managed", "libpam0g-dev.managed", "libpam-devperm.managed", "cups.src", "netatalk.source", "netatalk permissions", "enable timemachine volumes"
+  requires "mdns.complete", "libssl-dev.managed", "libacl1-dev.managed", "libwrap0-dev.managed", "libgcrypt11-dev.managed", "libdb4.8.managed", "libdb4.8-dev.managed", "libpam0g-dev.managed", "libpam-devperm.managed", "cups.src", "netatalk.source", "netatalk config", "netatalk permissions", "enable timemachine volumes"
 end
 
 dep "libssl-dev.managed" do
@@ -49,6 +49,21 @@ dep "netatalk.source" do
         log_shell "installing", "make install", {:spinner => true, :sudo => true}
       }
     }
+  }
+  
+end
+
+dep "netatalk config" do
+  
+  def config_path
+    "/usr/local/etc/netatalk/afpd.conf"
+  end
+  
+  met? {
+    section_exists?(config_path, 'protonet-pam')
+  }
+  meet {
+    append_to_file_with_section(config_path, "- -tcp -noddp -uamlist uams_dhx_pam.so,uams_dhx2_pam.so", 'protonet-pam', :sudo => true)
   }
   
 end
