@@ -211,6 +211,7 @@ if [ "$ARGV" = "start" ] || [ "$ARGV" = "restart" ]; then
   echo "waiting for pid"
   until [ -e "$APACHE_PID_FILE" ] || [ $CHECK_COUNTER -gt 3 ]; do
     echo "."
+    CHECK_COUNTER=$((CHECK_COUNTER+1))
     sleep 1
   done
   if [ -e "$APACHE_PID_FILE" ]; then
