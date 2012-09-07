@@ -47,7 +47,7 @@ PassengerUseGlobalQueue on
   ProxyPassReverse /monit/ http://127.0.0.1:2812/
 
   XSendFile on
-  XSendFilePath <%= var(:document_root) / 'shared/user-files' %>
+  XSendFilePath <%= var(:document_root) / 'shared/files' %>
 
   <IfModule mod_websocket_tcp_proxy.c>
     <Location /websocket>
@@ -136,7 +136,7 @@ PassengerUseGlobalQueue on
   ProxyPassReverse /monit/ http://127.0.0.1:2812/
 
   XSendFile on
-  XSendFilePath <%= var(:document_root) / 'shared/user-files' %>
+  XSendFilePath <%= var(:document_root) / 'shared/files' %>
 
   <IfModule mod_websocket_tcp_proxy.c>
     <Location /websocket>
