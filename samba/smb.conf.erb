@@ -7,8 +7,8 @@
   preferred master = yes
   dns proxy = yes
   # interfaces = eth0
-  # netbios name = <%= var :hostname, :default => hostname %>
-  # netbios aliases = <%= var :hostname %>
+  # netbios name = var :hostname, :default => hostname
+  # netbios aliases = var :hostname
   # name resolve order = lmhosts host wins bcast
   socket options = TCP_NODELAY
 
