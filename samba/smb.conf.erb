@@ -1,5 +1,5 @@
 [global]
-  workgroup = <%= var :workgroup %>
+  workgroup = WORKGROUP
   server string = %h/samba
   wins support = yes
   domain master = yes
@@ -23,8 +23,8 @@
   obey pam restrictions = yes
   guest account = nobody
   invalid users = root
-  create mask = 0644
-  directory mask = 0755
+  create mask = 0660
+  directory mask = 0770
   unix password sync = yes
   passwd program = /usr/bin/passwd %u
   passwd chat = *Enter\snew\sUNIX\spassword:* %n\n *Retype\snew\sUNIX\spassword:* %n\n .
@@ -41,11 +41,3 @@
   comment = Home Directories
   browseable = no
   writable = yes
-
-<% var(:share_names).words.each do |share_name| %>
-[<%= share_name %>]
-  path = <%= var "path_for_#{share_name}", :default => share_name.start_with('/'), :type => :path %>
-  browseable = yes
-  guest ok = <%= var "guest_ok_for_#{share_name}", :default => 'no' %>
-  writable = <%= var "should_#{share_name}_be_writeable", :default => 'yes' %>
-<% end %>
