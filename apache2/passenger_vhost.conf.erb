@@ -34,13 +34,15 @@ PassengerUseGlobalQueue on
     Order deny,allow
     Allow from all
   </ProxyMatch>
-
-  ProxyPass /node http://127.0.0.1:8124
+  
+  ProxyTimeout 600
+  
+  ProxyPass /node http://127.0.0.1:8124 retry=1 keepalive=on
   ProxyPassReverse /node http://127.0.0.1:8124
-  ProxyPass /dav http://127.0.0.1:8124/dav
+  ProxyPass /dav http://127.0.0.1:8124/dav retry=1 keepalive=on
   ProxyPassReverse /dav http://127.0.0.1:8124/dav
 
-  ProxyPass /xhr http://127.0.0.1:8000
+  ProxyPass /xhr http://127.0.0.1:8000 retry=1 keepalive=on
   ProxyPassReverse /xhr http://127.0.0.1:8000
 
   ProxyPass /monit/ http://127.0.0.1:2812/
@@ -124,12 +126,14 @@ PassengerUseGlobalQueue on
     Allow from all
   </ProxyMatch>
 
-  ProxyPass /node http://127.0.0.1:8124
+  ProxyTimeout 600
+  
+  ProxyPass /node http://127.0.0.1:8124 retry=1 keepalive=on
   ProxyPassReverse /node http://127.0.0.1:8124
-  ProxyPass /dav http://127.0.0.1:8124/dav
+  ProxyPass /dav http://127.0.0.1:8124/dav retry=1 keepalive=on
   ProxyPassReverse /dav http://127.0.0.1:8124/dav
 
-  ProxyPass /xhr http://127.0.0.1:8000
+  ProxyPass /xhr http://127.0.0.1:8000 retry=1 keepalive=on
   ProxyPassReverse /xhr http://127.0.0.1:8000
 
   ProxyPass /monit/ http://127.0.0.1:2812/
