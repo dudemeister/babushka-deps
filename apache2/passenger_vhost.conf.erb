@@ -19,6 +19,12 @@ PassengerUseGlobalQueue on
     Allow from all
   </Proxy>
 
+  <Proxy http://127.0.0.1:8080>
+    AddDefaultCharset off
+    Order deny,allow
+    Allow from all
+  </Proxy>
+
   <ProxyMatch http://127.0.0.1:8000>
     AddDefaultCharset off
     Order deny,allow
@@ -47,6 +53,9 @@ PassengerUseGlobalQueue on
 
   ProxyPass /monit/ http://127.0.0.1:2812/
   ProxyPassReverse /monit/ http://127.0.0.1:2812/
+
+  ProxyPass /mobile http://127.0.0.1:8080
+  ProxyPassReverse /mobile http://127.0.0.1:8080
 
   XSendFile on
   XSendFilePath <%= var(:document_root) / 'shared/files' %>
@@ -88,6 +97,15 @@ PassengerUseGlobalQueue on
   </Directory>
 </VirtualHost>
 
+Listen *:8080
+<VirtualHost *:8080>
+  DocumentRoot /home/protonet/dashboard/current/mobile/public
+  <Directory /home/protonet/dashboard/current/mobile/public>
+    AllowOverride all
+    Allow from all
+  </Directory>
+</VirtualHost>
+
 <VirtualHost *:443>
 
   ServerName <%= var(:server_name) %>
@@ -121,6 +139,12 @@ PassengerUseGlobalQueue on
     Allow from all
   </Proxy>
 
+  <Proxy http://127.0.0.1:8080>
+    AddDefaultCharset off
+    Order deny,allow
+    Allow from all
+  </Proxy>
+
   <ProxyMatch http://127.0.0.1:8000>
     AddDefaultCharset off
     Order deny,allow
@@ -149,6 +173,9 @@ PassengerUseGlobalQueue on
 
   ProxyPass /monit/ http://127.0.0.1:2812/
   ProxyPassReverse /monit/ http://127.0.0.1:2812/
+
+  ProxyPass /mobile http://127.0.0.1:8080
+  ProxyPassReverse /mobile http://127.0.0.1:8080
 
   XSendFile on
   XSendFilePath <%= var(:document_root) / 'shared/files' %>
