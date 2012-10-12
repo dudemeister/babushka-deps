@@ -51,6 +51,9 @@ PassengerUseGlobalQueue on
   XSendFile on
   XSendFilePath <%= var(:document_root) / 'shared/files' %>
 
+  RailsBaseURI /home/protonet/dashboard/current
+  RailsBaseURI /home/protonet/dashboard/current/mobile
+
   <IfModule mod_websocket_tcp_proxy.c>
     <Location /websocket>
       SetHandler websocket-handler
@@ -63,6 +66,14 @@ PassengerUseGlobalQueue on
 
   <Directory /home>
       PassengerEnabled off
+      Options Indexes MultiViews +FollowSymLinks
+      AllowOverride All
+      Order allow,deny
+      allow from all
+  </Directory>
+
+  <Directory /mobile>
+      PassengerEnabled on
       Options Indexes MultiViews +FollowSymLinks
       AllowOverride All
       Order allow,deny
@@ -142,6 +153,9 @@ PassengerUseGlobalQueue on
   XSendFile on
   XSendFilePath <%= var(:document_root) / 'shared/files' %>
 
+  RailsBaseURI /home/protonet/dashboard/current
+  RailsBaseURI /home/protonet/dashboard/current/mobile
+
   <IfModule mod_websocket_tcp_proxy.c>
     <Location /websocket>
       SetHandler websocket-handler
@@ -154,6 +168,14 @@ PassengerUseGlobalQueue on
 
   <Directory /home>
       PassengerEnabled off
+      Options Indexes MultiViews +FollowSymLinks
+      AllowOverride All
+      Order allow,deny
+      allow from all
+  </Directory>
+
+  <Directory /mobile>
+      PassengerEnabled on
       Options Indexes MultiViews +FollowSymLinks
       AllowOverride All
       Order allow,deny
