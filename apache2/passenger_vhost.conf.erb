@@ -63,10 +63,10 @@ PassengerUseGlobalQueue on
   RailsBaseURI /home/protonet/dashboard/current
   RailsBaseURI /home/protonet/dashboard/current/mobile
 
-  <IfModule mod_websocket_tcp_proxy.c>
+  <IfModule mod_websocket_vnc_proxy.c>
     <Location /websocket>
       SetHandler websocket-handler
-      WebSocketHandler  /usr/lib/apache2/modules/mod_websocket_tcp_proxy.so tcp_proxy_init
+      WebSocketHandler  /usr/lib/apache2/modules/mod_websocket_vnc_proxy.so vnc_proxy_init
       WebSocketTcpProxyHost localhost
       WebSocketTcpProxyPort 5000
       SupportDraft75 On
@@ -183,10 +183,10 @@ Listen *:8080
   RailsBaseURI /home/protonet/dashboard/current
   RailsBaseURI /home/protonet/dashboard/current/mobile
 
-  <IfModule mod_websocket_tcp_proxy.c>
+  <IfModule mod_websocket_vnc_proxy.c>
     <Location /websocket>
       SetHandler websocket-handler
-      WebSocketHandler  /usr/lib/apache2/modules/mod_websocket_tcp_proxy.so tcp_proxy_init
+      WebSocketHandler  /usr/lib/apache2/modules/mod_websocket_vnc_proxy.so vnc_proxy_init
       WebSocketTcpProxyHost localhost
       WebSocketTcpProxyPort 5000
       SupportDraft75 On

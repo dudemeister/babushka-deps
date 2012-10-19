@@ -271,7 +271,7 @@ end
 dep 'websocket_proxy.apache2' do
   requires 'apache2-prefork-dev.managed'
   met? {
-    ["websocket_tcp_proxy", "websocket", "websocket_draft76"].all? {|name| sudo("a2enmod #{name}") }
+    ["websocket_vnc_proxy", "websocket", "websocket_draft76"].all? {|name| sudo("a2enmod #{name}") }
   }
   meet {
     cd "/tmp" do
@@ -281,8 +281,8 @@ dep 'websocket_proxy.apache2' do
         ["mod_websocket_draft76.c", "mod_websocket.c"].each do |c_file|
           log_shell "installing ",  "sudo apxs2 -cia #{c_file}"
         end
-        cd "examples" do
-          log_shell "installing ", "sudo apxs2 -cia -I.. mod_websocket_tcp_proxy.c"
+        cd "vncproxy" do
+          log_shell "installing ", "sudo apxs2 -cia -I.. mod_websocket_vnc_proxy.c"
         end
       end
     end
