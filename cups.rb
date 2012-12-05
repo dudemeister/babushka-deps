@@ -1,5 +1,8 @@
 dep 'cups.complete' do
-  
+end
+
+dep 'cups.managed' do
+  provides []
 end
 
 dep 'cups.src' do
