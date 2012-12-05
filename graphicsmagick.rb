@@ -7,7 +7,7 @@ dep 'graphicsmagick-libmagick-dev-compat.managed' do
 end
 
 dep 'graphicsmagick.src' do
-  source 'http://sourceforge.net/projects/graphicsmagick/files/graphicsmagick/1.3.12/GraphicsMagick-1.3.12.tar.gz/download'
+  source 'http://sourceforge.net/projects/graphicsmagick/files/graphicsmagick/1.3.17/GraphicsMagick-1.3.17.tar.gz/download'
   provides 'gm'
 end
 

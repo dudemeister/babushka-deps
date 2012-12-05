@@ -4,7 +4,7 @@ dep 'passenger' do
     which("passenger-install-apache2-module")
   }
   meet {
-    shell("gem install passenger -v 3.0.12")
+    shell("gem install passenger -v 3.0.18")
   }
 end
 

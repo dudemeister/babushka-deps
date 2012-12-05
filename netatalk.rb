@@ -1,5 +1,5 @@
 dep "netatalk.complete" do
-  requires "mdns.complete", "libssl-dev.managed", "libacl1-dev.managed", "libwrap0-dev.managed", "libgcrypt11-dev.managed", "libdb4.8.managed", "libdb4.8-dev.managed", "libpam0g-dev.managed", "libpam-devperm.managed", "cups.src", "netatalk.source", "netatalk config", "netatalk permissions", "enable timemachine volumes"
+  "cups.managed", "netatalk.source", "netatalk config", "netatalk permissions", "enable timemachine volumes"
 end
 
 dep "libssl-dev.managed" do
@@ -40,10 +40,10 @@ dep "netatalk.source" do
   }
   meet {
     cd('/tmp') { |path|
-      log_shell "downloading netatalk", "curl -LO http://downloads.sourceforge.net/project/netatalk/netatalk/2.2.3/netatalk-2.2.3.tar.gz", {:spinner => true}
-      log_shell "expanding", "tar xzf netatalk-2.2.3.tar.gz", {:spinner => true}
+      log_shell "downloading netatalk", "curl -LO http://prdownloads.sourceforge.net/netatalk/netatalk-2.2.4.tar.bz2?download", {:spinner => true}
+      log_shell "expanding", "tar xzf netatalk-2.2.4.tar.bz2?download", {:spinner => true}
       # hostapd needs to build in the hostapd dir
-      cd("netatalk-2.2.3") {
+      cd("netatalk-2.2.4") {
         log_shell "configuring", "./configure --enable-debian --with-pam"
         log_shell "making", "make", {:spinner => true}
         log_shell "installing", "make install", {:spinner => true, :sudo => true}
