@@ -2,7 +2,7 @@ dep 'monit' do
   if Babushka::SystemProfile.for_host.name == :precise
     requires 'monit.managed'
   else
-    requires 'monit.src'
+    requires 'monit.src', 'autostart monit'
   end
 end
 
@@ -22,6 +22,7 @@ dep "autostart monit" do
   met? { !grep(/^[^#]*startup=0/, "/etc/default/monit") && File.exists?("/etc/init/monit.conf") }
   meet {
     change_line "startup=0", "startup=1", "/etc/default/monit"
+
     # remove existing monit startscripts
     sudo("update-rc.d -f monit remove")
     unless(File.exists?("/etc/init/monit.conf"))
