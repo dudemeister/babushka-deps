@@ -13,6 +13,6 @@ dep 'precise.update' do
     Babushka::SystemProfile.for_host.name == :precise
   }
   meet{
-    sudo("do-release-upgrade -d -f DistUpgradeViewNonInteractive > ~/.babushka/logs/ptn_ubuntu_update")
+    sudo("do-release-upgrade -d -f DistUpgradeViewNonInteractive > /home/protonet/.babushka/logs/ptn_ubuntu_update")
   }
 end
