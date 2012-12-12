@@ -55,7 +55,7 @@ dep 'passenger.deinstall' do
     !which("passenger-install-apache2-module")
   }
   meet {
-    shell("gem uninstall -ax passenger")
+    shell "sudo su -l protonet -c \"gem uninstall -ax passenger\""
   }
 
 end

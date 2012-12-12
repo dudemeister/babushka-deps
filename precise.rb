@@ -1,5 +1,6 @@
 dep 'precise' do
   requires  'precise.update', 
+            'protonet:add defaults tty_tickets to sudoers',
             'monit.link',
             'passenger.deinstall',
             'passenger',
@@ -12,6 +13,6 @@ dep 'precise.update' do
     Babushka::SystemProfile.for_host.name == :precise
   }
   meet{
-    sudo("do-release-upgrade -d -f DistUpgradeViewNonInteractive")
+    sudo("do-release-upgrade -d -f DistUpgradeViewNonInteractive > ~/.babushka/logs/ptn_ubuntu_update")
   }
 end

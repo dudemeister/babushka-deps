@@ -27,4 +27,6 @@ dep 'libpng12-dev.managed' do
   provides []
 end
 
-dep 'libjpeg62.managed'
+dep 'libjpeg62.managed' do
+  provides []
+end
