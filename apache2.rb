@@ -309,3 +309,37 @@ dep 'up_maxclient.apache2' do
     sudo("ruby -pi -e \"gsub(/MaxClients\s.*[0-9]*/, 'MaxClients 256')\" /etc/apache2/apache2.conf")
   }
 end
+
+dep 'prepare apache2 envvars for precise' do
+
+  met? {
+    !sudo('cat /etc/apache2/envvars').split("\n").grep(/protonet-envvars/).empty?
+  }
+  meet {
+    vars = <<-EOF
+# this won't be correct after changing uid
+unset HOME
+
+# for supporting multiple apache2 instances
+if [ "${APACHE_CONFDIR##/etc/apache2-}" != "${APACHE_CONFDIR}" ] ; then
+        SUFFIX="-${APACHE_CONFDIR##/etc/apache2-}"
+else
+        SUFFIX=
+fi
+
+# Since there is no sane way to get the parsed apache2 config in scripts, some
+# settings are defined via environment variables and then used in apache2ctl,
+# /etc/init.d/apache2, /etc/logrotate.d/apache2, etc.
+export APACHE_RUN_USER=www-data
+export APACHE_RUN_GROUP=www-data
+export APACHE_PID_FILE=/var/run/apache2$SUFFIX.pid
+export APACHE_RUN_DIR=/var/run/apache2$SUFFIX
+export APACHE_LOCK_DIR=/var/lock/apache2$SUFFIX
+# Only /var/log/apache2 is handled by /etc/logrotate.d/apache2.
+export APACHE_LOG_DIR=/var/log/apache2$SUFFIX
+
+EOF
+
+    append_to_file_with_section vars, "/etc/apache2/envvars", 'protonet-envvars', {:sudo => true}
+  }
+end

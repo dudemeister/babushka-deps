@@ -30,3 +30,8 @@ dep "autostart monit" do
     end
   } 
 end
+
+dep 'monit.link' do
+  met? { File.exists?("/usr/sbin/monit") }
+  meet { sudo("ln -s /usr/bin/monit /usr/sbin/monit") }
+end

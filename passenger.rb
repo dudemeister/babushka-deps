@@ -48,3 +48,14 @@ end
 dep 'libcurl4-openssl-dev.managed' do
   provides []
 end
+
+dep 'passenger.deinstall' do
+
+  met? { 
+    !which("passenger-install-apache2-module")
+  }
+  meet {
+    shell("gem uninstall -ax passenger")
+  }
+
+end
