@@ -13,10 +13,10 @@ dep 'precise.update' do
     Babushka::SystemProfile.for_host.name == :precise
   }
   meet{ 
-    sudo("rm -f /ptn_precise")
+    sudo("rm -f /ptn_precise-ne")
     sudo("screen -d -m -S precise && sleep 3", :su => true)
     sudo("screen -S precise -X stuff 'do-release-upgrade -d -f DistUpgradeViewNonInteractive && echo $? > /tmp/ptn_precise`echo -ne '\015'`'", :as => "root -l", :su => true)
-    while !File.exist?("/tmp/ptn_precise")
+    while !File.exist?("/tmp/ptn_precise-ne")
       sleep 10
     end
   }
