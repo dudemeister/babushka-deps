@@ -1,5 +1,5 @@
 dep 'git-aliases' do
-  requires 'git'
+  requires 'git', 'git-user-config'
   met? { 
     met_result = false
     tmp_path = "/tmp/git-aliases-test"
@@ -17,6 +17,19 @@ dep 'git-aliases' do
     log_shell "Adding git alias co for checkout", "git config --global alias.co checkout"
     log_shell "Adding git alias br for branch",   "git config --global alias.br branch"
     log_shell "Adding git alias st for status",   "git config --global alias.st status"
+  }
+end
+
+dep 'git-user-config' do
+  requires 'git'
+  met? { 
+    ["git config --get user.email", "git config --get user.name"].all? do |cmd|
+      raw_shell(cmd).ok?
+    end
+  }
+  meet {
+    log_shell "Adding git config user.email",   "git config --global user.email protonet@localhost"
+    log_shell "Adding git config user.name", 'git config --global user.name "protonet"'
   }
 end
 
