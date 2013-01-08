@@ -1,6 +1,6 @@
 dep 'monit' do
   if Babushka::SystemProfile.for_host.name == :precise
-    requires 'monit.managed'
+    requires 'monit.managed', 'monit.link'
   else
     requires 'monit.src', 'autostart monit'
   end
