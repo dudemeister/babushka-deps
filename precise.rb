@@ -13,11 +13,13 @@ dep 'precise.update' do
     Babushka::SystemProfile.for_host.name == :precise
   }
   meet{ 
-    sudo("rm -f /ptn_precise-ne")
-    sudo("screen -d -m -S precise && sleep 3", :su => true)
-    sudo("screen -S precise -X stuff 'do-release-upgrade -d -f DistUpgradeViewNonInteractive && echo $? > /tmp/ptn_precise`echo -ne '\015'`'", :as => "root -l", :su => true)
-    while !File.exist?("/tmp/ptn_precise-ne")
+    sudo("rm -f /ptn_precise")
+    sudo("screen -d -m -S precise", :su => true)
+    sudo("screen -S precise -p 0 -X stuff 'do-release-upgrade -m server -f DistUpgradeViewNonInteractive && echo $? > /tmp/ptn_precise'", :as => "root", :su => true)
+    sudo("screen -S precise -p 0 -X stuff '`echo -ne '\015'`'", :as => "root", :su => true)
+    while !File.exist?("/tmp/ptn_precise")
       sleep 10
     end
   }
 end
+
