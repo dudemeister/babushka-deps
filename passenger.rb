@@ -4,7 +4,7 @@ dep 'passenger' do
     which("passenger-install-apache2-module")
   }
   meet {
-    shell("gem install passenger -v 3.0.18")
+    sudo("gem install passenger -v 3.0.18 --no-ri --no-rdoc", :su => true, :as => "root")
   }
 end
 
