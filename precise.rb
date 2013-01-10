@@ -5,6 +5,7 @@ dep 'precise' do
             'passenger.deinstall',
             'passenger',
             'prepare apache2 envvars for precise',
+            'apache2 passenger mods configured',
             'libjpeg62.managed'
 end
 
