@@ -61,6 +61,7 @@ dep "netatalk.source" do
 end
 
 dep "netatalk.source uninstall" do
+  requires "libdb4.8.managed", "libdb4.8-dev.managed"
   met? {
     !which('netatalk-config')
   }
