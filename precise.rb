@@ -4,8 +4,6 @@ dep 'precise' do
             'monit.link',
             'passenger.deinstall',
             'passenger',
-            'netatalk.source uninstall',
-            'netatalk.managed',
             'prepare apache2 envvars for precise',
             'apache2 passenger mods configured',
             'libjpeg62.managed'

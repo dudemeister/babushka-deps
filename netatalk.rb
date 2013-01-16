@@ -1,13 +1,7 @@
 dep "netatalk.complete" do
-  netatalk = if Babushka::SystemProfile.for_host.name == :precise
-    "netatalk.managed"
-  else
-    "netatalk.source"
-  end
-  
   requires  "cups.managed", "libpam0g-dev.managed", 
-            "libdb4.8.managed", "libdb4.8-dev.managed",
-            netatalk, "netatalk config", "netatalk permissions", "enable timemachine volumes"
+            "libdb4.8.managed", "libdb4.8-dev.managed", 
+            "netatalk.source", "netatalk config", "netatalk permissions", "enable timemachine volumes"
 end
 
 dep "libssl-dev.managed" do
@@ -58,26 +52,8 @@ dep "netatalk.source" do
       }
     }
   }
+  
 end
-
-dep "netatalk.source uninstall" do
-  met? {
-    !which('netatalk-config')
-  }
-  meet {
-    cd('/tmp') { |path|
-      log_shell "downloading netatalk", "curl -LO http://prdownloads.sourceforge.net/netatalk/netatalk-2.2.4.tar.gz", {:spinner => true}
-      log_shell "expanding", "tar xzf netatalk-2.2.4.tar.gz", {:spinner => true}
-      # hostapd needs to build in the hostapd dir
-      cd("netatalk-2.2.4") {
-        log_shell "configuring", "./configure --enable-debian --with-pam"
-        log_shell "uninstalling", "make uninstall", {:spinner => true, :sudo => true}
-      }
-    }
-  }
-end
-
-dep "netatalk.managed"
 
 dep "netatalk config" do
   
