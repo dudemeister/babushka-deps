@@ -1,3 +1,4 @@
+# encoding: UTF-8
 dep 'passenger' do
   requires 'zlib headers.managed'
   met? { 
