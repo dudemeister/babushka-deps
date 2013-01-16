@@ -17,7 +17,7 @@ dep 'precise.update' do
     sudo("rm -f /tmp/ptn_precise")
     sudo("screen -d -m -S precise", :su => true)
     sudo("screen -S precise -p 0 -X stuff 'do-release-upgrade -m server -f DistUpgradeViewNonInteractive && echo $? > /tmp/ptn_precise'", :as => "root", :su => true)
-    sudo("screen -S precise -p 0 -X stuff 'echo \015'", :as => "root", :su => true)
+    sudo("screen -S precise -p 0 -X stuff '\015'", :as => "root", :su => true)
     while !File.exist?("/tmp/ptn_precise")
       sleep 10
     end
