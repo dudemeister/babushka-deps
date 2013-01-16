@@ -28,7 +28,7 @@ dep 'apache2 passenger mods configured' do
   }
 
   meet {
-    shell "sudo su -l root -c \"passenger-install-apache2-module -a\""
+    sudo("passenger-install-apache2-module -a", :as => 'root', :su => true)
     render_erb 'passenger/passenger.load.erb', :to => '/etc/apache2/mods-available/passenger.load', :sudo => true
     render_erb 'passenger/passenger.conf.erb', :to => '/etc/apache2/mods-available/passenger.conf', :sudo => true
   }
@@ -56,7 +56,7 @@ dep 'passenger.deinstall' do
     !which("passenger-install-apache2-module")
   }
   meet {
-    shell "sudo su -l protonet -c \"gem uninstall -ax passenger\""
+    sudo("gem uninstall -ax passenger", :as => 'protonet', :su => true)
   }
 
 end
