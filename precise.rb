@@ -6,7 +6,8 @@ dep 'precise' do
             'passenger',
             'prepare apache2 envvars for precise',
             'apache2 passenger mods configured',
-            'libjpeg62.managed'
+            'libjpeg62.managed',
+            'fix apache2 permissions with udev'
 end
 
 dep 'precise.update' do
