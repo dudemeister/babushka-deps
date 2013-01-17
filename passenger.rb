@@ -14,6 +14,7 @@ dep 'apache2 passenger mods configured' do
   requires_when_unmet 'build tools', 'apache2 dev packages', 'libcurl4-openssl-dev.managed'
   setup {
     passenger_path = Babushka::GemHelper.gem_path_for('passenger') || "/usr/local/rvm/gems/ruby-1.9.3-p125/gems/passenger-3.0.12"
+    sudo("echo '#{passenger_path}' > /tmp/ptn_passenger_path.txt", :as => 'root', :su => true)
     set :passenger_root, passenger_path
     set :ruby, "/usr/local/rvm/wrappers/ruby-1.9.3-p125/ruby"
   }
@@ -28,7 +29,7 @@ dep 'apache2 passenger mods configured' do
   }
 
   meet {
-    sudo("passenger-install-apache2-module -a 2&>1 /dev/null", :as => 'root', :su => true)
+    sudo("passenger-install-apache2-module -a 2&>1 /tmp/ptn_passenger_install.txt", :as => 'root', :su => true)
     render_erb 'passenger/passenger.load.erb', :to => '/etc/apache2/mods-available/passenger.load', :sudo => true
     render_erb 'passenger/passenger.conf.erb', :to => '/etc/apache2/mods-available/passenger.conf', :sudo => true
   }
