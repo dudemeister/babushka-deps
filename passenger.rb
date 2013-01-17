@@ -28,7 +28,7 @@ dep 'apache2 passenger mods configured' do
   }
 
   meet {
-    sudo("passenger-install-apache2-module -a", :as => 'root', :su => true)
+    sudo("passenger-install-apache2-module -a 2&>1 /dev/null", :as => 'root', :su => true)
     render_erb 'passenger/passenger.load.erb', :to => '/etc/apache2/mods-available/passenger.load', :sudo => true
     render_erb 'passenger/passenger.conf.erb', :to => '/etc/apache2/mods-available/passenger.conf', :sudo => true
   }
