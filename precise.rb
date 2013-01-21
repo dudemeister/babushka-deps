@@ -7,7 +7,8 @@ dep 'precise' do
             'prepare apache2 envvars for precise',
             'apache2 passenger mods configured',
             'libjpeg62.managed',
-            'fix apache2 permissions with udev'
+            'fix apache2 permissions with udev',
+            'up_maxclient.apache2'
 end
 
 dep 'precise.update' do
