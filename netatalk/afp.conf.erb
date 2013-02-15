@@ -1,0 +1,25 @@
+;
+; Netatalk 3.x configuration file
+;
+
+[Global]
+; Global server settings
+vol preset = default_for_all_vol
+log file = /var/log/netatalk.log
+uam list = uams_dhx.so,uams_dhx2.so
+save password = no
+
+[default_for_all_vol]
+file perm = 0660
+directory perm = 0770
+cnid scheme = dbd
+;valid users = @protonet
+
+[Homes]
+basedir regex = /home
+follow symlinks = yes
+
+;[TimeMachine]
+;path = /afp/tm_backup
+;time machine = yes
+;vol size limit = 350000

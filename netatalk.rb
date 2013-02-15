@@ -1,7 +1,7 @@
 dep "netatalk.complete" do
   requires  "cups.managed", "libpam0g-dev.managed", 
             "libdb4.8.managed", "libdb4.8-dev.managed", 
-            "netatalk.source", "netatalk config", "netatalk permissions", "enable timemachine volumes"
+            "netatalk.source", "netatalk config", "libavahi-client-dev.managed"
 end
 
 dep "libssl-dev.managed" do
@@ -36,72 +36,35 @@ dep "libpam-devperm.managed" do
   provides []
 end
 
+dep "libavahi-client-dev.managed" do
+  provides []
+end
+
 dep "netatalk.source" do
   met? {
-    which('netatalk-config')
+    which('netatalk-config') && shell("netatalk-config --version") == "3.0.2"
   }
   meet {
     cd('/tmp') { |path|
-      log_shell "downloading netatalk", "curl -LO http://prdownloads.sourceforge.net/netatalk/netatalk-2.2.4.tar.gz", {:spinner => true}
-      log_shell "expanding", "tar xzf netatalk-2.2.4.tar.gz", {:spinner => true}
-      # hostapd needs to build in the hostapd dir
-      cd("netatalk-2.2.4") {
-        log_shell "configuring", "./configure --enable-debian --with-pam"
+      log_shell "downloading netatalk", "curl -LO http://downloads.sourceforge.net/project/netatalk/netatalk/3.0.2/netatalk-3.0.2.tar.gz", {:spinner => true}
+      log_shell "expanding", "tar xzf netatalk-3.0.2.tar.gz", {:spinner => true}
+      cd("netatalk-3.0.2") {
+        log_shell "configuring", "./configure --enable-debian --with-pam --with-init-style=debian"
         log_shell "making", "make", {:spinner => true}
         log_shell "installing", "make install", {:spinner => true, :sudo => true}
       }
     }
   }
-  
 end
 
 dep "netatalk config" do
-  
-  def config_path
-    "/usr/local/etc/netatalk/afpd.conf"
-  end
-  
-  met? {
-    section_exists?(config_path, 'protonet-pam')
+  met? { 
+    babushka_config? ""
   }
-  meet {
-    append_to_file_with_section("- -tcp -noddp -uamlist uams_dhx_pam.so,uams_dhx2_pam.so", config_path, 'protonet-pam', :sudo => true)
+  meet { 
+    render_erb "netatalk/netatalk.conf.erb", :to => "/usr/local/etc/afp.conf", :sudo => true
   }
-  
-end
-
-dep "netatalk permissions" do
-  def config_path
-    "/usr/local/etc/netatalk/AppleVolumes.default"
-  end
-  
-  met? {
-    grep(/:DEFAULT: options:upriv,usedots dperm:0770 fperm:0660 umask:0007/, "#{config_path}")
-  }
-  meet{
-    old_defaults = ":DEFAULT: options:upriv,usedots"
-    new_defaults = ":DEFAULT: options:upriv,usedots dperm:0770 fperm:0660 umask:0007"
-    ruby = which("ruby")
-    sudo("#{ruby} -pi -e \"gsub(/^#{old_defaults}$/, '#{new_defaults}')\" #{config_path}")    
+  after {
+    sudo "/etc/init.d/netatalk restart"
   }
 end
-
-dep "enable timemachine volumes" do
-  
-  def config_path
-    "/usr/local/etc/netatalk/AppleVolumes.default"
-  end
-  
-  met? {
-    grep(/^~ options:tm$/, "#{config_path}")
-  }
-  meet {
-    ruby = which("ruby")
-    sudo("#{ruby} -pi -e \"gsub(/^~$/, '~ options:tm')\" #{config_path}")
-    sudo("/etc/init.d/netatalk restart")
-  }
-end
-
-# sudo /etc/init.d/netatalk restart
-
-# add to monitoring
