@@ -59,7 +59,7 @@ end
 
 dep "netatalk config" do
   met? { 
-    babushka_config? ""
+    babushka_config? "/usr/local/etc/afp.conf"
   }
   meet { 
     render_erb "netatalk/netatalk.conf.erb", :to => "/usr/local/etc/afp.conf", :sudo => true
