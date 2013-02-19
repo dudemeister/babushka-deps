@@ -62,7 +62,7 @@ dep "netatalk config" do
     babushka_config? "/usr/local/etc/afp.conf"
   }
   meet { 
-    render_erb "netatalk/netatalk.conf.erb", :to => "/usr/local/etc/afp.conf", :sudo => true
+    render_erb "netatalk/afp.conf.erb", :to => "/usr/local/etc/afp.conf", :sudo => true
   }
   after {
     sudo "/etc/init.d/netatalk restart"
