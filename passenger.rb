@@ -14,13 +14,13 @@ dep 'apache2 passenger mods configured' do
   requires_when_unmet 'build tools', 'apache2 dev packages', 'libcurl4-openssl-dev.managed'
   setup {
     default_passenger_path = if Babushka::SystemProfile.for_host.name == :precise
-      "/usr/local/rvm/gems/ruby-1.9.3-p125/gems/passenger-3.0.18"
+      "/usr/local/rvm/gems/ruby-1.9.3-p374/gems/passenger-3.0.18"
     else
-      "/usr/local/rvm/gems/ruby-1.9.3-p125/gems/passenger-3.0.12"
+      "/usr/local/rvm/gems/ruby-1.9.3-p374/gems/passenger-3.0.12"
     end
     passenger_path = Babushka::GemHelper.gem_path_for('passenger') || default_passenger_path
     set :passenger_root, passenger_path
-    set :ruby, "/usr/local/rvm/wrappers/ruby-1.9.3-p125/ruby"
+    set :ruby, "/usr/local/rvm/wrappers/ruby-1.9.3-p374/ruby"
   }
 
   met? {
