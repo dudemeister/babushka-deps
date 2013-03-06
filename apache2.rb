@@ -234,6 +234,18 @@ dep 'apache2 runs on boot' do
   meet { sudo "update-rc.d apache2 defaults" }
 end
 
+dep "remove apache2 from autostart" do
+  requires 'apache2'
+  requires 'rcconf'
+  met? { shell("rcconf --list").val_for('apache2') == 'off' }
+  meet { sudo "update-rc.d apache2 remove" }
+end
+
+dep "apache2 stop" do
+  met? { apache2_running? }
+  meet { apachectl "stop" }
+end
+
 dep 'passenger vhost configured.apache2' do
   requires 'apache2 passenger mods configured'
 
