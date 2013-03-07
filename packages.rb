@@ -78,6 +78,8 @@ dep 'pcre.managed' do
   }
   provides 'pcretest'
 end
+
+dep "dialog.managed"
 dep 'rcconf.managed' do
   requires 'dialog.managed'
   installs { via :apt, 'rcconf' }
