@@ -236,7 +236,7 @@ end
 
 dep "remove apache2 from autostart" do
   requires 'apache2'
-  requires 'rcconf'
+  requires 'rcconf.managed'
   met? { shell("rcconf --list").val_for('apache2') == 'off' }
   meet { sudo "update-rc.d apache2 remove" }
 end
