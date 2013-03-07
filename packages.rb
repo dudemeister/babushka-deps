@@ -79,6 +79,7 @@ dep 'pcre.managed' do
   provides 'pcretest'
 end
 dep 'rcconf.managed' do
+  requires 'dialog.managed'
   installs { via :apt, 'rcconf' }
 end
 dep 'screen.managed'
