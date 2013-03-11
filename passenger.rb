@@ -1,7 +1,7 @@
 # encoding: UTF-8
 dep 'passenger' do
   requires 'zlib headers.managed'
-  met? { 
+  met? {
     which("passenger-install-apache2-module")
   }
   meet {
@@ -20,11 +20,11 @@ dep 'apache2 passenger mods configured' do
     end
     passenger_path = Babushka::GemHelper.gem_path_for('passenger') || default_passenger_path
     set :passenger_root, passenger_path
-    set :ruby, "/usr/local/rvm/wrappers/ruby-1.9.3-p374/ruby"
+    set :ruby, "/usr/local/rvm/wrappers/default/ruby"
   }
 
   met? {
-    "#{var :passenger_root}/ext/apache2/mod_passenger.so".p.exists? && [ 
+    "#{var :passenger_root}/ext/apache2/mod_passenger.so".p.exists? && [
       "mods-available/passenger.conf",
       "mods-available/passenger.load"
     ].all? { |file|
@@ -57,7 +57,7 @@ end
 
 dep 'passenger.deinstall' do
 
-  met? { 
+  met? {
     !which("passenger-install-apache2-module")
   }
   meet {

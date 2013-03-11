@@ -4,12 +4,12 @@ meta :rvm do
   end
 end
 
-dep '1.9.3-p125.rvm' do
+dep '1.9.3-p392.rvm' do
   requires '1.9.3 installed.rvm'
-  met? { 
-    login_shell('ruby --version') && login_shell('ruby --version')['ruby 1.9.3p125']
+  met? {
+    login_shell('ruby --version') && login_shell('ruby --version')['ruby 1.9.3p392']
   }
-  meet { sudo("/bin/bash", :input => 'rvm alias create default 1.9.3-p125', :su => true) }
+  meet { sudo("/bin/bash", :input => 'rvm alias create default 1.9.3-p392', :su => true) }
 end
 
 dep '1.9.3-p374.rvm' do
@@ -43,12 +43,12 @@ end
 
 dep '1.9.3 installed.rvm' do
   requires 'rvm'
-  met? { 
-    rvm('list')['ruby-1.9.3-p374']
+  met? {
+    rvm('list')['ruby-1.9.3-p392']
   }
   meet {
-    log('rvm install 1.9.3-p374'){
-      sudo("/bin/bash", :input => 'rvm install 1.9.3-p374', :su => true)
+    log('rvm install 1.9.3-p392'){
+      sudo("/bin/bash", :input => 'rvm install 1.9.3-p392', :su => true)
     }
   }
   after{
