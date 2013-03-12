@@ -24,7 +24,9 @@
   guest account = nobody
   invalid users = root
   create mask = 0660
+  force create mode = 0660
   directory mask = 0770
+  force directory mode = 0770
   unix password sync = yes
   passwd program = /usr/bin/passwd %u
   passwd chat = *Enter\snew\sUNIX\spassword:* %n\n *Retype\snew\sUNIX\spassword:* %n\n .
