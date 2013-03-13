@@ -1,6 +1,6 @@
 dep "netatalk.complete" do
   requires  "cups.managed", "libpam0g-dev.managed", 
-            "libdb4.8.managed", "libdb4.8-dev.managed", 
+            "libdb5.1.managed", "libdb5.1-dev.managed", 
             "netatalk.source", "netatalk config", "libavahi-client-dev.managed"
 end
 
@@ -20,11 +20,11 @@ dep "libgcrypt11-dev.managed" do
   provides []
 end
 
-dep "libdb4.8.managed" do
+dep "libdb5.1.managed" do
   provides []
 end
 
-dep "libdb4.8-dev.managed" do
+dep "libdb5.1-dev.managed" do
   provides []
 end
 
