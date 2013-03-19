@@ -4,8 +4,8 @@ dep 'node.src' do
 end
 
 dep 'npm update' do
-  met? { eval(shell('npm version'))[:npm].to_i > 1.1 }
-  meet { shell('npm update npm -g')                  }
+  met? { shell('npm --version').to_i > 1.1 }
+  meet { shell('npm update npm -g')        }
 end
 
 dep 'node066.src' do
