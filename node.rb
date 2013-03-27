@@ -19,6 +19,7 @@ dep 'nvm' do
 end
 
 dep 'nvm node0101' do
+  requires 'nvm'
   met? {
     `node -v`.strip == 'v0.10.1'
   }
