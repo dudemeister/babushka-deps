@@ -1,0 +1,40 @@
+PassengerMinInstances 4
+PassengerMaxPoolSize 10
+PassengerUseGlobalQueue on
+
+<VirtualHost *:80>
+
+  ServerName <%= var(:server_name) %>
+  DocumentRoot <%= var(:document_root) / 'current/public' %>
+
+  ErrorLog <%= var(:document_root) / 'shared/log/error.log' %>
+  CustomLog <%= var(:document_root) / 'shared/log/access.log' %> common
+
+  XSendFile on
+  XSendFilePath <%= var(:document_root) / 'shared/files' %>
+
+  RailsBaseURI <%= var(:document_root) / 'current' %>
+
+  ProxyRequests On
+  AllowCONNECT  22
+  ProxyTimeout 600
+
+  <Proxy http://127.0.0.1:8000>
+    AddDefaultCharset off
+    Order deny,allow
+    Allow from all
+  </Proxy>
+
+  <Proxy http://127.0.0.1:8124>
+    AddDefaultCharset off
+    Order deny,allow
+    Allow from all
+  </Proxy>
+
+  ProxyPass /node http://127.0.0.1:8000 retry=1 keepalive=on
+  ProxyPassReverse /node http://127.0.0.1:8000
+
+  ProxyPass /image_proxy http://127.0.0.1:8124 retry=1 keepalive=on
+  ProxyPassReverse /image_proxy http://127.0.0.1:8124
+
+</VirtualHost>

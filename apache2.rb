@@ -355,3 +355,19 @@ EOF
     append_to_file_with_section vars, "/etc/apache2/envvars", 'protonet-envvars', {:sudo => true}
   }
 end
+
+dep "passenger configuration for german-shepherd" do
+  requires 'apache2 passenger mods configured'
+
+  met? {
+    site_available?(var(:domain)) && babushka_config?(vhost_config_path(var(:domain)))
+  }
+  meet {
+    if(var(:domain) == "admin")
+      render_erb 'apache2/passenger_vhost_admin.conf.erb', :to => vhost_config_path(var(:domain)), :sudo => true
+    else
+      render_erb 'apache2/passenger_vhost_german_shepherd.conf.erb', :to => vhost_config_path(var(:domain)), :sudo => true
+    end
+  }
+end
+
