@@ -356,7 +356,7 @@ EOF
   }
 end
 
-dep "passenger configuration for german-shepherd" do
+dep "passenger configuration for german-shepherd.apache2" do
   requires 'apache2', 'apache2 passenger mods configured'
 
   met? {
