@@ -357,7 +357,7 @@ EOF
 end
 
 dep "passenger configuration for german-shepherd" do
-  requires 'apache2 passenger mods configured'
+  requires 'apache2', 'apache2 passenger mods configured'
 
   met? {
     site_available?(var(:domain)) && babushka_config?(vhost_config_path(var(:domain)))
