@@ -1,4 +1,5 @@
 dep 'rabbitmq-server', :template => 'managed'
+dep 'rabbitmq.managed'
 
 dep 'erlang-nox.managed' do
   provides []
