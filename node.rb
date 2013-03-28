@@ -20,9 +20,9 @@ end
 dep 'nvm node0101' do
   requires 'nvm'
   met? {
-    `node -v`.strip == 'v0.10.1'
+    login_shell("node -v | grep v0.10.1", as: "protonet") == 'v0.10.1'
   }
   meet {
-    sudo "source /home/protonet/.nvm/nvm.sh; nvm install 0.10.1", as: 'protonet'
+    sudo "nvm install 0.10.1; nvm alias default 0.10.1", as: 'protonet'
   }
 end
