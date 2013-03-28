@@ -20,9 +20,9 @@ end
 dep 'nvm node0101' do
   requires 'nvm'
   met? {
-    login_shell("node -v | grep v0.10.1", as: "protonet") == 'v0.10.1'
+    login_shell(". /home/protonet/.nvm/nvm.sh; node -v | grep v0.10.1", as: "protonet") == 'v0.10.1'
   }
   meet {
-    log_shell("installing node 0.10.1", 'su - protonet bash -l -c "nvm install 0.10.1 && nvm alias default 0.10.1"')
+    login_shell('. /home/protonet/.nvm/nvm.sh; nvm install 0.10.1; nvm alias default 0.10.1', as: "protonet")
   }
 end
