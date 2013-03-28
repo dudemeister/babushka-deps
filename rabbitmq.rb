@@ -33,7 +33,8 @@ dep 'add rabbitmqadmin' do
     which("rabbitmqadmin")
   }
   meet {
-    sudo("wget -O /usr/sbin/rabbitmqadmin -L http://localhost:15672/cli/rabbitmqadmin && chmod +x /usr/sbin/rabbitmqadmin")
+    sudo("wget -O /usr/sbin/rabbitmqadmin -L http://localhost:15672/cli/rabbitmqadmin")
+    sudo("chmod +x /usr/sbin/rabbitmqadmin")
   }
 end
 
