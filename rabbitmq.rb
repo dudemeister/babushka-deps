@@ -44,6 +44,7 @@ dep 'enable rabbitmq management plugin' do
   }
   meet {
     sudo("rabbitmq-plugins enable rabbitmq_management")
+    sudo("service rabbitmq-server restart")
   }
 end
 
