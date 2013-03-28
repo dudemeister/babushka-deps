@@ -24,7 +24,6 @@ dep 'rabbitmq-server-304.src' do
   source "http://www.rabbitmq.com/releases/rabbitmq-server/v3.0.4/rabbitmq-server_3.0.4-1_all.deb"
   process_source {
     sudo("dpkg -i rabbitmq-server_3.0.4-1_all.deb")
-    sudo("service rabbitmq-server stop")
   }
   provides ["rabbitmq-server"]
 end
@@ -34,7 +33,16 @@ dep 'add rabbitmqadmin' do
     which("rabbitmqadmin")
   }
   meet {
-    sudo("wget -L http://localhost:15672/cli/ > /usr/sbin/rabbitmqadmin && chmod +x /usr/sbin/rabbitmqadmin")
+    sudo("wget -O /usr/sbin/rabbitmqadmin -L http://localhost:15672/cli/rabbitmqadmin && chmod +x /usr/sbin/rabbitmqadmin")
+  }
+end
+
+dep 'enable rabbitmq management plugin' do
+  met? {
+    system("rabbitmq-plugins list -E rabbitmq_management | grep rabbitmq_management")
+  }
+  meet {
+    sudo("rabbitmq-plugins enable rabbitmq_management")
   }
 end
 
