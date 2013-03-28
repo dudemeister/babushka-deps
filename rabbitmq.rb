@@ -19,6 +19,25 @@ dep 'rabbitmq.src' do
   provides ["rabbitmq-server"]
 end
 
+dep 'rabbitmq-server-304.src' do
+  requires "erlang-nox.managed"
+  source "http://www.rabbitmq.com/releases/rabbitmq-server/v3.0.4/rabbitmq-server_3.0.4-1_all.deb"
+  process_source {
+    sudo("dpkg -i rabbitmq-server_3.0.4-1_all.deb")
+    sudo("service rabbitmq-server stop")
+  }
+  provides ["rabbitmq-server"]
+end
+
+dep 'add rabbitmqadmin' do
+  met? {
+    which("rabbitmqadmin")
+  }
+  meet {
+    sudo("wget -L http://localhost:15672/cli/ > /usr/sbin/rabbitmqadmin && chmod +x /usr/sbin/rabbitmqadmin")
+  }
+end
+
 dep 'rabbitmq remove' do
   def binaries
     ["rabbitmq-activate-plugins", "rabbitmq-multi", "rabbitmqctl", "rabbitmq-deactivate-plugins", "rabbitmq-server"]
@@ -55,5 +74,5 @@ dep 'rabbitmq remove autostart' do
 end
 
 dep 'rabbitmq update' do
-  requires 'rabbitmq remove', 'rabbitmq.src', 'rabbitmq remove autostart'
+  requires 'rabbitmq remove', 'rabbitmq304.src', 'rabbitmq remove autostart'
 end
