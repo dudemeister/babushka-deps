@@ -10,7 +10,7 @@ end
 
 dep 'nvm' do
   met? {
-    system("nvm")
+    login_shell('nvm help | grep \"Node Version Manager\"', as: "protonet") == 'Node Version Manager'
   }
   meet {
     log_shell "installing nvm", "curl https://raw.github.com/creationix/nvm/master/install.sh | sh"
