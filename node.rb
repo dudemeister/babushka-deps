@@ -23,6 +23,6 @@ dep 'nvm node0101' do
     login_shell("node -v | grep v0.10.1", as: "protonet") == 'v0.10.1'
   }
   meet {
-    sudo "nvm install 0.10.1; nvm alias default 0.10.1", as: 'protonet'
+    log_shell("installing node 0.10.1", 'su - protonet bash -l -c "nvm install 0.10.1 && nvm alias default 0.10.1"')
   }
 end
