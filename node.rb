@@ -23,6 +23,6 @@ dep 'nvm node0101' do
     `node -v`.strip == 'v0.10.1'
   }
   meet {
-    log_shell "install node v0.10.1", "source /home/protonet/.nvm/nvm.sh; nvm install 0.10.1"
+    sudo "source /home/protonet/.nvm/nvm.sh; nvm install 0.10.1", as: 'protonet'
   }
 end
