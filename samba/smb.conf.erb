@@ -23,10 +23,17 @@
   obey pam restrictions = yes
   guest account = nobody
   invalid users = root
+
   create mask = 0660
   force create mode = 0660
-  directory mask = 1770
-  force directory mode = 1770
+  security mask = 0660
+  force security mode = 0660
+
+  directory mask = 2770
+  force directory mode = 2770
+  directory security mask = 2770
+  force directory security mode = 2770
+
   unix password sync = yes
   passwd program = /usr/bin/passwd %u
   passwd chat = *Enter\snew\sUNIX\spassword:* %n\n *Retype\snew\sUNIX\spassword:* %n\n .
