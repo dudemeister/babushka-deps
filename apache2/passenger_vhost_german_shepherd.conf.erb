@@ -19,22 +19,22 @@ PassengerUseGlobalQueue on
   AllowCONNECT  22
   ProxyTimeout 600
 
-  <Proxy http://127.0.0.1:8000>
-    AddDefaultCharset off
-    Order deny,allow
-    Allow from all
-  </Proxy>
-
   <Proxy http://127.0.0.1:8124>
     AddDefaultCharset off
     Order deny,allow
     Allow from all
   </Proxy>
 
-  ProxyPass /node http://127.0.0.1:8000 retry=1 keepalive=on
-  ProxyPassReverse /node http://127.0.0.1:8000
+  <Proxy http://127.0.0.1:8125>
+    AddDefaultCharset off
+    Order deny,allow
+    Allow from all
+  </Proxy>
 
-  ProxyPass /image_proxy http://127.0.0.1:8124 retry=1 keepalive=on
-  ProxyPassReverse /image_proxy http://127.0.0.1:8124
+  ProxyPass /node http://127.0.0.1:8124 retry=1 keepalive=on
+  ProxyPassReverse /node http://127.0.0.1:8124
+
+  ProxyPass /image_proxy http://127.0.0.1:8125 retry=1 keepalive=on
+  ProxyPassReverse /image_proxy http://127.0.0.1:8125
 
 </VirtualHost>
