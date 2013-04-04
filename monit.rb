@@ -41,6 +41,12 @@ dep "remove autostart monit" do
   } 
 end
 
+dep "stop monit" do
+  requires 'monit'
+  met? { !system("/etc/init.d/monit status")  }
+  meet { sudo("/etc/init.d/monit stop") }
+end
+
 
 dep 'monit.link' do
   met? { File.exists?("/usr/sbin/monit") }

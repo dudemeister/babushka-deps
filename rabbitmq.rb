@@ -48,6 +48,12 @@ dep 'enable rabbitmq management plugin' do
   }
 end
 
+dep "stop rabbitmq" do
+  requires 'rabbitmq-server-304.src'
+  met? { !system("/etc/init.d/rabbitmq-server status")  }
+  meet { sudo("/etc/init.d/rabbitmq-server stop") }
+end
+
 dep 'rabbitmq remove' do
   def binaries
     ["rabbitmq-activate-plugins", "rabbitmq-multi", "rabbitmqctl", "rabbitmq-deactivate-plugins", "rabbitmq-server"]
