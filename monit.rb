@@ -31,6 +31,17 @@ dep "autostart monit" do
   } 
 end
 
+
+dep "remove autostart monit" do
+  requires 'monit'
+  requires 'rcconf.managed'
+  met? { shell("rcconf --list").val_for('monit') == 'off' }
+  meet {
+    sudo("update-rc.d -f monit remove")
+  } 
+end
+
+
 dep 'monit.link' do
   met? { File.exists?("/usr/sbin/monit") }
   meet { sudo("ln -s /usr/bin/monit /usr/sbin/monit") }
