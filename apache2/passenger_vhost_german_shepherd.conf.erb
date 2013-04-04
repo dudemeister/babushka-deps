@@ -18,6 +18,17 @@ PassengerUseGlobalQueue on
   ProxyRequests On
   AllowCONNECT  22
   ProxyTimeout 600
+  
+  <IfModule mod_websocket_vnc_proxy.c>
+    <LocationMatch "/node/socket.io/\d+/websocket.*">
+      SetHandler websocket-handler
+      WebSocketHandler  /usr/lib/apache2/modules/mod_websocket_vnc_proxy.so vnc_proxy_init
+      WebSocketTcpProxyHost 127.0.0.1
+      WebSocketTcpProxyPort 8000
+      SupportDraft75 On
+    </LocationMatch>
+  </IfModule>
+  
 
   <Proxy http://127.0.0.1:8000>
     AddDefaultCharset off
