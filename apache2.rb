@@ -241,7 +241,7 @@ dep "remove apache2 from autostart" do
   meet { sudo "update-rc.d -f apache2 remove" }
 end
 
-dep "apache2 stop" do
+dep "apache2 stop.apache2" do
   met? { apache2_running? }
   meet { apachectl "stop" }
 end
