@@ -50,8 +50,8 @@ end
 
 dep "stop rabbitmq" do
   requires 'rabbitmq-server-304.src'
-  met? { !system("/etc/init.d/rabbitmq-server status")  }
-  meet { sudo("/etc/init.d/rabbitmq-server stop") }
+  met? { !sudo("/etc/init.d/rabbitmq-server status", as: "root")  }
+  meet { sudo("/etc/init.d/rabbitmq-server stop", as: "root") }
 end
 
 dep 'rabbitmq remove' do
