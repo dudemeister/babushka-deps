@@ -242,7 +242,7 @@ dep "remove apache2 from autostart" do
 end
 
 dep "apache2 stop.apache2" do
-  met? { apache2_running? }
+  met? { !apache2_running? }
   meet { apachectl "stop" }
 end
 
