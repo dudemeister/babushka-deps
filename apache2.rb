@@ -6,7 +6,9 @@ meta :apache2 do
       "/usr/sbin/apache2ctl #{command}"
     end
     def apachectl(command)
-      sudo apachectl_command(command)
+      # sudo apachectl_command(command)
+      puts "I won't restart apache2. I won't restart apache2. I won't restart apache2..."
+      true
     end
     def config_path
       '/etc/apache2'
