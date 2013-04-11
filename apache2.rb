@@ -373,3 +373,15 @@ dep "passenger configuration for german-shepherd.apache2" do
   }
 end
 
+
+dep 'change ports for nginx proxying.apache2' do
+  requires 'passenger configuration for german-shepherd.apache2'
+  met? {
+     grep "<VirtualHost *:8080>", '/etc/apache2/sites-enabled/protonet'
+  }
+  meet {
+    change_line "<VirtualHost *:80>", "<VirtualHost *:8080>", "/etc/apache2/sites-enabled/protonet"
+  }
+  after { restart_gracefully }
+end
+
