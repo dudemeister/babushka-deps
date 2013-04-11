@@ -377,10 +377,10 @@ end
 dep 'change ports for nginx proxying.apache2' do
   requires 'passenger configuration for german-shepherd.apache2'
   met? {
-     grep "<VirtualHost *:8080>", '/etc/apache2/sites-enabled/protonet'
+     babushka_config?(File.join(config_path, 'ports.conf'))
   }
   meet {
-    change_line "<VirtualHost *:80>", "<VirtualHost *:8080>", "/etc/apache2/sites-enabled/protonet"
+    render_erb 'apache2/ports.conf.erb', :to => File.join(config_path, 'ports.conf'), :sudo => true
   }
   after { restart_gracefully }
 end
