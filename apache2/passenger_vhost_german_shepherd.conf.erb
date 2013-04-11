@@ -2,7 +2,7 @@ PassengerMinInstances 4
 PassengerMaxPoolSize 10
 PassengerUseGlobalQueue on
 
-<VirtualHost *:80>
+<VirtualHost *:8089>
 
   ServerName <%= var(:server_name) %>
   DocumentRoot <%= var(:document_root) / 'current/public' %>
