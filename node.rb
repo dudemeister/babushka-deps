@@ -23,6 +23,6 @@ dep 'nvm node0101' do
     login_shell(". /home/protonet/.nvm/nvm.sh; node -v | grep v0.10.1", as: "protonet") == 'v0.10.1'
   }
   meet {
-    login_shell('. /home/protonet/.nvm/nvm.sh; nvm install 0.10.1; nvm alias default 0.10.1', as: "protonet")
+    login_shell('. /home/protonet/.nvm/nvm.sh; nvm install v0.10.1; nvm alias default v0.10.1', as: "protonet")
   }
 end
