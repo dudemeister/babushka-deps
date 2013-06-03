@@ -14,7 +14,7 @@ meta :apache2 do
       '/etc/apache2'
     end
     def apache2_running?
-      shell "netstat -an | grep -E '^tcp.*[.:]80 +.*LISTEN'"
+      shell "pgrep -n apache2"
     end
     def restart_gracefully
       if apache2_running?
