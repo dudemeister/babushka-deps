@@ -14,7 +14,7 @@ meta :apache2 do
       '/etc/apache2'
     end
     def apache2_running?
-      shell "pgrep -n apache2"
+      shell "stat /var/run/apache2.pid && pgrep -P $(cat /var/run/apache2.pid)"
     end
     def restart_gracefully
       if apache2_running?
