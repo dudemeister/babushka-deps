@@ -239,7 +239,13 @@ dep 'passenger vhost configured.apache2' do
 end
 
 dep 'apache2-prefork-dev.managed' do
+  installs { via :apt, 'apache2-prefork-dev' }
   provides ["apxs2"]
+  before { log_shell("Writing error policy to policy-rc.d/null", "echo \"#!/bin/sh\nexit 101\" | sudo tee /usr/sbin/policy-rc.d/null", sudo: true)  }
+  after do
+    log_shell("Writing error policy to policy-rc.d/null", "unlink /usr/sbin/policy-rc.d/null", sudo: true)
+    log_shell("Removing from rc.d:", "update-rc.d -f apache2 remove", sudo: true)
+  end
 end
 
 dep 'xsendfile.apache2' do
