@@ -1,4 +1,4 @@
-# taken from http://github.com/tricycle/babushka-deps and adapted for my needs (same for apache2/*) 
+# taken from http://github.com/tricycle/babushka-deps and adapted for my needs (same for apache2/*)
 # hard works been done by them ;)
 meta :apache2 do
   template {
@@ -12,14 +12,6 @@ meta :apache2 do
     end
     def config_path
       '/etc/apache2'
-    end
-    def apache2_running?
-      shell "stat /var/run/apache2.pid && pgrep -P $(cat /var/run/apache2.pid)"
-    end
-    def restart_gracefully
-      if apache2_running?
-        log_shell "Restarting apache2", apachectl_command("graceful"), :sudo => true
-      end
     end
     def vhost_config_path(domain)
       config_path / "sites-available/#{domain}"
@@ -88,21 +80,11 @@ dep 'configured.apache2' do
     render_erb 'apache2/logrotate.erb',        :to => '/etc/logrotate.d/apache2', :sudo => true
   }
 
-  after { restart_gracefully }
 end
 
 dep 'default site disabled.apache2' do
   met? { site_disabled? 'default' }
   meet { disable_site 'default' }
-  after { restart_gracefully }
-end
-
-dep 'running.apache2' do
-  requires 'configured.apache2'
-  met? { apache2_running? }
-  meet {
-    apachectl "start"
-  }
 end
 
 dep 'mod_rewrite enabled.apache2' do
@@ -159,14 +141,12 @@ dep 'vhost enabled.apache2' do
   requires 'apache2'
   met? { site_enabled? var(:domain) }
   meet { enable_site var(:domain) }
-  after { restart_gracefully }
 end
 
 dep 'module enabled.apache2' do
   requires 'apache2'
   met? { mod_enabled? var(:module_name) }
   meet { enable_mod var(:module_name) }
-  after { restart_gracefully }
 end
 
 dep 'libapache2-mod-authz-unixgroup.managed' do
@@ -243,11 +223,6 @@ dep "remove apache2 from autostart" do
   meet { sudo "update-rc.d -f apache2 remove" }
 end
 
-dep "apache2 stop.apache2" do
-  met? { !apache2_running? }
-  meet { apachectl "stop" }
-end
-
 dep 'passenger vhost configured.apache2' do
   requires 'apache2 passenger mods configured'
 
@@ -279,7 +254,6 @@ dep 'xsendfile.apache2' do
       log_shell "installing",  "sudo apxs2 -cia mod_xsendfile.c"
     end
   }
-  after { restart_gracefully }
 end
 
 dep 'websocket_proxy.apache2' do
@@ -301,7 +275,6 @@ dep 'websocket_proxy.apache2' do
       end
     end
   }
-  after { restart_gracefully }  
 end
 
 dep 'websocket_read_timeouts.apache2' do
@@ -312,7 +285,6 @@ dep 'websocket_read_timeouts.apache2' do
   meet {
     change_line "RequestReadTimeout body=10,minrate=500", "RequestReadTimeout body=30,MinRate=1", "/etc/apache2/mods-available/reqtimeout.conf"
   }
-  after { restart_gracefully }
 end
 
 dep 'up_maxclient.apache2' do
@@ -382,6 +354,5 @@ dep 'change ports for nginx proxying.apache2' do
   meet {
     render_erb 'apache2/ports.conf.erb', :to => File.join(config_path, 'ports.conf'), :sudo => true
   }
-  after { restart_gracefully }
 end
 
