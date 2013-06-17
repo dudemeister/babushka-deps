@@ -1,5 +1,5 @@
 dep "netatalk.complete" do
-  requires  "cups.managed", "libpam0g-dev.managed", 
+  requires  "cups.managed", "libpam0g-dev.managed",
             "libdb5.1.managed", "libdb5.1-dev.managed", "libavahi-client-dev.managed",
             "netatalk.source", "netatalk config"
 end
@@ -58,13 +58,10 @@ dep "netatalk.source" do
 end
 
 dep "netatalk config" do
-  met? { 
+  met? {
     babushka_config? "/usr/local/etc/afp.conf"
   }
-  meet { 
+  meet {
     render_erb "netatalk/afp.conf.erb", :to => "/usr/local/etc/afp.conf", :sudo => true
-  }
-  after {
-    sudo "/etc/init.d/netatalk restart"
   }
 end
