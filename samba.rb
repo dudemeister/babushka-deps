@@ -12,7 +12,7 @@ dep 'samba.managed' do
   installs { via :apt, 'samba' }
   provides []
   before do
-    shell("echo manual > /etc/init/smbd.override")
-    shell("echo manual > /etc/init/nmbd.override")
+    shell("echo manual > /etc/init/smbd.override", :sudo => true)
+    shell("echo manual > /etc/init/nmbd.override", :sudo => true)
   end
 end
