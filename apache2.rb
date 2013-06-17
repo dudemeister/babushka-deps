@@ -48,14 +48,6 @@ end
 
 dep 'apache2', :template => 'managed' do
   installs %w[apache2 apache2-mpm-prefork]
-  before do
-    log_shell("Writing error policy to policy-rc.d", "echo \"#!/bin/sh\nexit 101\" | sudo tee /usr/sbin/policy-rc.d", sudo: true)
-    log_shell("Making the script executable",        "chmod +x /usr/sbin/policy-rc.d",                                sudo: true)
-  end
-  after do
-    log_shell("Removing error policy from policy-rc.d", "unlink /usr/sbin/policy-rc.d",  sudo: true)
-    log_shell("Removing from rc.d:",                    "update-rc.d -f apache2 remove", sudo: true)
-  end
 end
 
 dep 'apache2 dev packages', :template => 'managed' do
