@@ -49,7 +49,7 @@ dep "netatalk.source" do
       log_shell "downloading netatalk", "curl -LO http://downloads.sourceforge.net/project/netatalk/netatalk/3.0.4/netatalk-3.0.4.tar.gz", {:spinner => true}
       log_shell "expanding", "tar xzf netatalk-3.0.4.tar.gz", {:spinner => true}
       cd("netatalk-3.0.4") {
-        log_shell "configuring", "./configure --enable-debian --with-pam --with-init-style=debian"
+        log_shell "configuring", "./configure --enable-debian --with-pam"
         log_shell "making", "make", {:spinner => true}
         log_shell "installing", "make install", {:spinner => true, :sudo => true}
       }
