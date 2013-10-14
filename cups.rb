@@ -6,7 +6,7 @@ dep 'cups.managed' do
 end
 
 dep 'cups.src' do
-  source 'http://ftp.easysw.com/pub/cups/1.5.0/cups-1.5.0-source.tar.gz'
+  source 'ftp://ftp.gr.postgresql.org/pub/gnu/cups/1.5.0/cups-1.5.0-source.tar.gz'
   preconfigure { shell("cp -R ~/.babushka/build/cups-1.5.0-source/cups-1.5.0/* ~/.babushka/build/cups-1.5.0-source/; rm -rf ~/.babushka/build/cups-1.5.0-source/cups-1.5.0") }
   install { sudo("make install") }
   provides ['cups-config']
